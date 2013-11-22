@@ -101,12 +101,21 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma mark - Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    KXChatViewController *chatViewController = [[KXChatViewController alloc] init];
-    chatViewController.hidesBottomBarWhenPushed = YES;
-    
-    [self.navigationController pushViewController:chatViewController animated:YES];
+    if ([segue.identifier isEqualToString:@"pushContactFromContacts"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        KXContact *contact = [[self.contacts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        
+        KXContactTableViewController *contactTableViewController = segue.destinationViewController;
+        contactTableViewController.theme = contact.theme;
+        contactTableViewController.contactName = contact.contactName;
+        contactTableViewController.contactAvatar = contact.contactAvatar;
+        
+        contactTableViewController.hidesBottomBarWhenPushed = YES;
+    }
 }
 
 #pragma mark - Core Data

@@ -11,28 +11,33 @@
 #import "KXChatTableViewCell.h"
 #import "KXMessage.h"
 
-#define CHAT_TOOLBAR_HEIGHT 40.0f
+#define CHAT_TOOLBAR_HEIGHT 44.0f
 #define CHAT_TOOLBAR_SPACE 110.0f
-#define CHAT_TEXT_FIELD_HEIGHT 30.0f
-#define CHAT_BUTTON_WIDTH 30.0f
-#define CHAT_BUTTON_HEIGHT 30.0f
+#define CHAT_TEXT_FIELD_HEIGHT 32.0f
+#define CHAT_BUTTON_WIDTH 32.0f
+#define CHAT_BUTTON_HEIGHT 32.0f
 
 @interface KXChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) UITableView *chatTableView;
-@property (weak, nonatomic) UIToolbar *chatToolbar;
-@property (weak, nonatomic) UIBarButtonItem *chatTypeButtonItem;
-@property (weak, nonatomic) UIButton *chatTypeButton;
-@property (weak, nonatomic) UIBarButtonItem *inputTextViewButtonItem;
-@property (weak, nonatomic) UITextView *inputTextView;
-@property (weak, nonatomic) UIBarButtonItem *smileyButtonItem;
-@property (weak, nonatomic) UIButton *smileyButton;
-@property (weak, nonatomic) UIBarButtonItem *insertButtonItem;
-@property (weak, nonatomic) UIButton *insertButton;
+@property (strong, nonatomic) UITableView *chatTableView;
+@property (strong, nonatomic) UIToolbar *chatToolbar;
+@property (strong, nonatomic) UIBarButtonItem *fixedToolbarButtonItemSpace;
+@property (strong, nonatomic) UIBarButtonItem *chatTypeButtonItem;
+@property (strong, nonatomic) UIButton *chatTypeButton;
+@property (strong, nonatomic) UIBarButtonItem *talkButtonItem;
+@property (strong, nonatomic) UIButton *talkButton;
+@property (strong, nonatomic) UIBarButtonItem *inputTextViewButtonItem;
+@property (strong, nonatomic) UITextView *inputTextView;
+@property (strong, nonatomic) UIBarButtonItem *smileyButtonItem;
+@property (strong, nonatomic) UIButton *smileyButton;
+@property (strong, nonatomic) UIBarButtonItem *insertButtonItem;
+@property (strong, nonatomic) UIButton *insertButton;
 
 @property (strong, nonatomic) NSMutableArray *messages;
 @property (strong, nonatomic) NSMutableArray *timestamps;
 @property (strong, nonatomic) NSMutableArray *subtitles;
 @property (strong, nonatomic) NSDictionary *avatars;
+
+@property (nonatomic) BOOL isAudioChat;
 
 @end

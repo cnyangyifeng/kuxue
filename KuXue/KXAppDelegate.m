@@ -117,34 +117,19 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     
     NSManagedObject *idea1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXIdea" inManagedObjectContext:context];
-    [idea1 setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
-    [idea1 setValue:@"杨义锋" forKey:@"contactName"];
-    [idea1 setValue:[NSNumber numberWithInt:3] forKey:@"sid"];
+    [idea1 setValue:@"fanlang.jpg" forKey:@"contactAvatar"];
+    [idea1 setValue:@"樊浪" forKey:@"contactName"];
+    [idea1 setValue:[NSNumber numberWithInt:1] forKey:@"sid"];
     [idea1 setValue:@"theme-1.jpg" forKey:@"theme"];
     [idea1 setValue:@"thumbnail-1.jpg" forKey:@"ideaThumbnail"];
-    [idea1 setValue:@"21分钟前" forKey:@"ideaTimeReceived"];
-    [idea1 setValue:@"Objective-C 程序设计" forKey:@"ideaTitle"];
-    
-    NSManagedObject *idea2 = [NSEntityDescription insertNewObjectForEntityForName:@"KXIdea" inManagedObjectContext:context];
-    [idea2 setValue:@"fanlang.jpg" forKey:@"contactAvatar"];
-    [idea2 setValue:@"樊浪" forKey:@"contactName"];
-    [idea2 setValue:[NSNumber numberWithInt:3] forKey:@"sid"];
-    [idea2 setValue:@"theme-2.jpg" forKey:@"theme"];
-    [idea2 setValue:@"thumbnail-2.jpg" forKey:@"ideaThumbnail"];
-    [idea2 setValue:@"1小时前" forKey:@"ideaTimeReceived"];
-    [idea2 setValue:@"在新东方收获成功" forKey:@"ideaTitle"];
+    [idea1 setValue:@"1小时前" forKey:@"ideaTimeReceived"];
+    [idea1 setValue:@"在新东方收获成功" forKey:@"ideaTitle"];
     
     NSManagedObject *contact1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
-    [contact1 setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
-    [contact1 setValue:@"杨义锋" forKey:@"contactName"];
-    [contact1 setValue:@"13581651017" forKey:@"mobile"];
+    [contact1 setValue:@"fanlang.jpg" forKey:@"contactAvatar"];
+    [contact1 setValue:@"樊浪" forKey:@"contactName"];
+    [contact1 setValue:@"13811155255" forKey:@"mobile"];
     [contact1 setValue:@"theme-1.jpg" forKey:@"theme"];
-    
-    NSManagedObject *contact2 = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
-    [contact2 setValue:@"fanlang.jpg" forKey:@"contactAvatar"];
-    [contact2 setValue:@"樊浪" forKey:@"contactName"];
-    [contact2 setValue:@"13811155255" forKey:@"mobile"];
-    [contact2 setValue:@"theme-2.jpg" forKey:@"theme"];
     
     for (int i = 0; i < 10; i++) {
         NSManagedObject *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
