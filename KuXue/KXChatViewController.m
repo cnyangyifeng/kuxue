@@ -21,12 +21,14 @@
 @synthesize chatTypeButton = _chatTypeButton;
 @synthesize talkButtonItem = _talkButtonItem;
 @synthesize talkButton = _talkButton;
-@synthesize inputTextViewButtonItem = _inputTextViewButtonItem;
-@synthesize inputTextView = _inputTextView;
-@synthesize smileyButtonItem = _smileyButtonItem;
-@synthesize smileyButton = _smileyButton;
-@synthesize insertButtonItem = _insertButtonItem;
-@synthesize insertButton = _insertButton;
+@synthesize inputTextFieldButtonItem = _inputTextFieldButtonItem;
+@synthesize inputTextField = _inputTextField;
+@synthesize emoticonOrAudioPlayButtonItem = _emoticonOrAudioPlayButtonItem;
+@synthesize emoticonOrAudioPlayButton = _emoticonOrAudioPlayButton;
+@synthesize insertOrAudioSendButtonItem = _insertOrAudioSendButtonItem;
+@synthesize insertOrAudioSendButton = _insertOrAudioSendButton;
+
+@synthesize talkHud = _talkHud;
 
 @synthesize messages = _messages;
 @synthesize timestamps = _timestamps;
@@ -47,7 +49,7 @@
 {
     [super viewDidLoad];
     
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     
     [self initMockData];
 }
@@ -98,12 +100,11 @@
     tableView.delegate = self;
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, self.view.bounds.size.height - CHAT_TOOLBAR_HEIGHT, self.view.bounds.size.width, CHAT_TOOLBAR_HEIGHT)];
-    toolbar.backgroundColor = [UIColor whiteColor];
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectMake(0.0f, 0.0f, CHAT_BUTTON_WIDTH, CHAT_BUTTON_HEIGHT)];
     [leftButton setBackgroundColor:[UIColor whiteColor]];
-    [leftButton setImage:[UIImage imageNamed:@"Microphone"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"Keyboard"] forState:UIControlStateNormal];
     [leftButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [leftButton.layer setBorderWidth:0.5f];
     [leftButton.layer setCornerRadius:leftButton.bounds.size.width / 2.0f];
@@ -112,41 +113,42 @@
     [leftButton addTarget:self action:@selector(switchChatType) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftButtonItem= [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     
-    UIButton *holdButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [holdButton setFrame:CGRectMake(0.0f, 0.0f, toolbar.bounds.size.width - CHAT_BUTTON_WIDTH - CHAT_TOOLBAR_SPACE, CHAT_BUTTON_HEIGHT)];
-    [holdButton setBackgroundColor:[UIColor blackColor]];
-    [holdButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [holdButton.layer setBorderWidth:0.5f];
-    [holdButton.layer setCornerRadius:5.0f];
-    [holdButton setTitle:@"Hold to Talk" forState:UIControlStateNormal];
-    [holdButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [holdButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    UIBarButtonItem *holdButtonItem = [[UIBarButtonItem alloc] initWithCustomView:holdButton];
+    UIButton *tapButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [tapButton setFrame:CGRectMake(0.0f, 0.0f, toolbar.bounds.size.width - CHAT_BUTTON_WIDTH - CHAT_TOOLBAR_ESTIMATED_SPACE, CHAT_BUTTON_HEIGHT)];
+    [tapButton setBackgroundColor:[UIColor blackColor]];
+    [tapButton.layer setBorderColor:[UIColor blackColor].CGColor];
+    [tapButton.layer setBorderWidth:0.5f];
+    [tapButton.layer setCornerRadius:5.0f];
+    [tapButton setTitle:@"Tap to Talk" forState:UIControlStateNormal];
+    [tapButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [tapButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
+    [tapButton addTarget:self action:@selector(tapToTalk) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *tapButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tapButton];
     
-    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, toolbar.bounds.size.width - CHAT_BUTTON_WIDTH - CHAT_TOOLBAR_SPACE, CHAT_TEXT_FIELD_HEIGHT)];
-    [textView setBackgroundColor:[UIColor whiteColor]];
-    [textView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [textView.layer setBorderWidth:0.5f];
-    [textView.layer setCornerRadius:5.0f];
-    [textView setFont:[UIFont systemFontOfSize:15.0f]];
-    UIBarButtonItem *textViewButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textView];
+    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0.0f, 0.0f, toolbar.bounds.size.width - CHAT_BUTTON_WIDTH - CHAT_TOOLBAR_ESTIMATED_SPACE, CHAT_TEXT_FIELD_HEIGHT)];
+    [textField setBackgroundColor:[UIColor whiteColor]];
+    [textField.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [textField.layer setBorderWidth:0.5f];
+    [textField.layer setCornerRadius:5.0f];
+    [textField setFont:[UIFont systemFontOfSize:15.0f]];
+    UIBarButtonItem *textFieldButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textField];
     
     UIButton *middleButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [middleButton setFrame:CGRectMake(0.0f, 0.0f, CHAT_BUTTON_WIDTH, CHAT_BUTTON_HEIGHT)];
     [middleButton setBackgroundColor:[UIColor whiteColor]];
-    [middleButton setImage:[UIImage imageNamed:@"Smiley"] forState:UIControlStateNormal];
+    [middleButton setImage:[UIImage imageNamed:@"Volume"] forState:UIControlStateNormal];
     [middleButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [middleButton.layer setBorderWidth:0.5f];
     [middleButton.layer setCornerRadius:middleButton.bounds.size.width / 2.0f];
     // [middleButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
     // [middleButton setTitleColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
-    [middleButton addTarget:self action:@selector(hideKeyboard) forControlEvents:UIControlEventTouchUpInside];
+    [middleButton addTarget:self action:@selector(tapToInsertEmoticonOrPlayAudio) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *middleButtonItem= [[UIBarButtonItem alloc] initWithCustomView:middleButton];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setFrame:CGRectMake(0.0f, 0.0f, CHAT_BUTTON_WIDTH, CHAT_BUTTON_HEIGHT)];
     [rightButton setBackgroundColor:[UIColor whiteColor]];
-    [rightButton setImage:[UIImage imageNamed:@"Insert"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"Send"] forState:UIControlStateNormal];
     [rightButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [rightButton.layer setBorderWidth:0.5f];
     [rightButton.layer setCornerRadius:rightButton.bounds.size.width / 2.0f];
@@ -156,23 +158,29 @@
     UIBarButtonItem *rightButtonItem= [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     
     UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    fixedSpace.width = -10.0f;
+    fixedSpace.width = CHAT_TOOLBAR_LEFT_FIXED_SPACE;
     
-    self.isAudioChat = NO;
+    self.isAudioChatType = YES;
+    self.isAudioPlaying = NO;
+    [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, leftButtonItem, tapButtonItem, middleButtonItem, rightButtonItem, nil]];
     
-    [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, leftButtonItem, textViewButtonItem, middleButtonItem, rightButtonItem, nil]];
+    KXVoiceHUD *voiceHud = [[KXVoiceHUD alloc] initWithParentView:self.view];
+    voiceHud.title = @"Talk Now";
+    [voiceHud setDelegate:self];
     
     self.chatTypeButtonItem = leftButtonItem;
     self.chatTypeButton = leftButton;
     self.fixedToolbarButtonItemSpace = fixedSpace;
-    self.talkButtonItem = holdButtonItem;
-    self.talkButton = holdButton;
-    self.inputTextViewButtonItem = textViewButtonItem;
-    self.inputTextView = textView;
-    self.smileyButtonItem = middleButtonItem;
-    self.smileyButton = middleButton;
-    self.insertButtonItem = rightButtonItem;
-    self.insertButton = rightButton;
+    self.talkButtonItem = tapButtonItem;
+    self.talkButton = tapButton;
+    self.inputTextFieldButtonItem = textFieldButtonItem;
+    self.inputTextField = textField;
+    self.emoticonOrAudioPlayButtonItem = middleButtonItem;
+    self.emoticonOrAudioPlayButton = middleButton;
+    self.insertOrAudioSendButtonItem = rightButtonItem;
+    self.insertOrAudioSendButton = rightButton;
+    
+    self.talkHud = voiceHud;
     
     self.chatTableView = tableView;
     [self.view addSubview:self.chatTableView];
@@ -181,19 +189,56 @@
     [self.view addSubview:self.chatToolbar];
 }
 
+#pragma mark - Chat Type Button
+
 - (void)switchChatType
 {
-    if (self.isAudioChat) {
+    if (self.isAudioChatType) {
         [self.view hideKeyboard];
         [self.chatTypeButton setImage:[UIImage imageNamed:@"Microphone"] forState:UIControlStateNormal];
-        [self.chatToolbar setItems:[NSArray arrayWithObjects:self.fixedToolbarButtonItemSpace, self.chatTypeButtonItem, self.inputTextViewButtonItem, self.smileyButtonItem, self.insertButtonItem, nil]];
-         self.isAudioChat = NO;
+        [self.emoticonOrAudioPlayButton setImage:[UIImage imageNamed:@"Emoticon"] forState:UIControlStateNormal];
+        [self.insertOrAudioSendButton setImage:[UIImage imageNamed:@"Insert"] forState:UIControlStateNormal];
+        [self.chatToolbar setItems:[NSArray arrayWithObjects:self.fixedToolbarButtonItemSpace, self.chatTypeButtonItem, self.inputTextFieldButtonItem, self.emoticonOrAudioPlayButtonItem, self.insertOrAudioSendButtonItem, nil]];
+        self.isAudioChatType = NO;
     } else {
         [self.chatTypeButton setImage:[UIImage imageNamed:@"Keyboard"] forState:UIControlStateNormal];
-        [self.chatToolbar setItems:[NSArray arrayWithObjects:self.fixedToolbarButtonItemSpace, self.chatTypeButtonItem, self.talkButtonItem, self.smileyButtonItem, self.insertButtonItem, nil]];
-        self.isAudioChat = YES;
+        [self.emoticonOrAudioPlayButton setImage:[UIImage imageNamed:@"Volume"] forState:UIControlStateNormal];
+        [self.insertOrAudioSendButton setImage:[UIImage imageNamed:@"Send"] forState:UIControlStateNormal];
+        [self.chatToolbar setItems:[NSArray arrayWithObjects:self.fixedToolbarButtonItemSpace, self.chatTypeButtonItem, self.talkButtonItem, self.emoticonOrAudioPlayButtonItem, self.insertOrAudioSendButtonItem, nil]];
+        self.isAudioChatType = YES;
     }
 }
+
+#pragma mark - Tap To Talk Button
+
+- (void)tapToTalk
+{
+    [self.view addSubview:self.talkHud];
+    [self.talkHud startForFilePath:[NSString stringWithFormat:@"%@/Documents/KuXue.caf", NSHomeDirectory()]];
+}
+
+- (void)tapToInsertEmoticonOrPlayAudio
+{
+    if (self.isAudioChatType) {
+//        [self.talkHud cancelRecording];
+//        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+//        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+        NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Documents/KuXue.caf", NSHomeDirectory()]];
+        [self.talkHud playRecording:url];
+    }
+}
+
+#pragma mark - Talk HUD
+
+- (void)KXVoiceHUD:(KXVoiceHUD *)voiceHUD voiceRecorded:(NSString *)recordPath length:(float)recordLength {
+    NSLog(@"Sound recorded with file %@ for %.2f seconds", [recordPath lastPathComponent], recordLength);
+}
+
+- (void)voiceRecordCancelledByUser:(KXVoiceHUD *)voiceHUD {
+    NSLog(@"Voice recording cancelled for HUD: %@", voiceHUD);
+}
+
+#pragma mark - Emoticon Button & Insert Button
 
 - (void)hideKeyboard
 {
@@ -257,7 +302,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70.0f;
+    return TABLE_VIEW_CELL_HEIGHT;
 }
 
 #pragma mark - Core Data

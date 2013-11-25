@@ -3,12 +3,11 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "insert.png"
+      "filename" : "microphone_hud.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "insert@2x.png"
+      "scale" : "2x"
     }
   ],
   "info" : {

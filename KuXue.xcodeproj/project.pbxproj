@@ -35,6 +35,10 @@
 		0F06C04918349DB800FDF785 /* theme-6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F06C02E18349DB800FDF785 /* theme-6.jpg */; };
 		0F06C04A18349DB800FDF785 /* theme-7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F06C02F18349DB800FDF785 /* theme-7.jpg */; };
 		0F06C04B18349DB800FDF785 /* theme-8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F06C03018349DB800FDF785 /* theme-8.jpg */; };
+		0F523F8118406CDB00F967BF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F981660183DB35700EBD0B5 /* AudioToolbox.framework */; };
+		0F523F8318406CE900F967BF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F523F8218406CE900F967BF /* AVFoundation.framework */; };
+		0F523F8518406CF900F967BF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F523F8418406CF900F967BF /* QuartzCore.framework */; };
+		0F523F881840702100F967BF /* KXVoiceHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F523F871840702100F967BF /* KXVoiceHUD.m */; };
 		0F761B04183C96C300651F7F /* KXChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F761B03183C96C300651F7F /* KXChatTableViewCell.m */; };
 		0F761B09183CE8CE00651F7F /* KXMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F761B08183CE8CE00651F7F /* KXMessage.m */; };
 		0FAD00841836371E00FE15D9 /* national_geographic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0FAD00821836371E00FE15D9 /* national_geographic.jpg */; };
@@ -152,6 +156,11 @@
 		0F06C02E18349DB800FDF785 /* theme-6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "theme-6.jpg"; sourceTree = "<group>"; };
 		0F06C02F18349DB800FDF785 /* theme-7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "theme-7.jpg"; sourceTree = "<group>"; };
 		0F06C03018349DB800FDF785 /* theme-8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "theme-8.jpg"; sourceTree = "<group>"; };
+		0F523F8218406CE900F967BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0F523F8418406CF900F967BF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0F523F861840702100F967BF /* KXVoiceHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KXVoiceHUD.h; path = ../../../Workspace/KuXue/KuXue/KXVoiceHUD.h; sourceTree = "<group>"; };
+		0F523F871840702100F967BF /* KXVoiceHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KXVoiceHUD.m; path = ../../../Workspace/KuXue/KuXue/KXVoiceHUD.m; sourceTree = "<group>"; };
+		0F523F891840717A00F967BF /* KXVoiceHUDDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KXVoiceHUDDelegate.h; path = ../../../Workspace/KuXue/KuXue/KXVoiceHUDDelegate.h; sourceTree = "<group>"; };
 		0F761B02183C96C300651F7F /* KXChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXChatTableViewCell.h; sourceTree = "<group>"; };
 		0F761B03183C96C300651F7F /* KXChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXChatTableViewCell.m; sourceTree = "<group>"; };
 		0F761B07183CE8CE00651F7F /* KXMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMessage.h; sourceTree = "<group>"; };
@@ -285,6 +294,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F523F8518406CF900F967BF /* QuartzCore.framework in Frameworks */,
+				0F523F8318406CE900F967BF /* AVFoundation.framework in Frameworks */,
+				0F523F8118406CDB00F967BF /* AudioToolbox.framework in Frameworks */,
 				0F06BFED1831331900FDF785 /* libxml2.dylib in Frameworks */,
 				0FE7CF9E183116FC00CC502F /* libresolv.dylib in Frameworks */,
 				0FE7CF9C1831169800CC502F /* Security.framework in Frameworks */,
@@ -403,6 +415,8 @@
 		0FE7CF5E1830B70600CC502F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0F523F8418406CF900F967BF /* QuartzCore.framework */,
+				0F523F8218406CE900F967BF /* AVFoundation.framework */,
 				0F981660183DB35700EBD0B5 /* AudioToolbox.framework */,
 				0FE7D02E18312CE000CC502F /* libxml2.dylib */,
 				0FE7CF9D183116FC00CC502F /* libresolv.dylib */,
@@ -450,6 +464,9 @@
 				0FC6F06A18390CD0009683D4 /* KXIdeaViewController.m */,
 				0F761B07183CE8CE00651F7F /* KXMessage.h */,
 				0F761B08183CE8CE00651F7F /* KXMessage.m */,
+				0F523F861840702100F967BF /* KXVoiceHUD.h */,
+				0F523F871840702100F967BF /* KXVoiceHUD.m */,
+				0F523F891840717A00F967BF /* KXVoiceHUDDelegate.h */,
 				0FE7CF711830B70600CC502F /* Main.storyboard */,
 				0FE7CF661830B70600CC502F /* Supporting Files */,
 			);
@@ -926,6 +943,7 @@
 				0F761B09183CE8CE00651F7F /* KXMessage.m in Sources */,
 				0FE7D01B1831245E00CC502F /* GCDMulticastDelegate.m in Sources */,
 				0FE7D01C1831245E00CC502F /* RFImageToDataTransformer.m in Sources */,
+				0F523F881840702100F967BF /* KXVoiceHUD.m in Sources */,
 				0FE7D0231831245E00CC502F /* DDFileLogger.m in Sources */,
 				0FE7D01A1831245E00CC502F /* DDList.m in Sources */,
 				0FE7D02A1831245E00CC502F /* DDXMLElement.m in Sources */,
