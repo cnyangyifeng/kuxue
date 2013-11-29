@@ -45,6 +45,5 @@
 @property (strong, nonatomic) NSDictionary *avatars;
 
 @property (nonatomic) BOOL isAudioChatType;
-@property (nonatomic) BOOL isAudioPlaying;
 
 @end

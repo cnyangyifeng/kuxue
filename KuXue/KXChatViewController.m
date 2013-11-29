@@ -66,6 +66,7 @@
     [super viewWillDisappear:animated];
     
     [self removeKeyboardControl];
+    [self.talkHud commitRecording];
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,10 +120,10 @@
     [tapButton.layer setBorderColor:[UIColor blackColor].CGColor];
     [tapButton.layer setBorderWidth:0.5f];
     [tapButton.layer setCornerRadius:5.0f];
-    [tapButton setTitle:@"Tap to Talk" forState:UIControlStateNormal];
+    [tapButton setTitle:@"Tap to Record" forState:UIControlStateNormal];
     [tapButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [tapButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    [tapButton addTarget:self action:@selector(tapToTalk) forControlEvents:UIControlEventTouchUpInside];
+    [tapButton addTarget:self action:@selector(tapToRecord) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *tapButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tapButton];
     
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0.0f, 0.0f, toolbar.bounds.size.width - CHAT_BUTTON_WIDTH - CHAT_TOOLBAR_ESTIMATED_SPACE, CHAT_TEXT_FIELD_HEIGHT)];
@@ -161,12 +162,11 @@
     fixedSpace.width = CHAT_TOOLBAR_LEFT_FIXED_SPACE;
     
     self.isAudioChatType = YES;
-    self.isAudioPlaying = NO;
     [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, leftButtonItem, tapButtonItem, middleButtonItem, rightButtonItem, nil]];
     
     KXVoiceHUD *voiceHud = [[KXVoiceHUD alloc] initWithParentView:self.view];
     voiceHud.title = @"Talk Now";
-    [voiceHud setDelegate:self];
+    voiceHud.delegate = self;
     
     self.chatTypeButtonItem = leftButtonItem;
     self.chatTypeButton = leftButton;
@@ -211,7 +211,7 @@
 
 #pragma mark - Tap To Talk Button
 
-- (void)tapToTalk
+- (void)tapToRecord
 {
     [self.view addSubview:self.talkHud];
     [self.talkHud startForFilePath:[NSString stringWithFormat:@"%@/Documents/KuXue.caf", NSHomeDirectory()]];

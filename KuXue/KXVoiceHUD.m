@@ -22,12 +22,13 @@
         
         hudRect = CGRectMake(self.center.x - (HUD_SIZE / 2), self.center.y - (HUD_SIZE / 2), HUD_SIZE, HUD_SIZE);
         int x = (frame.size.width - HUD_SIZE) / 2;
-        btnCancel = [[UIButton alloc] initWithFrame:CGRectMake(x, hudRect.origin.y + HUD_SIZE - CANCEL_BUTTON_HEIGHT, HUD_SIZE, CANCEL_BUTTON_HEIGHT)];
-        [btnCancel setTitle:@"Cancel" forState:UIControlStateNormal];
-        [btnCancel addTarget:self action:@selector(cancelled:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:btnCancel];
+        stopButton = [[UIButton alloc] initWithFrame:CGRectMake(x, hudRect.origin.y + HUD_SIZE - STOP_BUTTON_HEIGHT, HUD_SIZE, STOP_BUTTON_HEIGHT)];
+        [stopButton setTitle:@"Stop" forState:UIControlStateNormal];
+        [stopButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
+        [stopButton addTarget:self action:@selector(stopButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:stopButton];
         
-        imgMicrophone = [UIImage imageNamed:@"VoiceHUD"];
+        micImage = [UIImage imageNamed:@"VoiceHUD"];
         
         // Fill empty sound meters.
         for(int i = 0; i < SOUND_METER_COUNT; i++) {
@@ -66,12 +67,12 @@
         return;
 	}
 	
-	recordSetting = [[NSMutableDictionary alloc] init];
+	recordSettings = [[NSMutableDictionary alloc] init];
 	
 	// Sets voice quality.
-	[recordSetting setValue :[NSNumber numberWithInt:kAudioFormatAppleIMA4] forKey:AVFormatIDKey];
-	[recordSetting setValue:[NSNumber numberWithFloat:16000.0] forKey:AVSampleRateKey];
-	[recordSetting setValue:[NSNumber numberWithInt: 1] forKey:AVNumberOfChannelsKey];
+	[recordSettings setValue :[NSNumber numberWithInt:kAudioFormatAppleIMA4] forKey:AVFormatIDKey];
+	[recordSettings setValue:[NSNumber numberWithFloat:16000.0f] forKey:AVSampleRateKey];
+	[recordSettings setValue:[NSNumber numberWithInt: 1] forKey:AVNumberOfChannelsKey];
     
 	// Should activate these settings if using kAudioFormatLinearPCM format.
 	// [recordSetting setValue :[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
@@ -85,7 +86,7 @@
     
 	err = nil;
 	
-	NSData *audioData = [NSData dataWithContentsOfFile:[url path] options: 0 error:&err];
+	NSData *audioData = [NSData dataWithContentsOfFile:[url path] options:0 error:&err];
 	if(audioData)
 	{
 		NSFileManager *fm = [NSFileManager defaultManager];
@@ -93,8 +94,8 @@
 	}
 	
 	err = nil;
-	recorder = [[ AVAudioRecorder alloc] initWithURL:url settings:recordSetting error:&err];
-	if(!recorder){
+	recorder = [[ AVAudioRecorder alloc] initWithURL:url settings:recordSettings error:&err];
+	if(!recorder) {
         NSLog(@"recorder: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
         UIAlertView *alert =
         [[UIAlertView alloc] initWithTitle: @"Warning" message: [err localizedDescription] delegate: nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
@@ -107,14 +108,14 @@
 	recorder.meteringEnabled = YES;
 	
 	BOOL audioHWAvailable = audioSession.inputAvailable;
-	if (! audioHWAvailable) {
+	if (!audioHWAvailable) {
         UIAlertView *cantRecordAlert =
-        [[UIAlertView alloc] initWithTitle: @"Warning" message: @"Audio input hardware not available" delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [[UIAlertView alloc] initWithTitle: @"Warning" message: @"Audio input hardware not available" delegate: nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [cantRecordAlert show];
         return;
 	}
 	
-	[recorder recordForDuration:(NSTimeInterval) 120];
+	[recorder recordForDuration:(NSTimeInterval)RECORD_DURATION];
 	
 	timer = [NSTimer scheduledTimerWithTimeInterval:WAVE_UPDATE_FREQUENCY target:self selector:@selector(updateMeters) userInfo:nil repeats:YES];
 }
@@ -122,15 +123,14 @@
 - (void)updateMeters {
     [recorder updateMeters];
     
-    NSLog(@"meter:%5f", [recorder averagePowerForChannel:0]);
-    if (([recorder averagePowerForChannel:0] < -60.0) && (recordTime > 3.0)) {
+    NSLog(@"meter: %5f", [recorder averagePowerForChannel:0]);
+    if (([recorder averagePowerForChannel:0] < -60.0f) && (recordTime > 3.0f)) {
         [self commitRecording];
         return;
     }
     
     recordTime += WAVE_UPDATE_FREQUENCY;
     [self addSoundMeterItem:[recorder averagePowerForChannel:0]];
-    
 }
 
 - (void)cancelRecording {
@@ -149,27 +149,23 @@
         [self.delegate KXVoiceHUD:self voiceRecorded:recorderFilePath length:recordTime];
     }
     
-    self.alpha = 0.0;
+    self.alpha = 0.0f;
     [self setNeedsDisplay];
 }
 
-- (void)cancelled:(id)sender {
-    self.alpha = 0.0;
+- (void)stopButtonAction:(id)sender {
+    self.alpha = 0.0f;
     [self setNeedsDisplay];
     
     [timer invalidate];
-    [self cancelRecording];
-}
-
-- (void)setCancelButtonTitle:(NSString *)title {
-    btnCancel.titleLabel.text = title;
+    [self commitRecording];
 }
 
 #pragma mark - Sound meter operations
 
 - (void)shiftSoundMeterLeft {
-    for(int i=0; i<SOUND_METER_COUNT - 1; i++) {
-        soundMeters[i] = soundMeters[i+1];
+    for(int i = 0; i < SOUND_METER_COUNT - 1; i++) {
+        soundMeters[i] = soundMeters[i + 1];
     }
 }
 
@@ -188,38 +184,38 @@
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    UIColor *strokeColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-    UIColor *fillColor = [UIColor colorWithRed:0.5827 green:0.5827 blue:0.5827 alpha:1.0];
-    UIColor *gradientColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
-    UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    UIColor *strokeColor = [UIColor colorWithRed:0.5827f green:0.5827f blue:0.5827f alpha:1.0f];
+    UIColor *fillColor = [UIColor colorWithRed:0.5827f green:0.5827f blue:0.5827f alpha:1.0f];
+    UIColor *gradientColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.8f];
+    UIColor *color = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f];
     
     NSArray *gradientColors = [NSArray arrayWithObjects: (id)fillColor.CGColor, (id)gradientColor.CGColor, nil];
     CGFloat gradientLocations[] = {0, 1};
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, gradientLocations);
     
-    UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:hudRect cornerRadius:10.0];
+    UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:hudRect cornerRadius:10.0f];
     CGContextSaveGState(context);
     [border addClip];
     CGContextDrawRadialGradient(context, gradient,
-                                CGPointMake(hudRect.origin.x + HUD_SIZE / 2, 120), 10,
-                                CGPointMake(hudRect.origin.x + HUD_SIZE / 2, 195), 215,
+                                CGPointMake(hudRect.origin.x + HUD_SIZE / 2, 120), 10.0f,
+                                CGPointMake(hudRect.origin.x + HUD_SIZE / 2, 160), 160.0f,
                                 kCGGradientDrawsBeforeStartLocation | kCGGradientDrawsAfterEndLocation);
     
     CGContextRestoreGState(context);
     [strokeColor setStroke];
-    border.lineWidth = 1.0;
+    border.lineWidth = 1.0f;
     [border stroke];
     
     // Draw the sound meter wave.
-    [[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.4] set];
+    [[UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.4f] set];
     
-    CGContextSetLineWidth(context, 3.0);
+    CGContextSetLineWidth(context, 1.0f);
     CGContextSetLineJoin(context, kCGLineJoinRound);
     
-    int baseLine = 250;
+    int baseLine = 240;
     int multiplier = 1;
-    int maxLengthOfWave = 50;
-    int maxValueOfMeter = 70;
+    int maxLengthOfWave = 24;
+    int maxValueOfMeter = 24;
     for(CGFloat x = SOUND_METER_COUNT - 1; x >= 0; x--)
     {
         multiplier = ((int)x % 2) == 0 ? 1 : -1;
@@ -249,13 +245,13 @@
     NSDictionary *attributes = @{NSFontAttributeName:textFont, NSForegroundColorAttributeName:textColor, NSParagraphStyleAttributeName:textStyle};
     [self.title drawInRect:CGRectInset(hudRect, 0, 25) withAttributes:attributes];
     
-    [imgMicrophone drawAtPoint:CGPointMake(hudRect.origin.x + hudRect.size.width/2 - imgMicrophone.size.width / 2, hudRect.origin.y + hudRect.size.height / 2 - imgMicrophone.size.height / 2)];
+    [micImage drawAtPoint:CGPointMake(hudRect.origin.x + hudRect.size.width / 2 - micImage.size.width / 2, hudRect.origin.y + hudRect.size.height / 2 - micImage.size.height / 2)];
     
-    [[UIColor colorWithWhite:0.8 alpha:1.0] setFill];
+    [[UIColor colorWithWhite:0.8f alpha:1.0f] setFill];
     UIBezierPath *line = [UIBezierPath bezierPath];
-    [line moveToPoint:CGPointMake(hudRect.origin.x, hudRect.origin.y + HUD_SIZE - CANCEL_BUTTON_HEIGHT)];
-    [line addLineToPoint:CGPointMake(hudRect.origin.x + HUD_SIZE, hudRect.origin.y + HUD_SIZE - CANCEL_BUTTON_HEIGHT)];
-    [line setLineWidth:3.0];
+    [line moveToPoint:CGPointMake(hudRect.origin.x, hudRect.origin.y + HUD_SIZE - STOP_BUTTON_HEIGHT)];
+    [line addLineToPoint:CGPointMake(hudRect.origin.x + HUD_SIZE, hudRect.origin.y + HUD_SIZE - STOP_BUTTON_HEIGHT)];
+    [line setLineWidth:1.0f];
     [line stroke];
 }
 
