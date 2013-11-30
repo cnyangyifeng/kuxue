@@ -11,6 +11,7 @@
 @interface KXChatTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) UIImageView *contactAvatarImageView;
+@property (weak, nonatomic) UIImageView *messageBackgroundImageView;
 @property (weak, nonatomic) UILabel *messageContentLabel;
 
 @end

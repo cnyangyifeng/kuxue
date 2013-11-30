@@ -95,6 +95,7 @@
 - (void)initMainView
 {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - CHAT_TOOLBAR_HEIGHT)];
+    [tableView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [tableView setSeparatorInset:UIEdgeInsetsZero];
     [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     tableView.dataSource = self;
@@ -291,18 +292,61 @@
     KXChatTableViewCell *cell = [[KXChatTableViewCell alloc] init];
     
     KXMessage *message = [self.messages objectAtIndex:indexPath.row];
+    
+    // Sets the contact avatar.
     cell.contactAvatarImageView.image = [UIImage imageNamed:message.contactAvatar];
-    if ([message.messageType isEqualToString:@"receiver"]) {
-        [cell.contactAvatarImageView setFrame:CGRectMake(cell.bounds.size.width - 38.0f, 6.0f, 32.0f, 32.0f)];
+    if ([message.messageType isEqualToString:@"incoming"]) {
+        [cell.contactAvatarImageView setFrame:CGRectMake(0.0f, 0.0f, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
+    } else if ([message.messageType isEqualToString:@"outgoing"]) {
+        [cell.contactAvatarImageView setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH, 0.0f, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
     }
+        
+    // Sets the message content.
+    cell.messageContentLabel.font = [UIFont systemFontOfSize:15.0f];
+    cell.messageContentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    cell.messageContentLabel.numberOfLines = 0;
+    
+    CGSize textSize = { MAX_MESSAGE_CONTENT_WIDTH, MAX_MESSAGE_CONTENT_HEIGHT };
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentRight;
+    NSDictionary *attributes = @{NSFontAttributeName: cell.messageContentLabel.font, NSParagraphStyleAttributeName: paragraphStyle};
+    CGSize size = [message.messageContent boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
     cell.messageContentLabel.text = message.messageContent;
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.userInteractionEnabled = NO;
+    
+    UIImage *bgImage = nil;
+    if ([message.messageType isEqualToString:@"incoming"]) {
+        [cell.messageContentLabel setFrame:CGRectMake(CONTACT_AVATAR_IMAGE_VIEW_WIDTH + MESSAGE_MARGIN + MESSAGE_PADDING_CALLOUT, MESSAGE_PADDING, size.width, size.height)];
+        bgImage = [[UIImage imageNamed:@"MessageIncoming"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
+        cell.messageBackgroundImageView.image = bgImage;
+        [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING_CALLOUT, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
+    } else if ([message.messageType isEqualToString:@"outgoing"]) {
+        [cell.messageContentLabel setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH - MESSAGE_MARGIN - MESSAGE_PADDING_CALLOUT - size.width, MESSAGE_PADDING, size.width, size.height)];
+        bgImage = [[UIImage imageNamed:@"MessageOutgoing"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
+        cell.messageBackgroundImageView.image = bgImage;
+        [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
+    }
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return TABLE_VIEW_CELL_HEIGHT;
+    KXMessage *message = [self.messages objectAtIndex:indexPath.row];
+
+    CGSize textSize = { MAX_MESSAGE_CONTENT_WIDTH, MAX_MESSAGE_CONTENT_HEIGHT };
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    paragraphStyle.alignment = NSTextAlignmentRight;
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:15.0f], NSParagraphStyleAttributeName: paragraphStyle};
+    CGSize size = [message.messageContent boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+    size.height += MESSAGE_PADDING * 2;
+    
+    CGFloat height = size.height + TABLE_VIEW_CELL_HEIGHT_SPACE;
+    
+    return height;
 }
 
 #pragma mark - Core Data

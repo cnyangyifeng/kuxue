@@ -133,15 +133,18 @@
     
     for (int i = 0; i < 10; i++) {
         NSManagedObject *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-        [message setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
-        [message setValue:@"杨义锋" forKey:@"contactName"];
-        [message setValue:@"21分钟前" forKey:@"messageTimeReceived"];
         if (i % 2 == 0) {
-            [message setValue:@"老师，您好！" forKey:@"messageContent"];
-            [message setValue:@"sender" forKey:@"messageType"];
+            [message setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
+            [message setValue:@"杨义锋" forKey:@"contactName"];
+            [message setValue:@"21分钟前" forKey:@"messageTimeReceived"];
+            [message setValue:@"老师，您好！我想要报一个新概念第一册的辅导班？您能帮我查一下什么时候可以报班吗？谢谢您了。还有，我需要自己买教材吗？" forKey:@"messageContent"];
+            [message setValue:@"incoming" forKey:@"messageType"];
         } else {
-            [message setValue:@"同学，你好！" forKey:@"messageContent"];
-            [message setValue:@"receiver" forKey:@"messageType"];
+            [message setValue:@"fanlang.jpg" forKey:@"contactAvatar"];
+            [message setValue:@"樊浪" forKey:@"contactName"];
+            [message setValue:@"21分钟前" forKey:@"messageTimeReceived"];
+            [message setValue:@"Hi, nice to meet you. Let's chat." forKey:@"messageContent"];
+            [message setValue:@"outgoing" forKey:@"messageType"];
         }
         [message setValue:[NSString stringWithFormat:@"%d", i] forKey:@"sid"];
     }

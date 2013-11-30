@@ -11,25 +11,28 @@
 @implementation KXChatTableViewCell
 
 @synthesize contactAvatarImageView = _contactAvatarImageView;
+@synthesize messageBackgroundImageView = _messageBackgroundImageView;
 @synthesize messageContentLabel = _messageContentLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.backgroundColor = [UIColor groupTableViewBackgroundColor];
+        self.backgroundColor = [UIColor clearColor];
         
-        UIImageView *iv = [[UIImageView alloc] initWithFrame:CGRectMake(6.0f, 6.0f, 32.0f, 32.0f)];
+        UIImageView *avatarImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        UILabel *msgLabel = [[UILabel alloc] init];
+        msgLabel.backgroundColor = [UIColor clearColor];
+        msgLabel.textColor = [UIColor blackColor];
         
-        UILabel *lb = [[UILabel alloc] initWithFrame:CGRectMake(54.0f, 6.0f, 192.0f, 32.0f)];
-        lb.backgroundColor = [UIColor whiteColor];
-        [lb setFont:[UIFont systemFontOfSize:15.0f]];
+        [self.contentView addSubview:avatarImageView];
+        [self.contentView addSubview:bgImageView];
+        [self.contentView addSubview:msgLabel];
         
-        self.contactAvatarImageView = iv;
-        [self addSubview:iv];
-        
-        self.messageContentLabel = lb;
-        [self addSubview:lb];
+        self.contactAvatarImageView = avatarImageView;
+        self.messageBackgroundImageView = bgImageView;
+        self.messageContentLabel = msgLabel;
     }
     
     return self;

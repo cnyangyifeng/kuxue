@@ -39,15 +39,18 @@
     return self;
 }
 
-- (id)initWithParentView:(UIView *)view {
+- (id)initWithParentView:(UIView *)view
+{
     return [self initWithFrame:view.bounds];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [self commitRecording];
 }
 
-- (void)startForFilePath:(NSString *)filePath {
+- (void)startForFilePath:(NSString *)filePath
+{
     recordTime = 0;
     
     self.alpha = 1.0f;
@@ -56,14 +59,14 @@
 	AVAudioSession *audioSession = [AVAudioSession sharedInstance];
 	NSError *err = nil;
 	[audioSession setCategory :AVAudioSessionCategoryPlayAndRecord error:&err];
-	if(err){
-        NSLog(@"audioSession: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+	if (err) {
+        NSLog(@"audioSession: %@ %d %@", [err domain], (int)[err code], [[err userInfo] description]);
         return;
 	}
 	[audioSession setActive:YES error:&err];
 	err = nil;
-	if(err){
-        NSLog(@"audioSession: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+	if (err) {
+        NSLog(@"audioSession: %@ %d %@", [err domain], (int)[err code], [[err userInfo] description]);
         return;
 	}
 	
@@ -87,16 +90,15 @@
 	err = nil;
 	
 	NSData *audioData = [NSData dataWithContentsOfFile:[url path] options:0 error:&err];
-	if(audioData)
-	{
+	if (audioData) {
 		NSFileManager *fm = [NSFileManager defaultManager];
 		[fm removeItemAtPath:[url path] error:&err];
 	}
 	
 	err = nil;
 	recorder = [[ AVAudioRecorder alloc] initWithURL:url settings:recordSettings error:&err];
-	if(!recorder) {
-        NSLog(@"recorder: %@ %d %@", [err domain], [err code], [[err userInfo] description]);
+	if (!recorder) {
+        NSLog(@"recorder: %@ %d %@", [err domain], (int)[err code], [[err userInfo] description]);
         UIAlertView *alert =
         [[UIAlertView alloc] initWithTitle: @"Warning" message: [err localizedDescription] delegate: nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alert show];
@@ -120,7 +122,8 @@
 	timer = [NSTimer scheduledTimerWithTimeInterval:WAVE_UPDATE_FREQUENCY target:self selector:@selector(updateMeters) userInfo:nil repeats:YES];
 }
 
-- (void)updateMeters {
+- (void)updateMeters
+{
     [recorder updateMeters];
     
     NSLog(@"meter: %5f", [recorder averagePowerForChannel:0]);
@@ -133,7 +136,8 @@
     [self addSoundMeterItem:[recorder averagePowerForChannel:0]];
 }
 
-- (void)cancelRecording {
+- (void)cancelRecording
+{
     if ([self.delegate respondsToSelector:@selector(voiceRecordCancelledByUser:)]) {
         [self.delegate voiceRecordCancelledByUser:self];
     }
@@ -141,7 +145,8 @@
     [recorder stop];
 }
 
-- (void)commitRecording {
+- (void)commitRecording
+{
     [recorder stop];
     [timer invalidate];
     
@@ -153,7 +158,8 @@
     [self setNeedsDisplay];
 }
 
-- (void)stopButtonAction:(id)sender {
+- (void)stopButtonAction:(id)sender
+{
     self.alpha = 0.0f;
     [self setNeedsDisplay];
     
@@ -163,13 +169,15 @@
 
 #pragma mark - Sound meter operations
 
-- (void)shiftSoundMeterLeft {
-    for(int i = 0; i < SOUND_METER_COUNT - 1; i++) {
+- (void)shiftSoundMeterLeft
+{
+    for (int i = 0; i < SOUND_METER_COUNT - 1; i++) {
         soundMeters[i] = soundMeters[i + 1];
     }
 }
 
-- (void)addSoundMeterItem:(int)lastValue {
+- (void)addSoundMeterItem:(int)lastValue
+{
     [self shiftSoundMeterLeft];
     [self shiftSoundMeterLeft];
     soundMeters[SOUND_METER_COUNT - 1] = lastValue;
@@ -180,7 +188,8 @@
 
 #pragma mark - Drawing operations
 
-- (void)drawRect:(CGRect)rect {
+- (void)drawRect:(CGRect)rect
+{
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -193,7 +202,7 @@
     CGFloat gradientLocations[] = {0, 1};
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)gradientColors, gradientLocations);
     
-    UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:hudRect cornerRadius:10.0f];
+    UIBezierPath *border = [UIBezierPath bezierPathWithRoundedRect:hudRect cornerRadius:5.0f];
     CGContextSaveGState(context);
     [border addClip];
     CGContextDrawRadialGradient(context, gradient,
@@ -216,17 +225,15 @@
     int multiplier = 1;
     int maxLengthOfWave = 24;
     int maxValueOfMeter = 24;
-    for(CGFloat x = SOUND_METER_COUNT - 1; x >= 0; x--)
-    {
+    for (CGFloat x = SOUND_METER_COUNT - 1; x >= 0; x--) {
         multiplier = ((int)x % 2) == 0 ? 1 : -1;
         
         CGFloat y = baseLine + ((maxValueOfMeter * (maxLengthOfWave - abs(soundMeters[(int)x]))) / maxLengthOfWave) * multiplier;
         
-        if(x == SOUND_METER_COUNT - 1) {
+        if (x == SOUND_METER_COUNT - 1) {
             CGContextMoveToPoint(context, x * (HUD_SIZE / SOUND_METER_COUNT) + hudRect.origin.x + 10, y);
             CGContextAddLineToPoint(context, x * (HUD_SIZE / SOUND_METER_COUNT) + hudRect.origin.x + 7, y);
-        }
-        else {
+        } else {
             CGContextAddLineToPoint(context, x * (HUD_SIZE / SOUND_METER_COUNT) + hudRect.origin.x + 10, y);
             CGContextAddLineToPoint(context, x * (HUD_SIZE / SOUND_METER_COUNT) + hudRect.origin.x + 7, y);
         }
@@ -255,7 +262,8 @@
     [line stroke];
 }
 
-- (void)playRecording:(NSURL *)url {
+- (void)playRecording:(NSURL *)url
+{
     [self cancelRecording];
     
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
