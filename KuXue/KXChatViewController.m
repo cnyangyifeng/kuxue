@@ -50,8 +50,8 @@
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-    
-    [self initMockData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -59,6 +59,15 @@
     [super viewWillAppear:animated];
     
     [self addKeyboardControl];
+
+    [self initMockData];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self scrollTableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -100,6 +109,8 @@
     [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     tableView.dataSource = self;
     tableView.delegate = self;
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [tableView addGestureRecognizer:tapGestureRecognizer];
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, self.view.bounds.size.height - CHAT_TOOLBAR_HEIGHT, self.view.bounds.size.width, CHAT_TOOLBAR_HEIGHT)];
     
@@ -110,8 +121,6 @@
     [leftButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [leftButton.layer setBorderWidth:0.5f];
     [leftButton.layer setCornerRadius:leftButton.bounds.size.width / 2.0f];
-    // [leftButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    // [leftButton setTitleColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(switchChatType) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftButtonItem= [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     
@@ -133,6 +142,11 @@
     [textField.layer setBorderWidth:0.5f];
     [textField.layer setCornerRadius:5.0f];
     [textField setFont:[UIFont systemFontOfSize:15.0f]];
+    UIView *textFieldPadding = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, textField.frame.size.height)];
+    textField.leftView = textFieldPadding;
+    textField.leftViewMode = UITextFieldViewModeAlways;
+    textField.returnKeyType = UIReturnKeySend;
+    textField.delegate = self;
     UIBarButtonItem *textFieldButtonItem = [[UIBarButtonItem alloc] initWithCustomView:textField];
     
     UIButton *middleButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -142,8 +156,6 @@
     [middleButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [middleButton.layer setBorderWidth:0.5f];
     [middleButton.layer setCornerRadius:middleButton.bounds.size.width / 2.0f];
-    // [middleButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    // [middleButton setTitleColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
     [middleButton addTarget:self action:@selector(tapToInsertEmoticonOrPlayAudio) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *middleButtonItem= [[UIBarButtonItem alloc] initWithCustomView:middleButton];
     
@@ -154,8 +166,6 @@
     [rightButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [rightButton.layer setBorderWidth:0.5f];
     [rightButton.layer setCornerRadius:rightButton.bounds.size.width / 2.0f];
-    // [rightButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
-    // [rightButton setTitleColor:[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0] forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(hideKeyboard) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightButtonItem= [[UIBarButtonItem alloc] initWithCustomView:rightButton];
     
@@ -163,6 +173,7 @@
     fixedSpace.width = CHAT_TOOLBAR_LEFT_FIXED_SPACE;
     
     self.isAudioChatType = YES;
+    [tapButton becomeFirstResponder];
     [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, leftButtonItem, tapButtonItem, middleButtonItem, rightButtonItem, nil]];
     
     KXVoiceHUD *voiceHud = [[KXVoiceHUD alloc] initWithParentView:self.view];
@@ -197,12 +208,14 @@
     if (self.isAudioChatType) {
         [self.view hideKeyboard];
         [self.chatTypeButton setImage:[UIImage imageNamed:@"Microphone"] forState:UIControlStateNormal];
+        [self.talkButton becomeFirstResponder];
         [self.emoticonOrAudioPlayButton setImage:[UIImage imageNamed:@"Emoticon"] forState:UIControlStateNormal];
         [self.insertOrAudioSendButton setImage:[UIImage imageNamed:@"Insert"] forState:UIControlStateNormal];
         [self.chatToolbar setItems:[NSArray arrayWithObjects:self.fixedToolbarButtonItemSpace, self.chatTypeButtonItem, self.inputTextFieldButtonItem, self.emoticonOrAudioPlayButtonItem, self.insertOrAudioSendButtonItem, nil]];
         self.isAudioChatType = NO;
     } else {
         [self.chatTypeButton setImage:[UIImage imageNamed:@"Keyboard"] forState:UIControlStateNormal];
+        [self.inputTextField becomeFirstResponder];
         [self.emoticonOrAudioPlayButton setImage:[UIImage imageNamed:@"Volume"] forState:UIControlStateNormal];
         [self.insertOrAudioSendButton setImage:[UIImage imageNamed:@"Send"] forState:UIControlStateNormal];
         [self.chatToolbar setItems:[NSArray arrayWithObjects:self.fixedToolbarButtonItemSpace, self.chatTypeButtonItem, self.talkButtonItem, self.emoticonOrAudioPlayButtonItem, self.insertOrAudioSendButtonItem, nil]];
@@ -221,11 +234,56 @@
 - (void)tapToInsertEmoticonOrPlayAudio
 {
     if (self.isAudioChatType) {
-//        [self.talkHud cancelRecording];
-//        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-//        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
         NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Documents/KuXue.caf", NSHomeDirectory()]];
         [self.talkHud playRecording:url];
+    }
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    [self.chatTableView setFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - CHAT_TOOLBAR_HEIGHT - keyboardSize.height)];
+    [self scrollTableView];
+}
+
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    [self.chatTableView setFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - CHAT_TOOLBAR_HEIGHT)];
+    [self scrollTableView];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [self hideKeyboard];
+    [self scrollTableView];
+    [self sendMessage];
+    
+    return YES;
+}
+
+- (void)sendMessage
+{
+    NSString *messageContent = self.inputTextField.text;
+    
+    if (messageContent.length > 0) {
+        self.inputTextField.text = @"";
+        
+        NSManagedObjectContext *context = [self managedObjectContext];
+        KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
+        message.contactAvatar = @"fanlang.jpg";
+        message.contactName = @"樊浪";
+        message.messageContent = messageContent;
+        message.messageTimeReceived = @"30分钟前";
+        message.messageType = @"outgoing";
+        message.sid = @"T10000";
+        [context insertObject:message];
+        NSError *error;
+        if (![context save:&error]) {
+            NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
+            return;
+        }
+        [self.messages addObject:message];
+        [self.chatTableView reloadData];
     }
 }
 
@@ -296,11 +354,11 @@
     // Sets the contact avatar.
     cell.contactAvatarImageView.image = [UIImage imageNamed:message.contactAvatar];
     if ([message.messageType isEqualToString:@"incoming"]) {
-        [cell.contactAvatarImageView setFrame:CGRectMake(0.0f, 0.0f, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
+        [cell.contactAvatarImageView setFrame:CGRectMake(0.0f, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
     } else if ([message.messageType isEqualToString:@"outgoing"]) {
-        [cell.contactAvatarImageView setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH, 0.0f, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
+        [cell.contactAvatarImageView setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
     }
-        
+    
     // Sets the message content.
     cell.messageContentLabel.font = [UIFont systemFontOfSize:15.0f];
     cell.messageContentLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -309,7 +367,6 @@
     CGSize textSize = { MAX_MESSAGE_CONTENT_WIDTH, MAX_MESSAGE_CONTENT_HEIGHT };
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentRight;
     NSDictionary *attributes = @{NSFontAttributeName: cell.messageContentLabel.font, NSParagraphStyleAttributeName: paragraphStyle};
     CGSize size = [message.messageContent boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
     cell.messageContentLabel.text = message.messageContent;
@@ -321,12 +378,12 @@
         [cell.messageContentLabel setFrame:CGRectMake(CONTACT_AVATAR_IMAGE_VIEW_WIDTH + MESSAGE_MARGIN + MESSAGE_PADDING_CALLOUT, MESSAGE_PADDING, size.width, size.height)];
         bgImage = [[UIImage imageNamed:@"MessageIncoming"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
         cell.messageBackgroundImageView.image = bgImage;
-        [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING_CALLOUT, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
+        [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING_CALLOUT, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING + MESSAGE_PADDING_TOP_SPACE, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
     } else if ([message.messageType isEqualToString:@"outgoing"]) {
         [cell.messageContentLabel setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH - MESSAGE_MARGIN - MESSAGE_PADDING_CALLOUT - size.width, MESSAGE_PADDING, size.width, size.height)];
         bgImage = [[UIImage imageNamed:@"MessageOutgoing"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
         cell.messageBackgroundImageView.image = bgImage;
-        [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
+        [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING + MESSAGE_PADDING_TOP_SPACE, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
     }
     
     return cell;
@@ -339,7 +396,6 @@
     CGSize textSize = { MAX_MESSAGE_CONTENT_WIDTH, MAX_MESSAGE_CONTENT_HEIGHT };
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    paragraphStyle.alignment = NSTextAlignmentRight;
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:15.0f], NSParagraphStyleAttributeName: paragraphStyle};
     CGSize size = [message.messageContent boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
     size.height += MESSAGE_PADDING * 2;
@@ -347,6 +403,20 @@
     CGFloat height = size.height + TABLE_VIEW_CELL_HEIGHT_SPACE;
     
     return height;
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self hideKeyboard];
+    [self scrollTableView];
+    
+    return indexPath;
+}
+
+- (void)scrollTableView
+{
+    NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
+    [self.chatTableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 #pragma mark - Core Data
