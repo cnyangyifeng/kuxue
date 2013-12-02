@@ -297,8 +297,8 @@
         
         NSManagedObjectContext *context = [self managedObjectContext];
         KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-        message.contactAvatar = @"fanlang.jpg";
-        message.contactName = @"樊浪";
+        message.contactAvatar = @"yangyifeng.jpg";
+        message.contactName = @"杨义锋";
         message.messageContent = messageContent;
         message.messageTimeReceived = @"30分钟前";
         message.messageType = @"outgoing";
