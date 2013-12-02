@@ -33,18 +33,11 @@
     [super viewDidLoad];
     
     [self initMockData];
-    
-    KXAppDelegate *delegate = [self appDelegate];
-    delegate.chatDelegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    if ([[self appDelegate] connect]) {
-        [[self appDelegate] goOnline];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -173,62 +166,6 @@
     }
     
     return sections;
-}
-
-#pragma mark - XMPP
-
-- (KXAppDelegate *)appDelegate
-{
-    return (KXAppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
-- (XMPPStream *)xmppStream
-{
-    return [[self appDelegate] xmppStream];
-}
-
-- (XMPPRoster *)xmppRoster
-{
-    return [[self appDelegate] xmppRoster];
-}
-
-#pragma mark - Chat Delegate
-
-- (void)newContactOnline:(NSString *)contactName
-{
-    for (KXContact *contact in self.contacts) {
-        if ([contact.contactName isEqualToString:contactName]) {
-            return;
-        }
-    }
-    
-    NSManagedObjectContext *context = [self managedObjectContext];
-    KXContact *newContact = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
-    newContact.contactAvatar = @"liukun.jpg";
-    newContact.contactName = contactName;
-    newContact.mobile = @"13810502314";
-    newContact.theme = @"theme-3.jpg";
-    
-    [context insertObject:newContact];
-    NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
-        return;
-    }
-    [self.contacts addObject:newContact];
-    [self.tableView reloadData];
-}
-
-- (void)contactWentOffline:(NSString *)contactName
-{
-    [self.contacts removeObject:contactName];
-    [self.tableView reloadData];
-}
-
-- (void)didDisconnect
-{
-    [self.contacts removeAllObjects];
-    [self.tableView reloadData];
 }
 
 @end

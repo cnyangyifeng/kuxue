@@ -7,20 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KXChatDelegate.h"
 #import "KXMessageDelegate.h"
 #import "XMPP.h"
 #import "XMPPRoster.h"
 
 @interface KXAppDelegate : UIResponder <UIApplicationDelegate> {
     UIWindow *window;
-    
-    XMPPStream *xmppStream;
-    XMPPRoster *xmppRoster;
     NSString *password;
     BOOL isOpen;
     
-    __weak NSObject <KXChatDelegate> *chatDelegate;
     __weak NSObject <KXMessageDelegate> *messageDelegate;
 }
 
@@ -35,7 +30,6 @@
 @property (readonly, nonatomic) XMPPStream *xmppStream;
 @property (readonly, nonatomic) XMPPRoster *xmppRoster;
 
-@property (weak, nonatomic) id chatDelegate;
 @property (weak, nonatomic) id messageDelegate;
 
 - (void)saveContext;

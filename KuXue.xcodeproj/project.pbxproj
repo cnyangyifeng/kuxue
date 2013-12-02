@@ -242,7 +242,6 @@
 		0F06C02F18349DB800FDF785 /* theme-7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "theme-7.jpg"; sourceTree = "<group>"; };
 		0F06C03018349DB800FDF785 /* theme-8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "theme-8.jpg"; sourceTree = "<group>"; };
 		0F35AC1A184A4610003E7A6D /* KXMessageDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXMessageDelegate.h; sourceTree = "<group>"; };
-		0F35AC1B184A5191003E7A6D /* KXChatDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXChatDelegate.h; sourceTree = "<group>"; };
 		0F35AC1E184A54A4003E7A6D /* XMPPBandwidthMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBandwidthMonitor.h; sourceTree = "<group>"; };
 		0F35AC1F184A54A4003E7A6D /* XMPPBandwidthMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPBandwidthMonitor.m; sourceTree = "<group>"; };
 		0F35AC21184A54A4003E7A6D /* XMPPCoreDataStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPCoreDataStorage.h; sourceTree = "<group>"; };
@@ -1198,7 +1197,6 @@
 				0FE7CF7A1830B70600CC502F /* Images.xcassets */,
 				0FE7CF6E1830B70600CC502F /* KXAppDelegate.h */,
 				0FE7CF6F1830B70600CC502F /* KXAppDelegate.m */,
-				0F35AC1B184A5191003E7A6D /* KXChatDelegate.h */,
 				0F761B02183C96C300651F7F /* KXChatTableViewCell.h */,
 				0F761B03183C96C300651F7F /* KXChatTableViewCell.m */,
 				0FC6F06F18392E58009683D4 /* KXChatViewController.h */,

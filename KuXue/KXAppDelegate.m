@@ -21,7 +21,6 @@
 @synthesize xmppStream = _xmppStream;
 @synthesize xmppRoster = _xmppRoster;
 
-@synthesize chatDelegate = _chatDelegate;
 @synthesize messageDelegate = _messageDelegate;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -142,13 +141,13 @@
             [message setValue:@"杨义锋" forKey:@"contactName"];
             [message setValue:@"21分钟前" forKey:@"messageTimeReceived"];
             [message setValue:@"老师，您好！初二数学秋季目标班现在还招生么？谢谢您" forKey:@"messageContent"];
-            [message setValue:@"incoming" forKey:@"messageType"];
+            [message setValue:@"outgoing" forKey:@"messageType"];
         } else {
             [message setValue:@"fanlang.jpg" forKey:@"contactAvatar"];
             [message setValue:@"樊浪" forKey:@"contactName"];
             [message setValue:@"21分钟前" forKey:@"messageTimeReceived"];
             [message setValue:@"同学，你好。" forKey:@"messageContent"];
-            [message setValue:@"outgoing" forKey:@"messageType"];
+            [message setValue:@"incoming" forKey:@"messageType"];
         }
         [message setValue:[NSString stringWithFormat:@"%d", i] forKey:@"sid"];
     }
@@ -163,20 +162,23 @@
 
 - (BOOL)connect
 {
+    NSLog(@"Connects.");
+    
     [self setUpStream];
     
     NSString *jid = @"yangyifeng@42.96.184.90";
     NSString *pwd = @"password";
     
-    if (![xmppStream isDisconnected]) {
+    if (![_xmppStream isDisconnected]) {
         return YES;
     }
     
-    [xmppStream setMyJID:[XMPPJID jidWithString:jid]];
+    [_xmppStream setMyJID:[XMPPJID jidWithString:jid]];
+    [_xmppStream setHostName:@"42.96.184.90"];
     password = pwd;
     
     NSError *error = nil;
-    if (![xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
+    if (![_xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Disconnected" message:@"Connection lost." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alertView show];
         return NO;
@@ -187,49 +189,72 @@
 
 - (void)disconnect
 {
+    NSLog(@"Disconnects.");
+    
     [self goOffline];
-    [xmppStream disconnect];
+    [_xmppStream disconnect];
+    // [_chatDelegate didDisconnect];
 }
 
 - (void)setUpStream
 {
-    xmppStream = [[XMPPStream alloc] init];
-    [xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    NSLog(@"Sets up stream.");
+    
+    _xmppStream = [[XMPPStream alloc] init];
+    [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)goOnline
 {
+    NSLog(@"Goes online. isConnected: %d isAuthenticated: %d", _xmppStream.isConnected, _xmppStream.isAuthenticated);
+    
     XMPPPresence *presence = [XMPPPresence presence];
-    [[self xmppStream] sendElement:presence];
+    NSLog(@"%@", presence.XMLString);
+    [_xmppStream sendElement:presence];
 }
 
 - (void)goOffline
 {
+    NSLog(@"Goes offline.");
+    
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
-    [xmppStream sendElement:presence];
+    [_xmppStream sendElement:presence];
 }
 
 #pragma mark - XMPP Delegate
 
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
+    NSLog(@"XMPP Stream did connect.");
+    
     isOpen = YES;
     NSError *error = nil;
-    [[self xmppStream] authenticateWithPassword:@"password" error:&error];
+    [_xmppStream authenticateWithPassword:password error:&error];
 }
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
+    NSLog(@"XMPP Stream did authenticate.");
+    
     [self goOnline];
+}
+
+- (void)xmppSteam:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
+{
+    NSLog(@"XMPP Stream did not authenticate. %@", error);
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
+    NSLog(@"Did receive IQ.");
+    
     return NO;
 }
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
+    NSLog(@"XMPP Stream did receive message: %@", message.stringValue);
+    
     NSString *messageContent = [[message elementForName:@"body"] stringValue];
     NSString *contactName = [[message attributeForName:@"from"] stringValue];
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -240,15 +265,17 @@
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
+    NSLog(@"XMPP Stream did receive presence.");
+    
     NSString *presenceType = [presence type];
     NSString *user = [[sender myJID] user];
     NSString *presenceFromUser = [[presence from] user];
     
     if (![presenceFromUser isEqualToString:user]) {
         if ([presenceType isEqualToString:@"available"]) {
-            [chatDelegate newContactOnline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"42.96.184.90"]];
+            // Sets new contact online.
         } else if ([presenceType isEqualToString:@"unavailable"]) {
-            [chatDelegate contactWentOffline:[NSString stringWithFormat:@"%@@%@", presenceFromUser, @"42.96.184.90"]];
+            // Sets contact went offline.
         }
     }
 }

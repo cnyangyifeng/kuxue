@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import <DAKeyboardControl/DAKeyboardControl.h>
+#import "KXAppDelegate.h"
 #import "KXChatTableViewCell.h"
 #import "KXMessage.h"
 #import "KXVoiceHUDDelegate.h"
 #import "KXVoiceHUD.h"
+#import "TURNSocket.h"
+#import "XMPP.h"
 
 #define CHAT_TOOLBAR_HEIGHT 45.0f
 #define CHAT_TOOLBAR_LEFT_FIXED_SPACE -10.0f
@@ -51,10 +54,10 @@
 @property (strong, nonatomic) KXVoiceHUD *talkHud;
 
 @property (strong, nonatomic) NSMutableArray *messages;
-@property (strong, nonatomic) NSMutableArray *timestamps;
-@property (strong, nonatomic) NSMutableArray *subtitles;
-@property (strong, nonatomic) NSDictionary *avatars;
+@property (strong, nonatomic) NSMutableArray *turnSockets;
 
 @property (nonatomic) BOOL isAudioChatType;
+
+- (void)sendMessage;
 
 @end

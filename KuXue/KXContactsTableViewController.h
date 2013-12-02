@@ -7,15 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KXAppDelegate.h"
-#import "KXChatDelegate.h"
 #import "KXContactsTableViewCell.h"
 #import "KXContactTableViewController.h"
 #import "KXContact.h"
-#import "XMPP.h"
-#import "XMPPRoster.h"
 
-@interface KXContactsTableViewController : UITableViewController <KXChatDelegate>
+@interface KXContactsTableViewController : UITableViewController
 
 @property (strong, nonatomic) NSMutableArray *contacts;
 

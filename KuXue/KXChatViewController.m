@@ -31,9 +31,7 @@
 @synthesize talkHud = _talkHud;
 
 @synthesize messages = _messages;
-@synthesize timestamps = _timestamps;
-@synthesize subtitles = _subtitles;
-@synthesize avatars = _avatars;
+@synthesize turnSockets = _turnSockets;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,6 +39,8 @@
     if (self) {
         [self initMainView];
     }
+    
+    self.turnSockets = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -52,6 +52,23 @@
     [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    
+    TURNSocket *socket = [[TURNSocket alloc] initWithStream:[self xmppStream] toJID:[XMPPJID jidWithString:@"yangyifeng@42.96.184.90"]];
+    [self.turnSockets addObject:socket];
+    [socket startWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+}
+
+- (void)turnSocket:(TURNSocket *)sender didSucceed:(GCDAsyncSocket *)socket
+{
+    NSLog(@"TURN Connection succeeded!");
+    NSLog(@"You now have a socket that you can use to send/receive data to/from the other person.");
+    [self.turnSockets removeObject:sender];
+}
+
+- (void)turnSocketDidFail:(TURNSocket *)sender
+{
+    NSLog(@"TURN Connection failed!");
+    [self.turnSockets removeObject:sender];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -266,6 +283,16 @@
     NSString *messageContent = self.inputTextField.text;
     
     if (messageContent.length > 0) {
+        NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
+        [body setStringValue:messageContent];
+        
+        NSXMLElement *msg = [NSXMLElement elementWithName:@"message"];
+        [msg addAttributeWithName:@"type" stringValue:@"chat"];
+        [msg addAttributeWithName:@"to" stringValue:@"liukun@42.96.184.90"];
+        [msg addChild:body];
+        
+        [[self xmppStream] sendElement:msg];
+        
         self.inputTextField.text = @"";
         
         NSManagedObjectContext *context = [self managedObjectContext];
@@ -430,6 +457,25 @@
     }
     
     return context;
+}
+
+#pragma mark - Message Delegate
+
+- (void)newMessageReceived:(NSDictionary *)messageContent
+{
+    // TODO
+}
+
+#pragma mark - XMPP
+
+- (KXAppDelegate *)appDelegate
+{
+    return (KXAppDelegate *)[[UIApplication sharedApplication] delegate];
+}
+
+- (XMPPStream *)xmppStream
+{
+    return [[self appDelegate] xmppStream];
 }
 
 @end
