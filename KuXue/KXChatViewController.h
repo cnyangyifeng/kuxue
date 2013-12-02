@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <DAKeyboardControl/DAKeyboardControl.h>
 #import "KXChatTableViewCell.h"
+#import "KXMessage.h"
 #import "KXVoiceHUDDelegate.h"
 #import "KXVoiceHUD.h"
-#import "KXMessage.h"
 
 #define CHAT_TOOLBAR_HEIGHT 45.0f
 #define CHAT_TOOLBAR_LEFT_FIXED_SPACE -10.0f

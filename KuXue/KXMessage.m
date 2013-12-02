@@ -8,7 +8,6 @@
 
 #import "KXMessage.h"
 
-
 @implementation KXMessage
 
 @dynamic contactAvatar;

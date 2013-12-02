@@ -12,7 +12,7 @@
 
 @protocol KXVoiceHUDDelegate <NSObject>
 
-@optional
+@required
 
 - (void)KXVoiceHUD:(KXVoiceHUD *)voiceHUD voiceRecorded:(NSString *)recordPath length:(float)recordLength;
 - (void)voiceRecordCancelledByUser:(KXVoiceHUD *)voiceHUD;

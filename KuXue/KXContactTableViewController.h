@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KXChatViewController.h"
 #import "KXContactHeaderTableViewCell.h"
 #import "KXContactTableViewCell.h"
-#import "KXChatViewController.h"
 #import "KXIdea.h"
 
 @interface KXContactTableViewController : UITableViewController

@@ -39,6 +39,18 @@
 {
     [super viewWillAppear:animated];
     
+    [self initMockData];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Initializations
+
+- (void)initMockData
+{
     // Fetches the application mock data.
     
     NSManagedObjectContext *context = [self managedObjectContext];
@@ -51,11 +63,6 @@
     // Reloads table data every time this view appears.
     
     [self.tableView reloadData];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
 }
 
 #pragma mark - Table View
