@@ -15,6 +15,5 @@
 @dynamic messageContent;
 @dynamic messageTimeReceived;
 @dynamic messageType;
-@dynamic sid;
 
 @end

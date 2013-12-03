@@ -120,6 +120,7 @@
 		0F35AD4F184A54A5003E7A6D /* XMPPMessage+XEP_0224.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35ACF2184A54A5003E7A6D /* XMPPMessage+XEP_0224.m */; };
 		0F35AD50184A54A5003E7A6D /* NSXMLElement+XEP_0297.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35ACF5184A54A5003E7A6D /* NSXMLElement+XEP_0297.m */; };
 		0F35AD51184A54A5003E7A6D /* XMPPMessage+XEP_0308.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35ACF8184A54A5003E7A6D /* XMPPMessage+XEP_0308.m */; };
+		0F35AD55184D831A003E7A6D /* KXUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35AD54184D831A003E7A6D /* KXUser.m */; };
 		0F523F8118406CDB00F967BF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F981660183DB35700EBD0B5 /* AudioToolbox.framework */; };
 		0F523F8318406CE900F967BF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F523F8218406CE900F967BF /* AVFoundation.framework */; };
 		0F523F8518406CF900F967BF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F523F8418406CF900F967BF /* QuartzCore.framework */; };
@@ -415,6 +416,8 @@
 		0F35ACF5184A54A5003E7A6D /* NSXMLElement+XEP_0297.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSXMLElement+XEP_0297.m"; sourceTree = "<group>"; };
 		0F35ACF7184A54A5003E7A6D /* XMPPMessage+XEP_0308.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XMPPMessage+XEP_0308.h"; sourceTree = "<group>"; };
 		0F35ACF8184A54A5003E7A6D /* XMPPMessage+XEP_0308.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XMPPMessage+XEP_0308.m"; sourceTree = "<group>"; };
+		0F35AD53184D831A003E7A6D /* KXUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXUser.h; sourceTree = "<group>"; };
+		0F35AD54184D831A003E7A6D /* KXUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXUser.m; sourceTree = "<group>"; };
 		0F523F8218406CE900F967BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0F523F8418406CF900F967BF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0F523F861840702100F967BF /* KXVoiceHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KXVoiceHUD.h; path = ../../../Workspace/KuXue/KuXue/KXVoiceHUD.h; sourceTree = "<group>"; };
@@ -1224,6 +1227,8 @@
 				0F761B07183CE8CE00651F7F /* KXMessage.h */,
 				0F761B08183CE8CE00651F7F /* KXMessage.m */,
 				0F35AC1A184A4610003E7A6D /* KXMessageDelegate.h */,
+				0F35AD53184D831A003E7A6D /* KXUser.h */,
+				0F35AD54184D831A003E7A6D /* KXUser.m */,
 				0F523F861840702100F967BF /* KXVoiceHUD.h */,
 				0F523F871840702100F967BF /* KXVoiceHUD.m */,
 				0F523F891840717A00F967BF /* KXVoiceHUDDelegate.h */,
@@ -1694,6 +1699,7 @@
 				0F35AD08184A54A5003E7A6D /* XMPPUserMemoryStorageObject.m in Sources */,
 				0F35AD2B184A54A5003E7A6D /* XMPPvCardTempTel.m in Sources */,
 				0F35AD24184A54A5003E7A6D /* XMPPvCardTemp.m in Sources */,
+				0F35AD55184D831A003E7A6D /* KXUser.m in Sources */,
 				0F06BFF31831379700FDF785 /* KXHomeTableViewController.m in Sources */,
 				0F06C0031832586800FDF785 /* pinyin.c in Sources */,
 				0F35AD21184A54A5003E7A6D /* XMPPvCardCoreDataStorage.m in Sources */,

@@ -23,6 +23,8 @@
 
 @synthesize messageDelegate = _messageDelegate;
 
+@synthesize user = _user;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     /* First Run Check */
@@ -30,29 +32,39 @@
     if (![defaults objectForKey:@"firstRun"]) {
         self.firstRun = TRUE;
         [defaults setObject:[NSDate date] forKey:@"firstRun"];
-        // Initializes application mock data.
+        // Initializes application data.
         [self initMockData];
     } else {
         self.firstRun = FALSE;
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [self initUser];
+    
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
+- (void)applicationWillResignActive:(UIApplication *)application
+{
     [self disconnect];
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {}
+- (void)applicationDidEnterBackground:(UIApplication *)application
+{
+}
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {}
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+}
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
     [self connect];
 }
 
-- (void)applicationWillTerminate:(UIApplication *)application {}
+- (void)applicationWillTerminate:(UIApplication *)application
+{
+}
 
 #pragma mark - Core Data
 
@@ -119,9 +131,15 @@
 {
     NSManagedObjectContext *context = [self managedObjectContext];
     
+    NSManagedObject *user1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXUser" inManagedObjectContext:context];
+    [user1 setValue:@"yangyifeng.jpg" forKey:@"avatar"];
+    [user1 setValue:@"杨义锋" forKey:@"nickname"];
+    [user1 setValue:@"password" forKey:@"password"];
+    [user1 setValue:@"yangyifeng" forKey:@"userId"];
+    
     NSManagedObject *idea1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXIdea" inManagedObjectContext:context];
-    [idea1 setValue:@"fanlang.jpg" forKey:@"contactAvatar"];
-    [idea1 setValue:@"樊浪" forKey:@"contactName"];
+    [idea1 setValue:@"liukun.jpg" forKey:@"contactAvatar"];
+    [idea1 setValue:@"刘鹍" forKey:@"contactName"];
     [idea1 setValue:[NSNumber numberWithInt:1] forKey:@"sid"];
     [idea1 setValue:@"theme-1.jpg" forKey:@"theme"];
     [idea1 setValue:@"thumbnail-1.jpg" forKey:@"ideaThumbnail"];
@@ -129,33 +147,33 @@
     [idea1 setValue:@"在新东方收获成功" forKey:@"ideaTitle"];
     
     NSManagedObject *contact1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
-    [contact1 setValue:@"fanlang.jpg" forKey:@"contactAvatar"];
-    [contact1 setValue:@"樊浪" forKey:@"contactName"];
+    [contact1 setValue:@"liukun.jpg" forKey:@"contactAvatar"];
+    [contact1 setValue:@"刘鹍" forKey:@"contactName"];
     [contact1 setValue:@"13811155255" forKey:@"mobile"];
     [contact1 setValue:@"theme-1.jpg" forKey:@"theme"];
     
-    for (int i = 0; i < 5; i++) {
-        NSManagedObject *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-        if (i % 2 == 0) {
-            [message setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
-            [message setValue:@"杨义锋" forKey:@"contactName"];
-            [message setValue:@"21分钟前" forKey:@"messageTimeReceived"];
-            [message setValue:@"老师，您好！初二数学秋季目标班现在还招生么？谢谢您" forKey:@"messageContent"];
-            [message setValue:@"outgoing" forKey:@"messageType"];
-        } else {
-            [message setValue:@"fanlang.jpg" forKey:@"contactAvatar"];
-            [message setValue:@"樊浪" forKey:@"contactName"];
-            [message setValue:@"21分钟前" forKey:@"messageTimeReceived"];
-            [message setValue:@"同学，你好。" forKey:@"messageContent"];
-            [message setValue:@"incoming" forKey:@"messageType"];
-        }
-        [message setValue:[NSString stringWithFormat:@"%d", i] forKey:@"sid"];
-    }
+    NSManagedObject *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
+    [message setValue:@"liukun.jpg" forKey:@"contactAvatar"];
+    [message setValue:@"刘鹍" forKey:@"contactName"];
+    [message setValue:[NSDate date] forKey:@"messageTimeReceived"];
+    [message setValue:@"同学，你好。" forKey:@"messageContent"];
+    [message setValue:@"incoming" forKey:@"messageType"];
     
     NSError *error;
     if (![context save:&error]) {
         NSLog(@"Data not saved. %@, %@", error, [error userInfo]);
     }
+}
+
+- (void)initUser
+{
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXUser"];
+    NSMutableArray *records = [[context executeFetchRequest:request error:nil] mutableCopy];
+    _user = (KXUser *)[records objectAtIndex:0];
+    _user.userId = @"yangyifeng";
+    _user.password = @"password";
 }
 
 #pragma mark - XMPP
@@ -166,8 +184,7 @@
     
     [self setUpStream];
     
-    NSString *jid = @"yangyifeng@42.96.184.90";
-    NSString *pwd = @"password";
+    NSString *jid = [_user.userId stringByAppendingString:@"@42.96.184.90"];
     
     if (![_xmppStream isDisconnected]) {
         return YES;
@@ -175,7 +192,6 @@
     
     [_xmppStream setMyJID:[XMPPJID jidWithString:jid]];
     [_xmppStream setHostName:@"42.96.184.90"];
-    password = pwd;
     
     NSError *error = nil;
     if (![_xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
@@ -193,7 +209,6 @@
     
     [self goOffline];
     [_xmppStream disconnect];
-    // [_chatDelegate didDisconnect];
 }
 
 - (void)setUpStream
@@ -209,7 +224,6 @@
     NSLog(@"Goes online. isConnected: %d isAuthenticated: %d", _xmppStream.isConnected, _xmppStream.isAuthenticated);
     
     XMPPPresence *presence = [XMPPPresence presence];
-    NSLog(@"%@", presence.XMLString);
     [_xmppStream sendElement:presence];
 }
 
@@ -227,9 +241,8 @@
 {
     NSLog(@"XMPP Stream did connect.");
     
-    isOpen = YES;
     NSError *error = nil;
-    [_xmppStream authenticateWithPassword:password error:&error];
+    [_xmppStream authenticateWithPassword:_user.password error:&error];
 }
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
@@ -253,14 +266,9 @@
 
 - (void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
-    NSLog(@"XMPP Stream did receive message: %@", message.stringValue);
+    NSLog(@"XMPP Stream did receive message: %@", message.body);
     
-    NSString *messageContent = [[message elementForName:@"body"] stringValue];
-    NSString *contactName = [[message attributeForName:@"from"] stringValue];
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:messageContent forKey:@"messageContent"];
-    [dict setObject:contactName forKey:@"contactName"];
-    [messageDelegate newMessageReceived:dict];
+    [self.messageDelegate newMessageReceived:message];
 }
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
@@ -268,10 +276,10 @@
     NSLog(@"XMPP Stream did receive presence.");
     
     NSString *presenceType = [presence type];
-    NSString *user = [[sender myJID] user];
+    NSString *usr = [[sender myJID] user];
     NSString *presenceFromUser = [[presence from] user];
     
-    if (![presenceFromUser isEqualToString:user]) {
+    if (![presenceFromUser isEqualToString:usr]) {
         if ([presenceType isEqualToString:@"available"]) {
             // Sets new contact online.
         } else if ([presenceType isEqualToString:@"unavailable"]) {

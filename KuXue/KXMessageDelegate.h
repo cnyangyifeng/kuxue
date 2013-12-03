@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XMPP.h"
 
 @protocol KXMessageDelegate <NSObject>
 
 @required
 
-- (void)newMessageReceived:(NSDictionary *)messageContent;
+- (void)newMessageReceived:(XMPPMessage *)message;
 
 @end

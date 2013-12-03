@@ -41,6 +41,7 @@
     }
     
     self.turnSockets = [[NSMutableArray alloc] init];
+    [[self appDelegate] setMessageDelegate:self];
     
     return self;
 }
@@ -53,9 +54,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
-    TURNSocket *socket = [[TURNSocket alloc] initWithStream:[self xmppStream] toJID:[XMPPJID jidWithString:@"yangyifeng@42.96.184.90"]];
-    [self.turnSockets addObject:socket];
-    [socket startWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    // KXUser *user = [[self appDelegate] user];
+    // NSString *jid = [user.userId stringByAppendingString:@"@42.96.184.90"];
+    // NSString *jid = @"liukun@42.96.184.90";
+    
+    // TURNSocket *socket = [[TURNSocket alloc] initWithStream:[self xmppStream] toJID:[XMPPJID jidWithString:jid]];
+    // [self.turnSockets addObject:socket];
+    // [socket startWithDelegate:self delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)turnSocket:(TURNSocket *)sender didSucceed:(GCDAsyncSocket *)socket
@@ -109,7 +114,7 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXMessage"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"sid" ascending:YES];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"messageTimeReceived" ascending:YES];
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
     self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
     
@@ -300,9 +305,8 @@
         message.contactAvatar = @"yangyifeng.jpg";
         message.contactName = @"杨义锋";
         message.messageContent = messageContent;
-        message.messageTimeReceived = @"30分钟前";
+        message.messageTimeReceived = [NSDate date];
         message.messageType = @"outgoing";
-        message.sid = @"T10000";
         [context insertObject:message];
         NSError *error;
         if (![context save:&error]) {
@@ -461,9 +465,26 @@
 
 #pragma mark - Message Delegate
 
-- (void)newMessageReceived:(NSDictionary *)messageContent
+- (void)newMessageReceived:(XMPPMessage *)message
 {
-    // TODO
+    // New message received.
+    NSManagedObjectContext *context = [self managedObjectContext];
+    KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
+    
+    msg.contactAvatar = @"liukun.jpg";
+    msg.contactName = @"刘鹍";
+    msg.messageContent = message.body;
+    msg.messageTimeReceived = [NSDate date];
+    msg.messageType = @"incoming";
+    [context insertObject:msg];
+    NSError *error;
+    if (![context save:&error]) {
+        NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
+        return;
+    }
+    [self.messages addObject:msg];
+    [self.chatTableView reloadData];
+    [self scrollTableView];
 }
 
 #pragma mark - XMPP

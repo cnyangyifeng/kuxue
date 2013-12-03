@@ -11,6 +11,7 @@
 #import "KXAppDelegate.h"
 #import "KXChatTableViewCell.h"
 #import "KXMessage.h"
+#import "KXUser.h"
 #import "KXVoiceHUDDelegate.h"
 #import "KXVoiceHUD.h"
 #import "TURNSocket.h"
@@ -35,7 +36,7 @@
 #define MAX_MESSAGE_CONTENT_WIDTH 230.0f
 #define MAX_MESSAGE_CONTENT_HEIGHT 10000.0f
 
-@interface KXChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, KXVoiceHUDDelegate>
+@interface KXChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, KXVoiceHUDDelegate, KXMessageDelegate>
 
 @property (strong, nonatomic) UITableView *chatTableView;
 @property (strong, nonatomic) UIToolbar *chatToolbar;
