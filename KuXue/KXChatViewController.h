@@ -10,6 +10,7 @@
 #import <DAKeyboardControl/DAKeyboardControl.h>
 #import "KXAppDelegate.h"
 #import "KXChatTableViewCell.h"
+#import "KXContact.h"
 #import "KXMessage.h"
 #import "KXUser.h"
 #import "KXVoiceHUDDelegate.h"
@@ -58,6 +59,8 @@
 @property (strong, nonatomic) NSMutableArray *turnSockets;
 
 @property (nonatomic) BOOL isAudioChatType;
+
+@property (strong, nonatomic) KXContact *contact;
 
 - (void)sendMessage;
 

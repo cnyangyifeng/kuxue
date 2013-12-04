@@ -18,6 +18,8 @@
 @property (strong, nonatomic) NSString *contactName;
 @property (strong, nonatomic) NSString *contactAvatar;
 
+@property (strong, nonatomic) KXContact *contact;
+
 @property (strong, nonatomic) NSMutableArray *ideas;
 
 @end

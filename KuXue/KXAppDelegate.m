@@ -132,10 +132,10 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     
     NSManagedObject *user1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXUser" inManagedObjectContext:context];
-    [user1 setValue:@"yangyifeng.jpg" forKey:@"avatar"];
-    [user1 setValue:@"杨义锋" forKey:@"nickname"];
+    [user1 setValue:@"liukun.jpg" forKey:@"avatar"];
+    [user1 setValue:@"刘鹍" forKey:@"nickname"];
     [user1 setValue:@"password" forKey:@"password"];
-    [user1 setValue:@"yangyifeng" forKey:@"userId"];
+    [user1 setValue:@"liukun" forKey:@"userId"];
     
     NSManagedObject *idea1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXIdea" inManagedObjectContext:context];
     [idea1 setValue:@"liukun.jpg" forKey:@"contactAvatar"];
@@ -147,14 +147,14 @@
     [idea1 setValue:@"在新东方收获成功" forKey:@"ideaTitle"];
     
     NSManagedObject *contact1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
-    [contact1 setValue:@"liukun.jpg" forKey:@"contactAvatar"];
-    [contact1 setValue:@"刘鹍" forKey:@"contactName"];
+    [contact1 setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
+    [contact1 setValue:@"杨义锋" forKey:@"contactName"];
     [contact1 setValue:@"13811155255" forKey:@"mobile"];
     [contact1 setValue:@"theme-1.jpg" forKey:@"theme"];
     
     NSManagedObject *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-    [message setValue:@"liukun.jpg" forKey:@"contactAvatar"];
-    [message setValue:@"刘鹍" forKey:@"contactName"];
+    [message setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
+    [message setValue:@"杨义锋" forKey:@"contactName"];
     [message setValue:[NSDate date] forKey:@"messageTimeReceived"];
     [message setValue:@"同学，你好。" forKey:@"messageContent"];
     [message setValue:@"incoming" forKey:@"messageType"];
@@ -172,7 +172,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXUser"];
     NSMutableArray *records = [[context executeFetchRequest:request error:nil] mutableCopy];
     _user = (KXUser *)[records objectAtIndex:0];
-    _user.userId = @"yangyifeng";
+    _user.userId = @"liukun";
     _user.password = @"password";
 }
 

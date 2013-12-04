@@ -18,6 +18,8 @@
 @synthesize contactName = _contactName;
 @synthesize contactAvatar = _contactAvatar;
 
+@synthesize contact = _contact;
+
 @synthesize ideas = _ideas;
 
 - (id)initWithStyle:(UITableViewStyle)style

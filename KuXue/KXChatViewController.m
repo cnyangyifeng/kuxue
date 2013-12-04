@@ -33,6 +33,10 @@
 @synthesize messages = _messages;
 @synthesize turnSockets = _turnSockets;
 
+@synthesize isAudioChatType = _isAudioChatType;
+
+@synthesize contact = _contact;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -54,26 +58,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
+    // Open TURN Socket.
     // KXUser *user = [[self appDelegate] user];
-    // NSString *jid = [user.userId stringByAppendingString:@"@42.96.184.90"];
     // NSString *jid = @"liukun@42.96.184.90";
     
     // TURNSocket *socket = [[TURNSocket alloc] initWithStream:[self xmppStream] toJID:[XMPPJID jidWithString:jid]];
     // [self.turnSockets addObject:socket];
     // [socket startWithDelegate:self delegateQueue:dispatch_get_main_queue()];
-}
-
-- (void)turnSocket:(TURNSocket *)sender didSucceed:(GCDAsyncSocket *)socket
-{
-    NSLog(@"TURN Connection succeeded!");
-    NSLog(@"You now have a socket that you can use to send/receive data to/from the other person.");
-    [self.turnSockets removeObject:sender];
-}
-
-- (void)turnSocketDidFail:(TURNSocket *)sender
-{
-    NSLog(@"TURN Connection failed!");
-    [self.turnSockets removeObject:sender];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -83,6 +74,7 @@
     [self addKeyboardControl];
 
     [self initMockData];
+    // [self initData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -121,6 +113,11 @@
     // Reloads table data every time this view appears.
     
     [self.chatTableView reloadData];
+}
+
+- (void)initData
+{
+    self.messages = [[NSMutableArray alloc] init];
 }
 
 - (void)initMainView
@@ -293,7 +290,7 @@
         
         NSXMLElement *msg = [NSXMLElement elementWithName:@"message"];
         [msg addAttributeWithName:@"type" stringValue:@"chat"];
-        [msg addAttributeWithName:@"to" stringValue:@"liukun@42.96.184.90"];
+        [msg addAttributeWithName:@"to" stringValue:@"yangyifeng@42.96.184.90"];
         [msg addChild:body];
         
         [[self xmppStream] sendElement:msg];
@@ -302,8 +299,8 @@
         
         NSManagedObjectContext *context = [self managedObjectContext];
         KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-        message.contactAvatar = @"yangyifeng.jpg";
-        message.contactName = @"杨义锋";
+        message.contactAvatar = @"liukun.jpg";
+        message.contactName = @"刘鹍";
         message.messageContent = messageContent;
         message.messageTimeReceived = [NSDate date];
         message.messageType = @"outgoing";
@@ -471,8 +468,8 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
     
-    msg.contactAvatar = @"liukun.jpg";
-    msg.contactName = @"刘鹍";
+    msg.contactAvatar = @"yangyifeng.jpg";
+    msg.contactName = @"杨义锋";
     msg.messageContent = message.body;
     msg.messageTimeReceived = [NSDate date];
     msg.messageType = @"incoming";
@@ -485,6 +482,21 @@
     [self.messages addObject:msg];
     [self.chatTableView reloadData];
     [self scrollTableView];
+}
+
+#pragma mark - TURN Socket
+
+- (void)turnSocket:(TURNSocket *)sender didSucceed:(GCDAsyncSocket *)socket
+{
+    NSLog(@"TURN Connection succeeded!");
+    NSLog(@"You now have a socket that you can use to send/receive data to/from the other person.");
+    [self.turnSockets removeObject:sender];
+}
+
+- (void)turnSocketDidFail:(TURNSocket *)sender
+{
+    NSLog(@"TURN Connection failed!");
+    [self.turnSockets removeObject:sender];
 }
 
 #pragma mark - XMPP
