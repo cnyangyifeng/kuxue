@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KXAppDelegate.h"
 #import "KXContactTableViewController.h"
 #import "KXHomeTableViewCell.h"
 #import "KXIdea.h"

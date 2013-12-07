@@ -499,12 +499,14 @@
     [self.turnSockets removeObject:sender];
 }
 
-#pragma mark - XMPP
+#pragma mark - Application Delegate
 
 - (KXAppDelegate *)appDelegate
 {
     return (KXAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
+
+#pragma mark - XMPP
 
 - (XMPPStream *)xmppStream
 {

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KXLoginViewController.h"
 #import "KXMessageDelegate.h"
 #import "KXUser.h"
 #import "XMPP.h"

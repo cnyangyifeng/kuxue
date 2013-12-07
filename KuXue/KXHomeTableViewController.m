@@ -36,6 +36,14 @@
     [super viewWillAppear:animated];
     
     [self initMockData];
+    
+    // If no user exists.
+    if ([[self appDelegate] user] == nil) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        KXLoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"KXLoginViewController"];
+        [[[self appDelegate] window] addSubview:loginViewController.view];
+        [[[[self appDelegate] window] rootViewController] presentViewController:loginViewController animated:NO completion:nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -140,6 +148,13 @@
     }
     
     return context;
+}
+
+#pragma mark - Application Delegate
+
+- (KXAppDelegate *)appDelegate
+{
+    return (KXAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 @end

@@ -139,6 +139,7 @@
 		0FC6F0681838FA8B009683D4 /* KXContactHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0671838FA8B009683D4 /* KXContactHeaderTableViewCell.m */; };
 		0FC6F06B18390CD0009683D4 /* KXIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F06A18390CD0009683D4 /* KXIdeaViewController.m */; };
 		0FC6F07118392E58009683D4 /* KXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F07018392E58009683D4 /* KXChatViewController.m */; };
+		0FC755C7184ED49E008B081A /* KXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC755C6184ED49E008B081A /* KXLoginViewController.m */; };
 		0FE7CF601830B70600CC502F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF5F1830B70600CC502F /* Foundation.framework */; };
 		0FE7CF621830B70600CC502F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF611830B70600CC502F /* CoreGraphics.framework */; };
 		0FE7CF641830B70600CC502F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF631830B70600CC502F /* UIKit.framework */; };
@@ -445,6 +446,8 @@
 		0FC6F06A18390CD0009683D4 /* KXIdeaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXIdeaViewController.m; sourceTree = "<group>"; };
 		0FC6F06F18392E58009683D4 /* KXChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXChatViewController.h; sourceTree = "<group>"; };
 		0FC6F07018392E58009683D4 /* KXChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXChatViewController.m; sourceTree = "<group>"; };
+		0FC755C5184ED49E008B081A /* KXLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXLoginViewController.h; sourceTree = "<group>"; };
+		0FC755C6184ED49E008B081A /* KXLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXLoginViewController.m; sourceTree = "<group>"; };
 		0FE7CF5C1830B70600CC502F /* KuXue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KuXue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE7CF5F1830B70600CC502F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0FE7CF611830B70600CC502F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1224,6 +1227,8 @@
 				0F06C00B1833CA0200FDF785 /* KXIdea.m */,
 				0FC6F06918390CD0009683D4 /* KXIdeaViewController.h */,
 				0FC6F06A18390CD0009683D4 /* KXIdeaViewController.m */,
+				0FC755C5184ED49E008B081A /* KXLoginViewController.h */,
+				0FC755C6184ED49E008B081A /* KXLoginViewController.m */,
 				0F761B07183CE8CE00651F7F /* KXMessage.h */,
 				0F761B08183CE8CE00651F7F /* KXMessage.m */,
 				0F35AC1A184A4610003E7A6D /* KXMessageDelegate.h */,
@@ -1741,6 +1746,7 @@
 				0F35AD41184A54A5003E7A6D /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				0FE7D0181831245E00CC502F /* XMPPPresence.m in Sources */,
 				0F35AD45184A54A5003E7A6D /* XMPPPresence+XEP_0172.m in Sources */,
+				0FC755C7184ED49E008B081A /* KXLoginViewController.m in Sources */,
 				0FE7D0201831245E00CC502F /* GCDAsyncSocket.m in Sources */,
 				0FE7D0141831245E00CC502F /* XMPPJID.m in Sources */,
 				0F35AD2E184A54A5003E7A6D /* XMPPIQ+XEP_0060.m in Sources */,

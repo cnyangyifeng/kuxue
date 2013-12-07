@@ -171,15 +171,21 @@
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXUser"];
     NSMutableArray *records = [[context executeFetchRequest:request error:nil] mutableCopy];
-    _user = (KXUser *)[records objectAtIndex:0];
-    _user.userId = @"liukun";
-    _user.password = @"password";
+    if (records != nil && [records count] > 0) {
+        _user = (KXUser *)[records objectAtIndex:0];
+        _user.userId = @"liukun";
+        _user.password = @"password";
+    }
 }
 
 #pragma mark - XMPP
 
 - (BOOL)connect
 {
+    if (self.user == nil) {
+        return NO;
+    }
+    
     NSLog(@"Connects.");
     
     [self setUpStream];
@@ -205,6 +211,10 @@
 
 - (void)disconnect
 {
+    if (self.user == nil) {
+        return;
+    }
+    
     NSLog(@"Disconnects.");
     
     [self goOffline];
@@ -273,11 +283,11 @@
 
 - (void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
 {
-    NSLog(@"XMPP Stream did receive presence.");
-    
     NSString *presenceType = [presence type];
     NSString *usr = [[sender myJID] user];
     NSString *presenceFromUser = [[presence from] user];
+    
+    NSLog(@"XMPP Stream did receive presence, %@: %@", presenceType, presenceFromUser);
     
     if (![presenceFromUser isEqualToString:usr]) {
         if ([presenceType isEqualToString:@"available"]) {
