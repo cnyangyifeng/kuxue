@@ -447,19 +447,6 @@
     [self.chatTableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
-#pragma mark - Core Data
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    NSManagedObjectContext *context = nil;
-    id delegate = [[UIApplication sharedApplication] delegate];
-    if ([delegate performSelector:@selector(managedObjectContext)]) {
-        context = [delegate managedObjectContext];
-    }
-    
-    return context;
-}
-
 #pragma mark - Message Delegate
 
 - (void)newMessageReceived:(XMPPMessage *)message
@@ -497,20 +484,6 @@
 {
     NSLog(@"TURN Connection failed!");
     [self.turnSockets removeObject:sender];
-}
-
-#pragma mark - Application Delegate
-
-- (KXAppDelegate *)appDelegate
-{
-    return (KXAppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
-#pragma mark - XMPP
-
-- (XMPPStream *)xmppStream
-{
-    return [[self appDelegate] xmppStream];
 }
 
 @end

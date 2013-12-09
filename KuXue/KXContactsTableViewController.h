@@ -10,8 +10,9 @@
 #import "KXContactsTableViewCell.h"
 #import "KXContactTableViewController.h"
 #import "KXContact.h"
+#import "KXTableViewController.h"
 
-@interface KXContactsTableViewController : UITableViewController
+@interface KXContactsTableViewController : KXTableViewController
 
 @property (strong, nonatomic) NSMutableArray *contacts;
 

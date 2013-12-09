@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KXAppDelegate.h"
 #import "KXContactTableViewController.h"
 #import "KXHomeTableViewCell.h"
 #import "KXIdea.h"
+#import "KXTableViewController.h"
 
-@interface KXHomeTableViewController : UITableViewController
+@interface KXHomeTableViewController : KXTableViewController
 
 @property (strong, nonatomic) NSMutableArray *ideas;
 

@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KXAppDelegate.h"
+#import "KXViewController.h"
 
-@interface KXLoginViewController : UIViewController
+@interface KXLoginViewController : KXViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *userIdTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+
+- (IBAction)login:(id)sender;
 
 @end

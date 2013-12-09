@@ -11,8 +11,9 @@
 #import "KXContactHeaderTableViewCell.h"
 #import "KXContactTableViewCell.h"
 #import "KXIdea.h"
+#import "KXTableViewController.h"
 
-@interface KXContactTableViewController : UITableViewController
+@interface KXContactTableViewController : KXTableViewController
 
 @property (strong, nonatomic) NSString *theme;
 @property (strong, nonatomic) NSString *contactName;

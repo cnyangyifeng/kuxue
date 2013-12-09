@@ -124,19 +124,6 @@
     }
 }
 
-#pragma mark - Core Data
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    NSManagedObjectContext *context = nil;
-    id delegate = [[UIApplication sharedApplication] delegate];
-    if ([delegate performSelector:@selector(managedObjectContext)]) {
-        context = [delegate managedObjectContext];
-    }
-    
-    return context;
-}
-
 #pragma mark - Contacts Partition
 
 -(NSMutableArray *)partitionObjects:(NSArray *)array collationStringSelector:(SEL)selector

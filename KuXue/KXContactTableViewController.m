@@ -111,26 +111,12 @@
 
 #pragma mark - Navigation
 
-
 - (IBAction)pushChatViewController:(id)sender
 {
     KXChatViewController *chatViewController = [[KXChatViewController alloc] init];
     chatViewController.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:chatViewController animated:YES];
-}
-
-#pragma mark - Core Data
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    NSManagedObjectContext *context = nil;
-    id delegate = [[UIApplication sharedApplication] delegate];
-    if ([delegate performSelector:@selector(managedObjectContext)]) {
-        context = [delegate managedObjectContext];
-    }
-    
-    return context;
 }
 
 @end

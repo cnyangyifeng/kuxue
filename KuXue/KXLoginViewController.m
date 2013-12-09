@@ -16,7 +16,6 @@
 
 @synthesize userIdTextField = _userIdTextField;
 @synthesize passwordTextField = _passwordTextField;
-@synthesize loginButton = _loginButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,9 +32,19 @@
     UIView *userIdTextFieldPadding = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, self.userIdTextField.frame.size.height)];
     self.userIdTextField.leftView = userIdTextFieldPadding;
     self.userIdTextField.leftViewMode = UITextFieldViewModeAlways;
+    [self.userIdTextField becomeFirstResponder];
+    
     UIView *passwordTextFieldPadding = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, self.passwordTextField.frame.size.height)];
     self.passwordTextField.leftView = passwordTextFieldPadding;
     self.passwordTextField.leftViewMode = UITextFieldViewModeAlways;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.userIdTextField.text = @"";
+    self.passwordTextField.text = @"";
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,9 +54,16 @@
 
 #pragma mark - Navigation
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (IBAction)login:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"modalMainFromLogin"]) {
+    UITextField *tf = (UITextField *)sender;
+    
+    if (tf.tag == 1) {
+        // If is userIdTextField.
+        [self.passwordTextField becomeFirstResponder];
+    } else {
+        [sender resignFirstResponder];
+        
         NSManagedObjectContext *context = [self managedObjectContext];
         
         NSManagedObject *usr = [NSEntityDescription insertNewObjectForEntityForName:@"KXUser" inManagedObjectContext:context];
@@ -64,29 +80,8 @@
         
         [[self appDelegate] connect];
         
-        [self removeFromParentViewController];
-        [self.view removeFromSuperview];
+        [self performSegueWithIdentifier:@"loginSegue" sender:sender];
     }
-}
-
-#pragma mark - Application Delegate
-
-- (KXAppDelegate *)appDelegate
-{
-    return (KXAppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-
-#pragma mark - Core Data
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    NSManagedObjectContext *context = nil;
-    id delegate = [[UIApplication sharedApplication] delegate];
-    if ([delegate performSelector:@selector(managedObjectContext)]) {
-        context = [delegate managedObjectContext];
-    }
-    
-    return context;
 }
 
 @end

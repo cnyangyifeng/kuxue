@@ -140,6 +140,9 @@
 		0FC6F06B18390CD0009683D4 /* KXIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F06A18390CD0009683D4 /* KXIdeaViewController.m */; };
 		0FC6F07118392E58009683D4 /* KXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F07018392E58009683D4 /* KXChatViewController.m */; };
 		0FC755C7184ED49E008B081A /* KXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC755C6184ED49E008B081A /* KXLoginViewController.m */; };
+		0FC755CA1852F05B008B081A /* KXMainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC755C91852F05B008B081A /* KXMainTabBarController.m */; };
+		0FC7560E18558FCD008B081A /* KXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC7560D18558FCD008B081A /* KXViewController.m */; };
+		0FC756111855AF91008B081A /* KXTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC756101855AF91008B081A /* KXTableViewController.m */; };
 		0FE7CF601830B70600CC502F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF5F1830B70600CC502F /* Foundation.framework */; };
 		0FE7CF621830B70600CC502F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF611830B70600CC502F /* CoreGraphics.framework */; };
 		0FE7CF641830B70600CC502F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF631830B70600CC502F /* UIKit.framework */; };
@@ -448,6 +451,12 @@
 		0FC6F07018392E58009683D4 /* KXChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXChatViewController.m; sourceTree = "<group>"; };
 		0FC755C5184ED49E008B081A /* KXLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXLoginViewController.h; sourceTree = "<group>"; };
 		0FC755C6184ED49E008B081A /* KXLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXLoginViewController.m; sourceTree = "<group>"; };
+		0FC755C81852F05B008B081A /* KXMainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMainTabBarController.h; sourceTree = "<group>"; };
+		0FC755C91852F05B008B081A /* KXMainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMainTabBarController.m; sourceTree = "<group>"; };
+		0FC7560C18558FCD008B081A /* KXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXViewController.h; sourceTree = "<group>"; };
+		0FC7560D18558FCD008B081A /* KXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXViewController.m; sourceTree = "<group>"; };
+		0FC7560F1855AF91008B081A /* KXTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXTableViewController.h; sourceTree = "<group>"; };
+		0FC756101855AF91008B081A /* KXTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXTableViewController.m; sourceTree = "<group>"; };
 		0FE7CF5C1830B70600CC502F /* KuXue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KuXue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE7CF5F1830B70600CC502F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0FE7CF611830B70600CC502F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1229,11 +1238,17 @@
 				0FC6F06A18390CD0009683D4 /* KXIdeaViewController.m */,
 				0FC755C5184ED49E008B081A /* KXLoginViewController.h */,
 				0FC755C6184ED49E008B081A /* KXLoginViewController.m */,
+				0FC755C81852F05B008B081A /* KXMainTabBarController.h */,
+				0FC755C91852F05B008B081A /* KXMainTabBarController.m */,
 				0F761B07183CE8CE00651F7F /* KXMessage.h */,
 				0F761B08183CE8CE00651F7F /* KXMessage.m */,
 				0F35AC1A184A4610003E7A6D /* KXMessageDelegate.h */,
+				0FC7560F1855AF91008B081A /* KXTableViewController.h */,
+				0FC756101855AF91008B081A /* KXTableViewController.m */,
 				0F35AD53184D831A003E7A6D /* KXUser.h */,
 				0F35AD54184D831A003E7A6D /* KXUser.m */,
+				0FC7560C18558FCD008B081A /* KXViewController.h */,
+				0FC7560D18558FCD008B081A /* KXViewController.m */,
 				0F523F861840702100F967BF /* KXVoiceHUD.h */,
 				0F523F871840702100F967BF /* KXVoiceHUD.m */,
 				0F523F891840717A00F967BF /* KXVoiceHUDDelegate.h */,
@@ -1678,6 +1693,7 @@
 				0FE7CF6C1830B70600CC502F /* main.m in Sources */,
 				0FE7D0161831245E00CC502F /* XMPPModule.m in Sources */,
 				0F35AD05184A54A5003E7A6D /* XMPPUserCoreDataStorageObject.m in Sources */,
+				0FC755CA1852F05B008B081A /* KXMainTabBarController.m in Sources */,
 				0FE7D01F1831245E00CC502F /* XMPPStringPrep.m in Sources */,
 				0FC6F0651838F6BE009683D4 /* KXContactTableViewController.m in Sources */,
 				0F35AD2F184A54A5003E7A6D /* XMPPPubSub.m in Sources */,
@@ -1731,6 +1747,7 @@
 				0F06BFF61831380C00FDF785 /* KXHomeTableViewCell.m in Sources */,
 				0F35AD02184A54A5003E7A6D /* XMPPResourceCoreDataStorageObject.m in Sources */,
 				0FE7D0171831245E00CC502F /* XMPPParser.m in Sources */,
+				0FC7560E18558FCD008B081A /* KXViewController.m in Sources */,
 				0F35AD4C184A54A5003E7A6D /* NSXMLElement+XEP_0203.m in Sources */,
 				0F35AD37184A54A5003E7A6D /* XMPPTransports.m in Sources */,
 				0F761B04183C96C300651F7F /* KXChatTableViewCell.m in Sources */,
@@ -1743,6 +1760,7 @@
 				0FE7D0121831245E00CC502F /* XMPPElement.m in Sources */,
 				0F35AD12184A54A5003E7A6D /* XMPPRoomCoreDataStorage.m in Sources */,
 				0F35AD09184A54A5003E7A6D /* XMPPRoster.m in Sources */,
+				0FC756111855AF91008B081A /* KXTableViewController.m in Sources */,
 				0F35AD41184A54A5003E7A6D /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				0FE7D0181831245E00CC502F /* XMPPPresence.m in Sources */,
 				0F35AD45184A54A5003E7A6D /* XMPPPresence+XEP_0172.m in Sources */,

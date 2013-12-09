@@ -36,14 +36,6 @@
     [super viewWillAppear:animated];
     
     [self initMockData];
-    
-    // If no user exists.
-    if ([[self appDelegate] user] == nil) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        KXLoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"KXLoginViewController"];
-        [[[self appDelegate] window] addSubview:loginViewController.view];
-        [[[[self appDelegate] window] rootViewController] presentViewController:loginViewController animated:NO completion:nil];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,26 +127,6 @@
         
         contactTableViewController.hidesBottomBarWhenPushed = YES;
     }
-}
-
-#pragma mark - Core Data
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    NSManagedObjectContext *context = nil;
-    id delegate = [[UIApplication sharedApplication] delegate];
-    if ([delegate performSelector:@selector(managedObjectContext)]) {
-        context = [delegate managedObjectContext];
-    }
-    
-    return context;
-}
-
-#pragma mark - Application Delegate
-
-- (KXAppDelegate *)appDelegate
-{
-    return (KXAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 @end

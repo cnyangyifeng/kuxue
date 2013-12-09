@@ -39,8 +39,6 @@
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [self initUser];
-    
     return YES;
 }
 
@@ -131,11 +129,11 @@
 {
     NSManagedObjectContext *context = [self managedObjectContext];
     
-    NSManagedObject *user1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXUser" inManagedObjectContext:context];
-    [user1 setValue:@"liukun.jpg" forKey:@"avatar"];
-    [user1 setValue:@"刘鹍" forKey:@"nickname"];
-    [user1 setValue:@"password" forKey:@"password"];
-    [user1 setValue:@"liukun" forKey:@"userId"];
+    // NSManagedObject *user1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXUser" inManagedObjectContext:context];
+    // [user1 setValue:@"liukun.jpg" forKey:@"avatar"];
+    // [user1 setValue:@"刘鹍" forKey:@"nickname"];
+    // [user1 setValue:@"password" forKey:@"password"];
+    // [user1 setValue:@"liukun" forKey:@"userId"];
     
     NSManagedObject *idea1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXIdea" inManagedObjectContext:context];
     [idea1 setValue:@"liukun.jpg" forKey:@"contactAvatar"];
@@ -173,8 +171,6 @@
     NSMutableArray *records = [[context executeFetchRequest:request error:nil] mutableCopy];
     if (records != nil && [records count] > 0) {
         _user = (KXUser *)[records objectAtIndex:0];
-        _user.userId = @"liukun";
-        _user.password = @"password";
     }
 }
 
@@ -182,11 +178,13 @@
 
 - (BOOL)connect
 {
+    [self initUser];
+    
     if (self.user == nil) {
         return NO;
     }
     
-    NSLog(@"Connects.");
+    NSLog(@"Connects. User: %@", self.user.userId);
     
     [self setUpStream];
     

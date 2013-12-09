@@ -8,15 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <DAKeyboardControl/DAKeyboardControl.h>
-#import "KXAppDelegate.h"
 #import "KXChatTableViewCell.h"
 #import "KXContact.h"
 #import "KXMessage.h"
+#import "KXMessageDelegate.h"
 #import "KXUser.h"
+#import "KXViewController.h"
 #import "KXVoiceHUDDelegate.h"
 #import "KXVoiceHUD.h"
 #import "TURNSocket.h"
-#import "XMPP.h"
 
 #define CHAT_TOOLBAR_HEIGHT 45.0f
 #define CHAT_TOOLBAR_LEFT_FIXED_SPACE -10.0f
@@ -37,7 +37,7 @@
 #define MAX_MESSAGE_CONTENT_WIDTH 230.0f
 #define MAX_MESSAGE_CONTENT_HEIGHT 10000.0f
 
-@interface KXChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, KXVoiceHUDDelegate, KXMessageDelegate>
+@interface KXChatViewController : KXViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, KXVoiceHUDDelegate, KXMessageDelegate>
 
 @property (strong, nonatomic) UITableView *chatTableView;
 @property (strong, nonatomic) UIToolbar *chatToolbar;
