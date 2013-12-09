@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>56428C60-2278-4CB9-AD58-DA7DB670EDD2</string>
+	<key>IDESourceControlProjectName</key>
+	<string>KuXue</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>17FF17BA-6360-4B33-A239-4FFDCC700D6D</key>
+		<string>ssh://github.com/cnyangyifeng/kuxue.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>KuXue.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>17FF17BA-6360-4B33-A239-4FFDCC700D6D</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/cnyangyifeng/kuxue.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>17FF17BA-6360-4B33-A239-4FFDCC700D6D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>17FF17BA-6360-4B33-A239-4FFDCC700D6D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>KuXue</string>
+		</dict>
+	</array>
+</dict>
+</plist>
