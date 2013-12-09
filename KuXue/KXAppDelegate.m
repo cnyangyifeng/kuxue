@@ -195,7 +195,6 @@
     }
     
     [_xmppStream setMyJID:[XMPPJID jidWithString:jid]];
-    [_xmppStream setHostName:XMPP_SERVER_URL];
     
     NSError *error = nil;
     if (![_xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
