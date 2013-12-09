@@ -457,6 +457,7 @@
 		0FC7560D18558FCD008B081A /* KXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXViewController.m; sourceTree = "<group>"; };
 		0FC7560F1855AF91008B081A /* KXTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXTableViewController.h; sourceTree = "<group>"; };
 		0FC756101855AF91008B081A /* KXTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXTableViewController.m; sourceTree = "<group>"; };
+		0FC756121855BE79008B081A /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		0FE7CF5C1830B70600CC502F /* KuXue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KuXue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE7CF5F1830B70600CC502F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0FE7CF611830B70600CC502F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -602,6 +603,7 @@
 			children = (
 				0F06C0011832582800FDF785 /* pinyin.h */,
 				0F06C0021832586800FDF785 /* pinyin.c */,
+				0FC756121855BE79008B081A /* constants.h */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";

@@ -11,6 +11,7 @@
 #import "KXUser.h"
 #import "XMPP.h"
 #import "XMPPRoster.h"
+#import "constants.h"
 
 @interface KXAppDelegate : UIResponder <UIApplicationDelegate> {
     UIWindow *window;

@@ -188,14 +188,14 @@
     
     [self setUpStream];
     
-    NSString *jid = [_user.userId stringByAppendingString:@"@42.96.184.90"];
+    NSString *jid = [_user.userId stringByAppendingString:XMPP_SERVER_URL];
     
     if (![_xmppStream isDisconnected]) {
         return YES;
     }
     
     [_xmppStream setMyJID:[XMPPJID jidWithString:jid]];
-    [_xmppStream setHostName:@"42.96.184.90"];
+    [_xmppStream setHostName:XMPP_SERVER_URL];
     
     NSError *error = nil;
     if (![_xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
