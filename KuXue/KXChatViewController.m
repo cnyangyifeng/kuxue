@@ -451,7 +451,8 @@
 
 - (void)newMessageReceived:(XMPPMessage *)message
 {
-    // New message received.
+    NSLog(@"Callback: New messsage received.");
+    
     NSManagedObjectContext *context = [self managedObjectContext];
     KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
     

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KXAuthenticationDelegate.h"
 #import "KXMessageDelegate.h"
 #import "KXUser.h"
 #import "XMPP.h"
@@ -22,17 +23,18 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (readonly, nonatomic) XMPPStream *xmppStream;
+@property (readonly, nonatomic) XMPPRoster *xmppRoster;
+
+@property (strong, nonatomic) KXUser *user;
+
 @property (nonatomic) BOOL firstRun;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (readonly, nonatomic) XMPPStream *xmppStream;
-@property (readonly, nonatomic) XMPPRoster *xmppRoster;
-
-@property (strong, nonatomic) KXUser *user;
-
+@property (weak, nonatomic) id authenticationDelegate;
 @property (weak, nonatomic) id messageDelegate;
 
 - (void)saveContext;
@@ -40,8 +42,9 @@
 
 - (BOOL)connect;
 - (void)disconnect;
-- (void)setUpStream;
-- (void)goOnline;
-- (void)goOffline;
+- (BOOL)isAuthenticated;
+
+- (void)loadUserFromLocalStorage;
+- (void)signOutUser;
 
 @end

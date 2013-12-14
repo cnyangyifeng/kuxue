@@ -6,4 +6,4 @@
 //  Copyright (c) 2013 kuxue.me. All rights reserved.
 //
 
-#define XMPP_SERVER_URL @"@42.96.184.90"
+#define XMPP_SERVER_URL @"42.96.184.90"

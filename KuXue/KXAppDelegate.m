@@ -12,18 +12,19 @@
 
 @synthesize window = _window;
 
+@synthesize xmppStream = _xmppStream;
+@synthesize xmppRoster = _xmppRoster;
+
+@synthesize user = _user;
+
 @synthesize firstRun = _firstRun;
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-@synthesize xmppStream = _xmppStream;
-@synthesize xmppRoster = _xmppRoster;
-
+@synthesize authenticationDelegate = _authenticationDelegate;
 @synthesize messageDelegate = _messageDelegate;
-
-@synthesize user = _user;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -38,6 +39,8 @@
         self.firstRun = FALSE;
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self loadUserFromLocalStorage];
     
     return YES;
 }
@@ -129,12 +132,6 @@
 {
     NSManagedObjectContext *context = [self managedObjectContext];
     
-    // NSManagedObject *user1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXUser" inManagedObjectContext:context];
-    // [user1 setValue:@"liukun.jpg" forKey:@"avatar"];
-    // [user1 setValue:@"刘鹍" forKey:@"nickname"];
-    // [user1 setValue:@"password" forKey:@"password"];
-    // [user1 setValue:@"liukun" forKey:@"userId"];
-    
     NSManagedObject *idea1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXIdea" inManagedObjectContext:context];
     [idea1 setValue:@"liukun.jpg" forKey:@"contactAvatar"];
     [idea1 setValue:@"刘鹍" forKey:@"contactName"];
@@ -163,7 +160,9 @@
     }
 }
 
-- (void)initUser
+#pragma mark - User
+
+- (void)loadUserFromLocalStorage
 {
     NSManagedObjectContext *context = [self managedObjectContext];
     
@@ -172,25 +171,32 @@
     if (records != nil && [records count] > 0) {
         _user = (KXUser *)[records objectAtIndex:0];
     }
+    
+    NSLog(@"User loaded from local storage.");
+}
+
+- (void)signOutUser
+{
+    _user = nil;
+    
+    NSLog(@"User signed out.");
 }
 
 #pragma mark - XMPP
 
 - (BOOL)connect
 {
-    [self initUser];
-    
-    if (self.user == nil) {
+    if (_user == nil) {
+        NSLog(@"XMPP server not connected, no user exists.");
         return NO;
     }
     
-    NSLog(@"Connects. User: %@", self.user.userId);
-    
     [self setUpStream];
     
-    NSString *jid = [_user.userId stringByAppendingString:XMPP_SERVER_URL];
+    NSString *jid = [_user.userId stringByAppendingFormat:@"%@%@", @"@", XMPP_SERVER_URL];
     
     if (![_xmppStream isDisconnected]) {
+        NSLog(@"XMPP server connection kept alive.");
         return YES;
     }
     
@@ -198,48 +204,32 @@
     
     NSError *error = nil;
     if (![_xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error]) {
+        NSLog(@"XMPP server failed to connect.");
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Disconnected" message:@"Connection lost." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alertView show];
         return NO;
     }
+    
+    NSLog(@"XMPP server connects.");
     
     return YES;
 }
 
 - (void)disconnect
 {
-    if (self.user == nil) {
+    if (_user == nil) {
         return;
     }
     
-    NSLog(@"Disconnects.");
-    
     [self goOffline];
     [_xmppStream disconnect];
+    
+    NSLog(@"XMPP server disconnects.");
 }
 
-- (void)setUpStream
+- (BOOL)isAuthenticated
 {
-    NSLog(@"Sets up stream.");
-    
-    _xmppStream = [[XMPPStream alloc] init];
-    [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
-}
-
-- (void)goOnline
-{
-    NSLog(@"Goes online. isConnected: %d isAuthenticated: %d", _xmppStream.isConnected, _xmppStream.isAuthenticated);
-    
-    XMPPPresence *presence = [XMPPPresence presence];
-    [_xmppStream sendElement:presence];
-}
-
-- (void)goOffline
-{
-    NSLog(@"Goes offline.");
-    
-    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
-    [_xmppStream sendElement:presence];
+    return [_xmppStream isAuthenticated];
 }
 
 #pragma mark - XMPP Delegate
@@ -254,14 +244,18 @@
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
-    NSLog(@"XMPP Stream did authenticate.");
+    NSLog(@"XMPP Stream did authenticate, user: %@.", self.user.userId);
+    
+    [self.authenticationDelegate userAuthenticated];
     
     [self goOnline];
 }
 
-- (void)xmppSteam:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
+- (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
 {
-    NSLog(@"XMPP Stream did not authenticate. %@", error);
+    NSLog(@"XMPP Stream did not authenticate, user: %@, %@", self.user.userId, error);
+    
+    [self.authenticationDelegate userNotAuthenticated];
 }
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
@@ -284,15 +278,41 @@
     NSString *usr = [[sender myJID] user];
     NSString *presenceFromUser = [[presence from] user];
     
-    NSLog(@"XMPP Stream did receive presence, %@: %@", presenceType, presenceFromUser);
-    
     if (![presenceFromUser isEqualToString:usr]) {
+        NSLog(@"XMPP Stream did receive presence: %@. From: %@, Sender: %@.", presenceType, presenceFromUser, usr);
+        
         if ([presenceType isEqualToString:@"available"]) {
             // Sets new contact online.
         } else if ([presenceType isEqualToString:@"unavailable"]) {
             // Sets contact went offline.
         }
     }
+}
+
+#pragma mark - XMPP Utilities
+
+- (void)setUpStream
+{
+    NSLog(@"Sets up stream.");
+    
+    _xmppStream = [[XMPPStream alloc] init];
+    [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+}
+
+- (void)goOnline
+{
+    NSLog(@"Goes online.");
+    
+    XMPPPresence *presence = [XMPPPresence presence];
+    [_xmppStream sendElement:presence];
+}
+
+- (void)goOffline
+{
+    NSLog(@"Goes offline.");
+    
+    XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
+    [_xmppStream sendElement:presence];
 }
 
 @end
