@@ -136,7 +136,7 @@
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectMake(0.0f, 0.0f, CHAT_BUTTON_WIDTH, CHAT_BUTTON_HEIGHT)];
     [leftButton setBackgroundColor:[UIColor whiteColor]];
-    [leftButton setImage:[UIImage imageNamed:@"Keyboard"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"Microphone"] forState:UIControlStateNormal];
     [leftButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [leftButton.layer setBorderWidth:0.5f];
     [leftButton.layer setCornerRadius:leftButton.bounds.size.width / 2.0f];
@@ -171,7 +171,7 @@
     UIButton *middleButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [middleButton setFrame:CGRectMake(0.0f, 0.0f, CHAT_BUTTON_WIDTH, CHAT_BUTTON_HEIGHT)];
     [middleButton setBackgroundColor:[UIColor whiteColor]];
-    [middleButton setImage:[UIImage imageNamed:@"Volume"] forState:UIControlStateNormal];
+    [middleButton setImage:[UIImage imageNamed:@"Emoticon"] forState:UIControlStateNormal];
     [middleButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [middleButton.layer setBorderWidth:0.5f];
     [middleButton.layer setCornerRadius:middleButton.bounds.size.width / 2.0f];
@@ -181,7 +181,7 @@
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setFrame:CGRectMake(0.0f, 0.0f, CHAT_BUTTON_WIDTH, CHAT_BUTTON_HEIGHT)];
     [rightButton setBackgroundColor:[UIColor whiteColor]];
-    [rightButton setImage:[UIImage imageNamed:@"Send"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"Insert"] forState:UIControlStateNormal];
     [rightButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [rightButton.layer setBorderWidth:0.5f];
     [rightButton.layer setCornerRadius:rightButton.bounds.size.width / 2.0f];
@@ -191,9 +191,8 @@
     UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     fixedSpace.width = CHAT_TOOLBAR_LEFT_FIXED_SPACE;
     
-    self.isAudioChatType = YES;
-    [tapButton becomeFirstResponder];
-    [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, leftButtonItem, tapButtonItem, middleButtonItem, rightButtonItem, nil]];
+    self.isAudioChatType = NO;
+    [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, leftButtonItem, textFieldButtonItem, middleButtonItem, rightButtonItem, nil]];
     
     KXVoiceHUD *voiceHud = [[KXVoiceHUD alloc] initWithParentView:self.view];
     voiceHud.title = @"Talk Now";
