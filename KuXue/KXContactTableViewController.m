@@ -14,10 +14,6 @@
 
 @implementation KXContactTableViewController
 
-@synthesize theme = _theme;
-@synthesize contactName = _contactName;
-@synthesize contactAvatar = _contactAvatar;
-
 @synthesize contact = _contact;
 
 @synthesize ideas = _ideas;
@@ -86,9 +82,9 @@
     
     if (indexPath.row == 0) {
         KXContactHeaderTableViewCell *headerCell = [tableView dequeueReusableCellWithIdentifier:headerCellIdendifier forIndexPath:indexPath];
-        headerCell.themeImageView.image = [UIImage imageNamed:self.theme];
-        headerCell.contactNameLabel.text = self.contactName;
-        headerCell.contactAvatarImageView.image = [UIImage imageNamed:self.contactAvatar];
+        headerCell.themeImageView.image = [UIImage imageNamed:self.contact.theme];
+        headerCell.contactNameLabel.text = self.contact.nickname;
+        headerCell.contactAvatarImageView.image = [UIImage imageNamed:self.contact.avatar];
         headerCell.backgroundColor = [UIColor groupTableViewBackgroundColor];
         return headerCell;
     } else {
@@ -114,6 +110,8 @@
 - (IBAction)pushChatViewController:(id)sender
 {
     KXChatViewController *chatViewController = [[KXChatViewController alloc] init];
+    chatViewController.contact = self.contact;
+    
     chatViewController.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:chatViewController animated:YES];

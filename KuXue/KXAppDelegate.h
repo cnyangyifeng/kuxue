@@ -13,6 +13,7 @@
 #import "KXUser.h"
 #import "XMPP.h"
 #import "XMPPRoster.h"
+#import "XMPPRosterMemoryStorage.h"
 #import "constants.h"
 
 @interface KXAppDelegate : UIResponder <UIApplicationDelegate> {
@@ -44,7 +45,7 @@
 
 - (BOOL)connect;
 - (void)disconnect;
-- (BOOL)isAuthenticated;
+- (void)fetchRoster;
 
 - (void)loadUserFromLocalStorage;
 - (void)signOutUser;

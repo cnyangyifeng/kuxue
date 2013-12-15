@@ -289,10 +289,10 @@
         
         NSXMLElement *msg = [NSXMLElement elementWithName:@"message"];
         [msg addAttributeWithName:@"type" stringValue:@"chat"];
-        [msg addAttributeWithName:@"to" stringValue:@"yangyifeng@42.96.184.90"];
+        [msg addAttributeWithName:@"to" stringValue:self.contact.userId];
         [msg addChild:body];
         
-        [[self xmppStream] sendElement:msg];
+        [[[self appDelegate] xmppStream] sendElement:msg];
         
         self.inputTextField.text = @"";
         

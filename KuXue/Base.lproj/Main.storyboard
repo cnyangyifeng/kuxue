@@ -733,7 +733,6 @@
                                     <outlet property="ideaThumbnailImageView" destination="84C-HW-GkC" id="2EQ-Tw-mlz"/>
                                     <outlet property="ideaTimeReceivedLabel" destination="mn7-1x-ljB" id="Fwg-UF-HED"/>
                                     <outlet property="ideaTitleLabel" destination="HQJ-Lo-1uc" id="4Ax-gQ-ONg"/>
-                                    <segue destination="RtC-cZ-nIr" kind="push" identifier="pushContactFromHome" id="ceI-C9-Rzu"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -929,7 +928,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="zrl-rk-DgH"/>
-    </inferredMetricsTieBreakers>
 </document>

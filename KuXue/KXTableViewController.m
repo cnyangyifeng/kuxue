@@ -53,11 +53,4 @@
     return (KXAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
-#pragma mark - XMPP
-
-- (XMPPStream *)xmppStream
-{
-    return [[self appDelegate] xmppStream];
-}
-
 @end

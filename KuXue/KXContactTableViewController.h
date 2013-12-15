@@ -15,10 +15,6 @@
 
 @interface KXContactTableViewController : KXTableViewController
 
-@property (strong, nonatomic) NSString *theme;
-@property (strong, nonatomic) NSString *contactName;
-@property (strong, nonatomic) NSString *contactAvatar;
-
 @property (strong, nonatomic) KXContact *contact;
 
 @property (strong, nonatomic) NSMutableArray *ideas;

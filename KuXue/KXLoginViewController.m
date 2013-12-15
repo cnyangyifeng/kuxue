@@ -140,12 +140,14 @@
 {
     NSManagedObjectContext *context = [self managedObjectContext];
     
+    // Deletes all local users.
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXUser"];
     [request setIncludesPropertyValues:NO];
     NSArray *users = [context executeFetchRequest:request error:nil];
     for (NSManagedObject *obj in users) {
         [context deleteObject:obj];
     }
+    
     NSError *error;
     if (![context save:&error]) {
         NSLog(@"Data not deleted. %@, %@", error, [error userInfo]);

@@ -142,12 +142,6 @@
     [idea1 setValue:@"1小时前" forKey:@"ideaTimeReceived"];
     [idea1 setValue:@"在新东方收获成功" forKey:@"ideaTitle"];
     
-    NSManagedObject *contact1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
-    [contact1 setValue:@"yangyifeng.jpg" forKey:@"avatar"];
-    [contact1 setValue:@"杨义锋" forKey:@"nickname"];
-    [contact1 setValue:@"theme-1.jpg" forKey:@"theme"];
-    [contact1 setValue:@"yangyifeng" forKey:@"userId"];
-    
     NSManagedObject *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
     [message setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
     [message setValue:@"杨义锋" forKey:@"contactName"];
@@ -228,9 +222,12 @@
     NSLog(@"XMPP server disconnects.");
 }
 
-- (BOOL)isAuthenticated
+- (void)fetchRoster
 {
-    return [_xmppStream isAuthenticated];
+    XMPPRosterMemoryStorage *rosterStorage = [[XMPPRosterMemoryStorage alloc] init];
+    _xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:rosterStorage];
+    [_xmppRoster activate:_xmppStream];
+    [_xmppRoster fetchRoster];
 }
 
 #pragma mark - XMPP Delegate
@@ -263,13 +260,12 @@
 {
     NSLog(@"Did receive IQ. %@", iq);
     
+    // Returns roster result.
     if ([iq.type isEqualToString:@"result"]) {
         NSXMLElement *query = iq.childElement;
         if ([query.name isEqualToString:@"query"]) {
-            NSArray *items = query.children;
-            [self.contactsDelegate contactsUpdated:items];
+            [self.contactsDelegate contactsUpdated:query.children];
         }
-        return YES;
     }
     
     return NO;

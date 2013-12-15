@@ -116,17 +116,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"pushContactFromHome"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        KXIdea *idea = [self.ideas objectAtIndex:indexPath.row];
-        
-        KXContactTableViewController *contactTableViewController = segue.destinationViewController;
-        contactTableViewController.theme = idea.theme;
-        contactTableViewController.contactName = idea.contactName;
-        contactTableViewController.contactAvatar = idea.contactAvatar;
-        
-        contactTableViewController.hidesBottomBarWhenPushed = YES;
-    }
+    //
 }
 
 @end

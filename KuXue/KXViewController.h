@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "KXAppDelegate.h"
-#import "XMPP.h"
 #import "constants.h"
 
 @interface KXViewController : UIViewController
@@ -16,7 +15,5 @@
 - (NSManagedObjectContext *)managedObjectContext;
 
 - (KXAppDelegate *)appDelegate;
-
-- (XMPPStream *)xmppStream;
 
 @end

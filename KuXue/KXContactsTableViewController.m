@@ -33,15 +33,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[self appDelegate] setContactsDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [self loadContactsFromLocalStorage];
-    
-    // [self loadContacts];
+    [self loadContacts];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -58,19 +58,9 @@
 
 - (void)loadContacts
 {
-    NSXMLElement *query = [NSXMLElement elementWithName:@"query" xmlns:@"jabber:iq:roster"];
+    NSLog(@"Fetches roster.");
     
-    NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
-    XMPPJID *jid = [[[self appDelegate] xmppStream] myJID];
-    [iq addAttributeWithName:@"from" stringValue:jid.description];
-    [iq addAttributeWithName:@"to" stringValue:jid.domain];
-    [iq addAttributeWithName:@"id" stringValue:@"123456"];
-    [iq addAttributeWithName:@"type" stringValue:@"get"];
-    [iq addChild:query];
-    
-    NSLog(@"Sending IQ: %@", iq);
-    
-    [[self xmppStream] sendElement:iq];
+    [[self appDelegate] fetchRoster];
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
@@ -139,9 +129,7 @@
         KXContact *contact = [[self.contacts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
         
         KXContactTableViewController *contactTableViewController = segue.destinationViewController;
-        contactTableViewController.theme = contact.theme;
-        contactTableViewController.contactName = contact.nickname;
-        contactTableViewController.contactAvatar = contact.avatar;
+        contactTableViewController.contact = contact;
         
         contactTableViewController.hidesBottomBarWhenPushed = YES;
     }
@@ -184,15 +172,31 @@
 {
     NSLog(@"Callback: Contacts updated.");
     
+    // Deletes all local contacts.
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXContact"];
+    [request setIncludesPropertyValues:NO];
+    NSArray *contacts = [context executeFetchRequest:request error:nil];
+    for (NSManagedObject *obj in contacts) {
+        [context deleteObject:obj];
+    }
+    
+    NSError *error;
+    if (![context save:&error]) {
+        NSLog(@"Data not deleted. %@, %@", error, [error userInfo]);
+        return;
+    }
+    
+    // Inserts new contacts.
     for (NSXMLElement *item in items) {
         NSString *jid = [item attributeStringValueForName:@"jid"];
-        NSString *name = [item attributeStringValueForName:@"name"];
         
         NSManagedObjectContext *context = [self managedObjectContext];
         
         NSManagedObject *contact = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
         [contact setValue:@"new_yorker.jpg" forKey:@"avatar"];
-        [contact setValue:name forKey:@"nickname"];
+        [contact setValue:jid forKey:@"nickname"];
         [contact setValue:@"theme-1.jpg" forKey:@"theme"];
         [contact setValue:jid forKey:@"userId"];
         
