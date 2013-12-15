@@ -18,6 +18,8 @@
 
 @implementation KXContactsTableViewController
 
+@synthesize progressHud = _progressHud;
+
 @synthesize contacts = _contacts;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -31,13 +33,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self initMockData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self loadContactsFromLocalStorage];
+    
+    // [self loadContacts];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -52,7 +56,30 @@
 
 #pragma mark - Initializations
 
-- (void)initMockData
+- (void)loadContacts
+{
+    NSXMLElement *query = [NSXMLElement elementWithName:@"query" xmlns:@"jabber:iq:roster"];
+    
+    NSXMLElement *iq = [NSXMLElement elementWithName:@"iq"];
+    XMPPJID *jid = [[[self appDelegate] xmppStream] myJID];
+    [iq addAttributeWithName:@"from" stringValue:jid.description];
+    [iq addAttributeWithName:@"to" stringValue:jid.domain];
+    [iq addAttributeWithName:@"id" stringValue:@"123456"];
+    [iq addAttributeWithName:@"type" stringValue:@"get"];
+    [iq addChild:query];
+    
+    NSLog(@"Sending IQ: %@", iq);
+    
+    [[self xmppStream] sendElement:iq];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Loading...";
+    
+    self.progressHud = hud;
+}
+
+- (void)loadContactsFromLocalStorage
 {
     // Fetches the application mock data.
     
@@ -61,10 +88,6 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXContact"];
     NSMutableArray *raw = [[context executeFetchRequest:request error:nil] mutableCopy];
     self.contacts = [self partitionObjects:raw collationStringSelector:@selector(getSortableName)];
-    
-    // Reloads table data every time this view appears.
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark - Table View
@@ -153,6 +176,38 @@
     }
     
     return sections;
+}
+
+#pragma mark - KXContactsDelegate
+
+- (void)contactsUpdated:(NSArray *)items
+{
+    NSLog(@"Callback: Contacts updated.");
+    
+    for (NSXMLElement *item in items) {
+        NSString *jid = [item attributeStringValueForName:@"jid"];
+        NSString *name = [item attributeStringValueForName:@"name"];
+        
+        NSManagedObjectContext *context = [self managedObjectContext];
+        
+        NSManagedObject *contact = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
+        [contact setValue:@"new_yorker.jpg" forKey:@"avatar"];
+        [contact setValue:name forKey:@"nickname"];
+        [contact setValue:@"theme-1.jpg" forKey:@"theme"];
+        [contact setValue:jid forKey:@"userId"];
+        
+        NSError *error;
+        if (![context save:&error]) {
+            NSLog(@"Data not saved. %@, %@", error, [error userInfo]);
+        }
+    }
+    
+    [self loadContactsFromLocalStorage];
+    
+    // Reloads table data every time this view appears.
+    [self.tableView reloadData];
+    
+    [self.progressHud hide:YES];
 }
 
 @end

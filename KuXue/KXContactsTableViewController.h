@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MBProgressHUD/MBProgressHUD.h>
+#import "KXContactsDelegate.h"
 #import "KXContactsTableViewCell.h"
 #import "KXContactTableViewController.h"
 #import "KXContact.h"
 #import "KXTableViewController.h"
 
-@interface KXContactsTableViewController : KXTableViewController
+@interface KXContactsTableViewController : KXTableViewController <KXContactsDelegate>
+
+@property (weak, nonatomic) MBProgressHUD *progressHud;
 
 @property (strong, nonatomic) NSMutableArray *contacts;
 

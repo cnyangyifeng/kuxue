@@ -24,6 +24,7 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 @synthesize authenticationDelegate = _authenticationDelegate;
+@synthesize contactsDelegate = _contactsDelegate;
 @synthesize messageDelegate = _messageDelegate;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -260,7 +261,16 @@
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
-    NSLog(@"Did receive IQ.");
+    NSLog(@"Did receive IQ. %@", iq);
+    
+    if ([iq.type isEqualToString:@"result"]) {
+        NSXMLElement *query = iq.childElement;
+        if ([query.name isEqualToString:@"query"]) {
+            NSArray *items = query.children;
+            [self.contactsDelegate contactsUpdated:items];
+        }
+        return YES;
+    }
     
     return NO;
 }

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "KXAuthenticationDelegate.h"
+#import "KXContactsDelegate.h"
 #import "KXMessageDelegate.h"
 #import "KXUser.h"
 #import "XMPP.h"
@@ -35,6 +36,7 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @property (weak, nonatomic) id authenticationDelegate;
+@property (weak, nonatomic) id contactsDelegate;
 @property (weak, nonatomic) id messageDelegate;
 
 - (void)saveContext;
