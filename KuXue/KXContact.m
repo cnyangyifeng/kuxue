@@ -10,17 +10,17 @@
 
 @implementation KXContact
 
-@dynamic contactAvatar;
-@dynamic contactName;
-@dynamic mobile;
+@dynamic avatar;
+@dynamic nickname;
 @dynamic theme;
+@dynamic userId;
 
 - (NSString *)getSortableName
 {
-    if ([self.contactName canBeConvertedToEncoding:NSASCIIStringEncoding]) {
-        return self.contactName;
+    if ([self.nickname canBeConvertedToEncoding:NSASCIIStringEncoding]) {
+        return self.nickname;
     } else {
-        return [NSString stringWithFormat:@"%c", pinyinFirstLetter([self.contactName characterAtIndex:0])];
+        return [NSString stringWithFormat:@"%c", pinyinFirstLetter([self.nickname characterAtIndex:0])];
     }
 }
 

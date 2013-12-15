@@ -101,13 +101,13 @@
     KXContactsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     KXContact *contact = [[self.contacts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    cell.contactAvatarImageView.image = [UIImage imageNamed:contact.contactAvatar];
-    cell.contactNameLabel.text = contact.contactName;
+    cell.contactAvatarImageView.image = [UIImage imageNamed:contact.avatar];
+    cell.contactNameLabel.text = contact.nickname;
     
     return cell;
 }
 
-#pragma mark - Navigation
+#pragma mark - Navigations
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -117,8 +117,8 @@
         
         KXContactTableViewController *contactTableViewController = segue.destinationViewController;
         contactTableViewController.theme = contact.theme;
-        contactTableViewController.contactName = contact.contactName;
-        contactTableViewController.contactAvatar = contact.contactAvatar;
+        contactTableViewController.contactName = contact.nickname;
+        contactTableViewController.contactAvatar = contact.avatar;
         
         contactTableViewController.hidesBottomBarWhenPushed = YES;
     }

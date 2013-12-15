@@ -133,8 +133,8 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     
     NSManagedObject *idea1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXIdea" inManagedObjectContext:context];
-    [idea1 setValue:@"liukun.jpg" forKey:@"contactAvatar"];
-    [idea1 setValue:@"刘鹍" forKey:@"contactName"];
+    [idea1 setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
+    [idea1 setValue:@"杨义锋" forKey:@"contactName"];
     [idea1 setValue:[NSNumber numberWithInt:1] forKey:@"sid"];
     [idea1 setValue:@"theme-1.jpg" forKey:@"theme"];
     [idea1 setValue:@"thumbnail-1.jpg" forKey:@"ideaThumbnail"];
@@ -142,10 +142,10 @@
     [idea1 setValue:@"在新东方收获成功" forKey:@"ideaTitle"];
     
     NSManagedObject *contact1 = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
-    [contact1 setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
-    [contact1 setValue:@"杨义锋" forKey:@"contactName"];
-    [contact1 setValue:@"13811155255" forKey:@"mobile"];
+    [contact1 setValue:@"yangyifeng.jpg" forKey:@"avatar"];
+    [contact1 setValue:@"杨义锋" forKey:@"nickname"];
     [contact1 setValue:@"theme-1.jpg" forKey:@"theme"];
+    [contact1 setValue:@"yangyifeng" forKey:@"userId"];
     
     NSManagedObject *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
     [message setValue:@"yangyifeng.jpg" forKey:@"contactAvatar"];
@@ -253,7 +253,7 @@
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
 {
-    NSLog(@"XMPP Stream did not authenticate, user: %@, %@", self.user.userId, error);
+    NSLog(@"XMPP Stream did not authenticate, user: %@, %@", [self.user.userId isEqualToString:@""] ? @"nil" : self.user.userId, error);
     
     [self.authenticationDelegate userNotAuthenticated];
 }

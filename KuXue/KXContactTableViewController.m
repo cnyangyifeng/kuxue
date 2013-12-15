@@ -109,7 +109,7 @@
     }
 }
 
-#pragma mark - Navigation
+#pragma mark - Navigations
 
 - (IBAction)pushChatViewController:(id)sender
 {

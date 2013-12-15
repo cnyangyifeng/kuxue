@@ -30,9 +30,33 @@
 {
     [super viewDidLoad];
     
-    self.avatarImageView.image = [UIImage imageNamed:@"liukun.jpg"];
-    self.nicknameLabel.text = [[[self appDelegate] user] nickname];
+    CGRect frame = self.tableView.frame;
+    frame.origin.x += 10.0f;
+    frame.origin.y += 10.0f;
+    frame.size.width -= 20.0f;
+    frame.size.height -= 10.0f;
+    self.tableView.frame = frame;
     
+    [self initUserProfile];
+    [self initLogoutButton];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Initializations
+
+- (void)initUserProfile
+{
+    KXUser *usr = [[self appDelegate] user];
+    self.avatarImageView.image = [UIImage imageNamed:usr.avatar];
+    self.nicknameLabel.text = usr.nickname;
+}
+
+- (void)initLogoutButton
+{
     UIImage *logoutButtonImage = [[UIImage imageNamed:@"OrangeButton"] resizableImageWithCapInsets:UIEdgeInsetsMake(32.0f, 32.0f, 32.0f, 32.0f)];
     UIImage *logoutHighlightedButtonImage = [[UIImage imageNamed:@"OrangeButtonHighlighted"] resizableImageWithCapInsets:UIEdgeInsetsMake(32.0f, 32.0f, 32.0f, 32.0f)];
     
@@ -43,13 +67,10 @@
     [self.logoutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
     [self.logoutButton setBackgroundImage:logoutHighlightedButtonImage forState:UIControlStateSelected];
-    [self.logoutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];    
+    [self.logoutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
+#pragma mark - Navigations
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

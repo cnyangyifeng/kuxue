@@ -51,6 +51,9 @@
         hud.labelText = @"Loading...";
         
         self.progressHud = hud;
+        
+        self.userIdTextField.text = usr.userId;
+        self.passwordTextField.text = usr.password;
     }
 }
 
@@ -66,6 +69,7 @@
     UIView *userIdTextFieldPadding = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, self.userIdTextField.frame.size.height)];
     self.userIdTextField.leftView = userIdTextFieldPadding;
     self.userIdTextField.leftViewMode = UITextFieldViewModeAlways;
+    self.userIdTextField.keyboardType = UIKeyboardTypeAlphabet;
 }
 
 - (void)initPasswordTextField
@@ -90,7 +94,7 @@
     [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
 }
 
-#pragma mark - Navigation
+#pragma mark - Navigations
 
 - (IBAction)login:(id)sender
 {

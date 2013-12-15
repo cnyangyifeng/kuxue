@@ -12,9 +12,9 @@
 
 @interface KXContact : NSManagedObject
 
-@property (strong, nonatomic) NSString *contactAvatar;
-@property (strong, nonatomic) NSString *contactName;
-@property (strong, nonatomic) NSString *mobile;
+@property (strong, nonatomic) NSString *avatar;
+@property (strong, nonatomic) NSString *nickname;
 @property (strong, nonatomic) NSString *theme;
+@property (strong, nonatomic) NSString *userId;
 
 @end

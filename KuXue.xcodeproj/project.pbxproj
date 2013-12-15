@@ -35,6 +35,7 @@
 		0F06C04918349DB800FDF785 /* theme-6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F06C02E18349DB800FDF785 /* theme-6.jpg */; };
 		0F06C04A18349DB800FDF785 /* theme-7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F06C02F18349DB800FDF785 /* theme-7.jpg */; };
 		0F06C04B18349DB800FDF785 /* theme-8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F06C03018349DB800FDF785 /* theme-8.jpg */; };
+		0F26E181185CCAA7001F4725 /* KXUserProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */; };
 		0F35ACFC184A54A5003E7A6D /* XMPPBandwidthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35AC1F184A54A4003E7A6D /* XMPPBandwidthMonitor.m */; };
 		0F35ACFD184A54A5003E7A6D /* XMPPCoreDataStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35AC22184A54A4003E7A6D /* XMPPCoreDataStorage.m */; };
 		0F35ACFE184A54A5003E7A6D /* XMPPGoogleSharedStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35AC26184A54A4003E7A6D /* XMPPGoogleSharedStatus.m */; };
@@ -248,6 +249,8 @@
 		0F06C02F18349DB800FDF785 /* theme-7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "theme-7.jpg"; sourceTree = "<group>"; };
 		0F06C03018349DB800FDF785 /* theme-8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "theme-8.jpg"; sourceTree = "<group>"; };
 		0F12B223185C6FD100C5A14F /* KXAuthenticationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXAuthenticationDelegate.h; sourceTree = "<group>"; };
+		0F26E17F185CCAA7001F4725 /* KXUserProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXUserProfileTableViewController.h; sourceTree = "<group>"; };
+		0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXUserProfileTableViewController.m; sourceTree = "<group>"; };
 		0F35AC1A184A4610003E7A6D /* KXMessageDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXMessageDelegate.h; sourceTree = "<group>"; };
 		0F35AC1E184A54A4003E7A6D /* XMPPBandwidthMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPBandwidthMonitor.h; sourceTree = "<group>"; };
 		0F35AC1F184A54A4003E7A6D /* XMPPBandwidthMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPBandwidthMonitor.m; sourceTree = "<group>"; };
@@ -1256,6 +1259,8 @@
 				0FC756101855AF91008B081A /* KXTableViewController.m */,
 				0F35AD53184D831A003E7A6D /* KXUser.h */,
 				0F35AD54184D831A003E7A6D /* KXUser.m */,
+				0F26E17F185CCAA7001F4725 /* KXUserProfileTableViewController.h */,
+				0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */,
 				0FC7560C18558FCD008B081A /* KXViewController.h */,
 				0FC7560D18558FCD008B081A /* KXViewController.m */,
 				0F523F861840702100F967BF /* KXVoiceHUD.h */,
@@ -1697,6 +1702,7 @@
 				0F06BFFF1832278700FDF785 /* KXContactsTableViewCell.m in Sources */,
 				0F35AD07184A54A5003E7A6D /* XMPPRosterMemoryStorage.m in Sources */,
 				0FE7D0241831245E00CC502F /* DDLog.m in Sources */,
+				0F26E181185CCAA7001F4725 /* KXUserProfileTableViewController.m in Sources */,
 				0FC6F0681838FA8B009683D4 /* KXContactHeaderTableViewCell.m in Sources */,
 				0FE7D0101831245E00CC502F /* NSNumber+XMPP.m in Sources */,
 				0FE7CF6C1830B70600CC502F /* main.m in Sources */,

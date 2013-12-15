@@ -60,7 +60,7 @@
     
     // Open TURN Socket.
     // KXUser *user = [[self appDelegate] user];
-    // NSString *jid = @"liukun@42.96.184.90";
+    // NSString *jid = @"contact@42.96.184.90";
     
     // TURNSocket *socket = [[TURNSocket alloc] initWithStream:[self xmppStream] toJID:[XMPPJID jidWithString:jid]];
     // [self.turnSockets addObject:socket];
@@ -299,8 +299,9 @@
         
         NSManagedObjectContext *context = [self managedObjectContext];
         KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-        message.contactAvatar = @"liukun.jpg";
-        message.contactName = @"刘鹍";
+        KXUser *usr = [[self appDelegate] user];
+        message.contactAvatar = usr.avatar;
+        message.contactName = usr.nickname;
         message.messageContent = messageContent;
         message.messageTimeReceived = [NSDate date];
         message.messageType = @"outgoing";
