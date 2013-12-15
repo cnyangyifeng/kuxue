@@ -51,6 +51,12 @@
 // DAKeyboardControl
 #define COCOAPODS_POD_AVAILABLE_DAKeyboardControl
 #define COCOAPODS_VERSION_MAJOR_DAKeyboardControl 2
-#define COCOAPODS_VERSION_MINOR_DAKeyboardControl 2
+#define COCOAPODS_VERSION_MINOR_DAKeyboardControl 3
 #define COCOAPODS_VERSION_PATCH_DAKeyboardControl 0
+
+// MBProgressHUD
+#define COCOAPODS_POD_AVAILABLE_MBProgressHUD
+#define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
+#define COCOAPODS_VERSION_MINOR_MBProgressHUD 8
+#define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
 
