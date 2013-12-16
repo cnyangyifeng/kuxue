@@ -6689,6 +6689,8 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 
 #if TARGET_OS_IPHONE
 
++ (void)ignore:(id)sender {}
+
 + (void)startCFStreamThreadIfNeeded
 {
 	static dispatch_once_t predicate;
@@ -6707,12 +6709,11 @@ static OSStatus SSLWriteFunction(SSLConnectionRef connection, const void *data, 
 	
 	LogInfo(@"CFStreamThread: Started");
 	
-    #pragma GCC diagnostic ignored "-Wundeclared-selector"
 	// We can't run the run loop unless it has an associated input source or a timer.
 	// So we'll just create a timer that will never fire - unless the server runs for decades.
 	[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
 	                                 target:self
-	                               selector:@selector(doNothingAtAll:)
+	                               selector:@selector(ignore:)
 	                               userInfo:nil
 	                                repeats:YES];
 	
