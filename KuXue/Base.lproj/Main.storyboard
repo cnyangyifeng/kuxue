@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="0r5-3N-DiJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -7,7 +7,7 @@
         <!--Main Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
-                <tabBarController id="8YX-ce-x5E" customClass="KXMainTabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="KXMainTabBarController" id="8YX-ce-x5E" customClass="KXMainTabBarController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JQR-rB-NYL">
                         <rect key="frame" x="0.0" y="431" width="320" height="49"/>
@@ -19,6 +19,7 @@
                         <segue destination="CDU-pI-e4Z" kind="relationship" relationship="viewControllers" id="zzi-cc-sM8"/>
                         <segue destination="RFP-hQ-yAz" kind="relationship" relationship="viewControllers" id="aP8-Ub-5eW"/>
                         <segue destination="neb-5B-mpZ" kind="relationship" relationship="viewControllers" id="UFD-xg-zID"/>
+                        <segue destination="0r5-3N-DiJ" kind="modal" identifier="presentLoginFromMain" id="hls-MW-2Gy"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNP-y4-bzi" sceneMemberID="firstResponder"/>
@@ -28,7 +29,7 @@
         <!--Login View Controller-->
         <scene sceneID="hTN-nk-OEi">
             <objects>
-                <viewController id="0r5-3N-DiJ" customClass="KXLoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="KXLoginViewController" id="0r5-3N-DiJ" customClass="KXLoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2T6-Kx-1Aw"/>
                         <viewControllerLayoutGuide type="bottom" id="b9r-8K-Wri"/>
@@ -38,55 +39,69 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="gCj-ws-jzg">
-                                <rect key="frame" x="128" y="32" width="64" height="64"/>
+                                <rect key="frame" x="128" y="42" width="64" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="User ID" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="L9u-MI-jAc">
-                                <rect key="frame" x="30" y="110" width="260" height="40"/>
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile phone number" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="L9u-MI-jAc">
+                                <rect key="frame" x="30" y="120" width="260" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                 <connections>
-                                    <action selector="login:" destination="0r5-3N-DiJ" eventType="editingDidEndOnExit" id="3X8-9r-wbD"/>
+                                    <action selector="textFieldDidEndOnExit:" destination="0r5-3N-DiJ" eventType="editingDidEndOnExit" id="eF0-gm-cWp"/>
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sMI-I6-raP">
-                                <rect key="frame" x="30" y="150" width="260" height="40"/>
+                                <rect key="frame" x="30" y="160" width="260" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
-                                    <action selector="login:" destination="0r5-3N-DiJ" eventType="editingDidEndOnExit" id="tpv-FA-gyv"/>
+                                    <action selector="textFieldDidEndOnExit:" destination="0r5-3N-DiJ" eventType="editingDidEndOnExit" id="ZF7-ui-5Ep"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gbg-sI-Nvj">
-                                <rect key="frame" x="29" y="200" width="262" height="45"/>
+                                <rect key="frame" x="30" y="200" width="260" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="Log in">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="loginButtonTapped:" destination="0r5-3N-DiJ" eventType="touchUpInside" id="EGT-nn-ZTJ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHc-fV-hI7">
+                                <rect key="frame" x="220" y="40" width="70" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="As guest">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="asGuestButtonTapped:" destination="0r5-3N-DiJ" eventType="touchUpInside" id="LVG-28-rbq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
                     <connections>
+                        <outlet property="asGuestButton" destination="pHc-fV-hI7" id="tGE-Eh-K3A"/>
                         <outlet property="loginButton" destination="Gbg-sI-Nvj" id="ntY-Mr-qtS"/>
                         <outlet property="passwordTextField" destination="sMI-I6-raP" id="IEa-AQ-prW"/>
                         <outlet property="userIdTextField" destination="L9u-MI-jAc" id="S13-Gq-KEn"/>
-                        <segue destination="8YX-ce-x5E" kind="modal" identifier="loginSegue" id="ihE-BN-7yb"/>
+                        <segue destination="8YX-ce-x5E" kind="modal" identifier="presentMainFromLogin" id="jJq-MO-bUx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HEr-PI-IHE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-543" y="826"/>
+            <point key="canvasLocation" x="-84" y="2069"/>
         </scene>
         <!--Contacts Table View Controller - Contacts-->
         <scene sceneID="HdF-Df-IOr">
@@ -96,8 +111,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="separatorColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactsTableViewCell" id="r3O-Zs-9tK" customClass="KXContactsTableViewCell">
                                 <rect key="frame" x="0.0" y="86" width="320" height="60"/>
@@ -172,14 +186,15 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qQS-Po-hS4">
-                                    <rect key="frame" x="10" y="5" width="300" height="45"/>
+                                    <rect key="frame" x="10" y="0.0" width="300" height="45"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                    <color key="backgroundColor" red="1" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal" title="Log out">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <segue destination="0r5-3N-DiJ" kind="modal" identifier="logoutSegue" modalTransitionStyle="flipHorizontal" id="Xqp-Y1-hAK"/>
+                                        <segue destination="0r5-3N-DiJ" kind="modal" identifier="logoutSegue" id="Xqp-Y1-hAK"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -928,4 +943,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="hls-MW-2Gy"/>
+    </inferredMetricsTieBreakers>
 </document>

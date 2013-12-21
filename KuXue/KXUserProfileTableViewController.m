@@ -26,7 +26,7 @@
 {
     [super viewDidLoad];
     
-    KXUser *usr = [[self appDelegate] user];
+    KXUser *usr = [[self appDelegate] lastActivateUser];
     self.avatarImageView.image = [UIImage imageNamed:usr.avatar];
     self.nicknameLabel.text = usr.nickname;
     self.userIdLabel.text = usr.userId;

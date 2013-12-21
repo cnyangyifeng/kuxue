@@ -14,7 +14,7 @@
 @property (strong, nonatomic) NSString *contactAvatar;
 @property (strong, nonatomic) NSString *contactName;
 @property (strong, nonatomic) NSString *messageContent;
-@property (strong, nonatomic) NSDate *messageTimeReceived;
+@property (strong, nonatomic) NSDate *messageReceivedTime;
 @property (strong, nonatomic) NSString *messageType;
 
 @end

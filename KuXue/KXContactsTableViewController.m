@@ -18,8 +18,6 @@
 
 @implementation KXContactsTableViewController
 
-@synthesize progressHud = _progressHud;
-
 @synthesize contacts = _contacts;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -61,12 +59,6 @@
     NSLog(@"Fetches roster.");
     
     [[self appDelegate] fetchRoster];
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeIndeterminate;
-    hud.labelText = @"Loading...";
-    
-    self.progressHud = hud;
 }
 
 - (void)loadContactsFromLocalStorage
@@ -172,16 +164,14 @@
 {
     NSLog(@"Callback: Contacts updated.");
     
-    // Deletes all local contacts.
+    // Deletes all contacts from core data storage.
     NSManagedObjectContext *context = [self managedObjectContext];
-    
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXContact"];
     [request setIncludesPropertyValues:NO];
     NSArray *contacts = [context executeFetchRequest:request error:nil];
     for (NSManagedObject *obj in contacts) {
         [context deleteObject:obj];
     }
-    
     NSError *error;
     if (![context save:&error]) {
         NSLog(@"Data not deleted. %@, %@", error, [error userInfo]);
@@ -210,8 +200,6 @@
     
     // Reloads table data every time this view appears.
     [self.tableView reloadData];
-    
-    [self.progressHud hide:YES];
 }
 
 @end

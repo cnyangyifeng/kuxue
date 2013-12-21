@@ -11,24 +11,46 @@
 #import "KXContactsDelegate.h"
 #import "KXMessageDelegate.h"
 #import "KXUser.h"
-#import "XMPP.h"
-#import "XMPPRoster.h"
-#import "XMPPRosterMemoryStorage.h"
+#import "XMPPFramework.h"
 #import "constants.h"
 
 @interface KXAppDelegate : UIResponder <UIApplicationDelegate> {
     UIWindow *window;
+    UIViewController *mainTabBarController;
+    
     XMPPStream *xmppStream;
+    XMPPReconnect *xmppReconnect;
     XMPPRoster *xmppRoster;
-    KXUser *user;
+    XMPPRosterCoreDataStorage *xmppRosterCoreDataStorage;
+    XMPPvCardTempModule *xmppvCardTempModule;
+    XMPPvCardAvatarModule *xmppvCardAvatarModule;
+    XMPPvCardCoreDataStorage *xmppvCardCoreDataStorage;
+    XMPPCapabilities *xmppCapabilities;
+    XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesCoreDataStorage;
+    
+    BOOL autoConnect;
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIViewController *mainTabBarController;
 
-@property (readonly, nonatomic) XMPPStream *xmppStream;
-@property (readonly, nonatomic) XMPPRoster *xmppRoster;
+@property (strong, readonly, nonatomic) XMPPStream *xmppStream;
+@property (strong, readonly, nonatomic) XMPPReconnect *xmppReconnect;
+@property (strong, readonly, nonatomic) XMPPRoster *xmppRoster;
+@property (strong, readonly, nonatomic) XMPPRosterCoreDataStorage *xmppRosterCoreDataStorage;
+@property (strong, readonly, nonatomic) XMPPvCardTempModule *xmppvCardTempModule;
+@property (strong, readonly, nonatomic) XMPPvCardAvatarModule *xmppvCardAvatarModule;
+@property (strong, readonly, nonatomic) XMPPvCardCoreDataStorage *xmppvCardCoreDataStorage;
+@property (strong, readonly, nonatomic) XMPPCapabilities *xmppCapabilities;
+@property (strong, readonly, nonatomic) XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesCoreDataStorage;
 
-@property (strong, nonatomic) KXUser *user;
+@property (nonatomic) BOOL autoConnect;
+
+@property (strong, nonatomic) KXUser *lastActivateUser;
+
+@property (strong, nonatomic) NSString *tempUserId;
+@property (strong, nonatomic) NSString *tempPassword;
+
 
 @property (nonatomic) BOOL firstRun;
 
@@ -40,14 +62,27 @@
 @property (weak, nonatomic) id contactsDelegate;
 @property (weak, nonatomic) id messageDelegate;
 
-- (void)saveContext;
+@property (nonatomic) NSInteger badgeNumber;
+
 - (NSURL *)applicationDocumentsDirectory;
 
-- (BOOL)connect;
+- (NSManagedObjectContext *)managedObjectContext;
+
+- (NSManagedObjectContext *)managedRosterObjectContext;
+- (NSManagedObjectContext *)managedvCardObjectContext;
+- (NSManagedObjectContext *)managedCapabilitiesObjectContext;
+
+- (BOOL)connect:(BOOL)automatic;
 - (void)disconnect;
+- (BOOL)isConnected;
+
+- (BOOL)authenticate;
+- (BOOL)isAuthenticated;
+
 - (void)fetchRoster;
 
-- (void)loadUserFromLocalStorage;
-- (void)signOutUser;
+- (void)loadLastActiveUser;
+- (void)unloadLastActiveUser;
+- (void)saveLastActiveUser;
 
 @end

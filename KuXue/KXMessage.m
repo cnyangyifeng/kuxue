@@ -13,7 +13,7 @@
 @dynamic contactAvatar;
 @dynamic contactName;
 @dynamic messageContent;
-@dynamic messageTimeReceived;
+@dynamic messageReceivedTime;
 @dynamic messageType;
 
 @end

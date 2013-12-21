@@ -106,7 +106,7 @@
     NSManagedObjectContext *context = [self managedObjectContext];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXMessage"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"messageTimeReceived" ascending:YES];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"messageReceivedTime" ascending:YES];
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
     self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
     
@@ -298,11 +298,11 @@
         
         NSManagedObjectContext *context = [self managedObjectContext];
         KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-        KXUser *usr = [[self appDelegate] user];
+        KXUser *usr = [[self appDelegate] lastActivateUser];
         message.contactAvatar = usr.avatar;
         message.contactName = usr.nickname;
         message.messageContent = messageContent;
-        message.messageTimeReceived = [NSDate date];
+        message.messageReceivedTime = [NSDate date];
         message.messageType = @"outgoing";
         [context insertObject:message];
         NSError *error;
@@ -452,14 +452,17 @@
 - (void)newMessageReceived:(XMPPMessage *)message
 {
     NSLog(@"Callback: New messsage received.");
+    XMPPUserCoreDataStorageObject *userStorageObject = [[[self appDelegate] xmppRosterCoreDataStorage] userForJID:[message from] xmppStream:[[self appDelegate] xmppStream] managedObjectContext:[[self appDelegate] managedRosterObjectContext]];
+    NSString *body = [[message elementForName:@"body"] stringValue];
+    NSString *displayName = [userStorageObject displayName];
     
     NSManagedObjectContext *context = [self managedObjectContext];
     KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
     
-    msg.contactAvatar = @"yangyifeng.jpg";
-    msg.contactName = @"杨义锋";
-    msg.messageContent = message.body;
-    msg.messageTimeReceived = [NSDate date];
+    msg.contactAvatar = @"male.jpg";
+    msg.contactName = displayName;
+    msg.messageContent = body;
+    msg.messageReceivedTime = [NSDate date];
     msg.messageType = @"incoming";
     [context insertObject:msg];
     NSError *error;

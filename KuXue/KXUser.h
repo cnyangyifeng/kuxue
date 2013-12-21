@@ -12,8 +12,9 @@
 @interface KXUser : NSManagedObject
 
 @property (strong, nonatomic) NSString *avatar;
-@property (strong, nonatomic) NSString *userId;
+@property (strong, nonatomic) NSDate *lastActiveTime;
 @property (strong, nonatomic) NSString *nickname;
 @property (strong, nonatomic) NSString *password;
+@property (strong, nonatomic) NSString *userId;
 
 @end

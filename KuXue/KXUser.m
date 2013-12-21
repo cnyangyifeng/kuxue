@@ -11,8 +11,9 @@
 @implementation KXUser
 
 @dynamic avatar;
-@dynamic userId;
+@dynamic lastActiveTime;
 @dynamic nickname;
 @dynamic password;
+@dynamic userId;
 
 @end

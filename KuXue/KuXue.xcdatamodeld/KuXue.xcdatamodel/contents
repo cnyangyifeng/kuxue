@@ -19,11 +19,12 @@
         <attribute name="contactAvatar" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="contactName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="messageContent" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="messageTimeReceived" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="messageReceivedTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="messageType" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="KXUser" representedClassName="KXUser" syncable="YES">
         <attribute name="avatar" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastActiveTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
