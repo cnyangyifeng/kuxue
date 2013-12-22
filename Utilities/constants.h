@@ -10,7 +10,7 @@
 #define XMPP_HOST_PORT 5222
 
 #define DEFAULT_FONT_SIZE 15.0f
-#define DEFAULT_AVATAR_NAME @"male.jpg"
-#define DEFAULT_THEME_NAME @"theme-1.jpg"
+#define DEFAULT_AVATAR_NAME @"male.png"
+#define DEFAULT_THEME_NAME @"keep_calm.png"
 
 #define PROGRESS_TIMEOUT_IN_SECONDS 10.0f
