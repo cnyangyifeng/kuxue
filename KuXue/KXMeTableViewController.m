@@ -37,7 +37,6 @@
     frame.size.height -= 10.0f;
     self.tableView.frame = frame;
     
-    [self initUserProfile];
     [self initLogoutButton];
 }
 
@@ -46,13 +45,19 @@
     [super didReceiveMemoryWarning];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self initUserProfile];
+    [self.view setNeedsDisplay];
+}
+
 #pragma mark - Initializations
 
 - (void)initUserProfile
 {
-//    KXUser *usr = [[self appDelegate] lastActivateUser];
-//    self.avatarImageView.image = [UIImage imageNamed:usr.avatar];
-//    self.nicknameLabel.text = usr.nickname;
+    self.avatarImageView.image = [[[self appDelegate] user] photo];
+    self.nicknameLabel.text = [[[self appDelegate] user] displayName];
 }
 
 - (void)initLogoutButton
@@ -75,6 +80,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"logoutSegue"]) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"jid"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
         [[self appDelegate] disconnect];
     }
 }

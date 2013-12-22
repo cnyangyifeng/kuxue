@@ -15,7 +15,6 @@
 @implementation KXContactTableViewController
 
 @synthesize contact = _contact;
-
 @synthesize ideas = _ideas;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -29,38 +28,19 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [self initMockData];
+    [self loadContactFromCoreDataStorage];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-#pragma mark - Initializations
-
-- (void)initMockData
-{
-    // Fetches the application mock data.
-    
-    NSManagedObjectContext *context = [self managedObjectContext];
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXIdea"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"sid" ascending:YES];
-    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
-    self.ideas = [[context executeFetchRequest:request error:nil] mutableCopy];
-    
-    // Reloads table data every time this view appears.
-    
-    [self.tableView reloadData];
 }
 
 #pragma mark - Table View
@@ -82,17 +62,21 @@
     
     if (indexPath.row == 0) {
         KXContactHeaderTableViewCell *headerCell = [tableView dequeueReusableCellWithIdentifier:headerCellIdendifier forIndexPath:indexPath];
-        headerCell.themeImageView.image = [UIImage imageNamed:@"theme-1.jpg"];
-        headerCell.contactNameLabel.text = self.contact.displayName;
+        headerCell.themeImageView.image = [UIImage imageNamed:DEFAULT_THEME_NAME];
         if (self.contact.photo != nil) {
             headerCell.contactAvatarImageView.image = self.contact.photo;
         } else {
             NSData *photoData = [[[self appDelegate] xmppvCardAvatarModule] photoDataForJID:self.contact.jid];
             if (photoData != nil) {
-                headerCell.imageView.image = [UIImage imageWithData:photoData];
+                headerCell.contactAvatarImageView.image = [UIImage imageWithData:photoData];
             } else {
-                headerCell.imageView.image = [UIImage imageNamed:@"male.jpg"];
+                headerCell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
             }
+        }
+        if (self.contact.nickname != nil) {
+            headerCell.contactNameLabel.text = self.contact.nickname;
+        } else {
+            headerCell.contactNameLabel.text = [[self.contact jid] user];
         }
         headerCell.backgroundColor = [UIColor groupTableViewBackgroundColor];
         return headerCell;
@@ -124,6 +108,17 @@
     chatViewController.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:chatViewController animated:YES];
+}
+
+#pragma mark - Core Data
+
+- (void)loadContactFromCoreDataStorage
+{
+    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXIdea"];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"sid" ascending:YES];
+    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
+    self.ideas = [[context executeFetchRequest:request error:nil] mutableCopy];
 }
 
 @end

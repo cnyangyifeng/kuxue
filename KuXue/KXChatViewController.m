@@ -101,10 +101,7 @@
 
 - (void)initMockData
 {
-    // Fetches the application mock data.
-    
-    NSManagedObjectContext *context = [self managedObjectContext];
-    
+    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXMessage"];
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"messageReceivedTime" ascending:YES];
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
@@ -151,7 +148,7 @@
     [tapButton.layer setCornerRadius:5.0f];
     [tapButton setTitle:@"Tap to Record" forState:UIControlStateNormal];
     [tapButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [tapButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
+    [tapButton.titleLabel setFont:[UIFont systemFontOfSize:DEFAULT_FONT_SIZE]];
     [tapButton addTarget:self action:@selector(tapToRecord) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *tapButtonItem = [[UIBarButtonItem alloc] initWithCustomView:tapButton];
     
@@ -160,7 +157,7 @@
     [textField.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [textField.layer setBorderWidth:0.5f];
     [textField.layer setCornerRadius:5.0f];
-    [textField setFont:[UIFont systemFontOfSize:15.0f]];
+    [textField setFont:[UIFont systemFontOfSize:DEFAULT_FONT_SIZE]];
     UIView *textFieldPadding = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, textField.frame.size.height)];
     textField.leftView = textFieldPadding;
     textField.leftViewMode = UITextFieldViewModeAlways;
@@ -296,10 +293,10 @@
         
         self.inputTextField.text = @"";
         
-        NSManagedObjectContext *context = [self managedObjectContext];
+        NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
         KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
         // KXUser *usr = [[self appDelegate] lastActivateUser];
-        // message.contactAvatar = usr.avatar;
+        message.contactAvatar = DEFAULT_AVATAR_NAME;
         // message.contactName = usr.nickname;
         message.messageContent = messageContent;
         message.messageReceivedTime = [NSDate date];
@@ -388,7 +385,7 @@
     }
     
     // Sets the message content.
-    cell.messageContentLabel.font = [UIFont systemFontOfSize:15.0f];
+    cell.messageContentLabel.font = [UIFont systemFontOfSize:DEFAULT_FONT_SIZE];
     cell.messageContentLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.messageContentLabel.numberOfLines = 0;
     
@@ -424,7 +421,7 @@
     CGSize textSize = { MAX_MESSAGE_CONTENT_WIDTH, MAX_MESSAGE_CONTENT_HEIGHT };
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:15.0f], NSParagraphStyleAttributeName: paragraphStyle};
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:DEFAULT_FONT_SIZE], NSParagraphStyleAttributeName: paragraphStyle};
     CGSize size = [message.messageContent boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
     size.height += MESSAGE_PADDING * 2;
     
@@ -443,8 +440,10 @@
 
 - (void)scrollTableView
 {
-    NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
-    [self.chatTableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (self.messages.count > 1) {
+        NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
+        [self.chatTableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
 }
 
 #pragma mark - Message Delegate
@@ -456,10 +455,10 @@
     NSString *body = [[message elementForName:@"body"] stringValue];
     NSString *displayName = [userStorageObject displayName];
     
-    NSManagedObjectContext *context = [self managedObjectContext];
+    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
     KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
     
-    msg.contactAvatar = @"male.jpg";
+    msg.contactAvatar = DEFAULT_AVATAR_NAME;
     msg.contactName = displayName;
     msg.messageContent = body;
     msg.messageReceivedTime = [NSDate date];

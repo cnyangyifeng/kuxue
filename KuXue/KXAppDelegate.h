@@ -27,6 +27,8 @@
     XMPPCapabilities *xmppCapabilities;
     XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesCoreDataStorage;
     
+    NSString *password;
+    
     BOOL autoConnect;
 }
 
@@ -45,10 +47,6 @@
 
 @property (nonatomic) BOOL autoConnect;
 
-@property (strong, nonatomic) NSString *tempUserId;
-@property (strong, nonatomic) NSString *tempPassword;
-
-
 @property (nonatomic) BOOL firstRun;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -61,10 +59,7 @@
 
 @property (nonatomic) NSInteger badgeNumber;
 
-- (NSURL *)applicationDocumentsDirectory;
-
 - (NSManagedObjectContext *)managedObjectContext;
-
 - (NSManagedObjectContext *)managedRosterObjectContext;
 - (NSManagedObjectContext *)managedvCardObjectContext;
 - (NSManagedObjectContext *)managedCapabilitiesObjectContext;
@@ -73,7 +68,6 @@
 - (void)disconnect;
 - (BOOL)isConnected;
 
-- (BOOL)authenticate;
-- (BOOL)isAuthenticated;
+- (XMPPUserCoreDataStorageObject *)user;
 
 @end

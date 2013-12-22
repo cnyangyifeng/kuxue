@@ -47,10 +47,7 @@
 
 - (void)initMockData
 {
-    // Fetches the application mock data.
-    
-    NSManagedObjectContext *context = [self managedObjectContext];
-    
+    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXIdea"];
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"sid" ascending:YES];
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
@@ -96,7 +93,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObjectContext *context = [self managedObjectContext];
+    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Deletes the selected record from core data.

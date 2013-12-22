@@ -17,7 +17,6 @@
 @synthesize userIdTextField = _userIdTextField;
 @synthesize passwordTextField = _passwordTextField;
 @synthesize loginButton = _loginButton;
-@synthesize asGuestButton = _asGuestButton;
 @synthesize registerButton = _registerButton;
 
 @synthesize progressHud = _progressHud;
@@ -27,7 +26,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
     }
-    
     return self;
 }
 
@@ -40,7 +38,6 @@
     [self initUserIdTextField];
     [self initPasswordTextField];
     [self initLoginButton];
-    [self initAsGuestButton];
     [self initRegisterButton];
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
@@ -88,10 +85,6 @@
     // [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
 }
 
-- (void)initAsGuestButton
-{
-}
-
 - (void)initRegisterButton
 {
     UIButton *bottomButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -99,7 +92,7 @@
     [bottomButton setBackgroundColor:[UIColor whiteColor]];
     [bottomButton setTitle:@"Register" forState:UIControlStateNormal];
     [bottomButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:15.0f]];
+    [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:DEFAULT_FONT_SIZE]];
     [bottomButton addTarget:self action:@selector(registerButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     
     self.registerButton = bottomButton;
@@ -129,22 +122,6 @@
     [self loginWithUserId:self.userIdTextField.text password:self.passwordTextField.text];
 }
 
-- (IBAction)asGuestButtonTapped:(id)sender
-{
-    NSLog(@"As guest button tapped.");
-    
-    [self dismissKeyboard];
-    
-//    NSManagedObjectContext *context = [self managedObjectContext];
-//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXUser"];
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId==%@", GUEST_ID];
-//    [request setPredicate:predicate];
-//    [request setFetchLimit:1];
-    // KXUser *usr = (KXUser *)[[[context executeFetchRequest:request error:nil] mutableCopy] objectAtIndex:0];
-    
-    // [self loginWithUserId:usr.userId password:usr.password];
-}
-
 - (void)registerButtonTapped
 {
     NSLog(@"Register button tapped.");
@@ -154,37 +131,33 @@
 
 - (void)loginWithUserId:(NSString *)userId password:(NSString *)password
 {
-    [[self appDelegate] setTempUserId:userId];
-    [[self appDelegate] setTempPassword:password];
-    
+    NSString *myJid = [self.userIdTextField.text stringByAppendingFormat:@"%@%@", @"@", XMPP_HOST_NAME];
+    [[NSUserDefaults standardUserDefaults] setObject:myJid forKey:@"jid"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:@"password"];
     [[self appDelegate] connect:NO];
-    
     [self showProgressHud];
-    [self hideProgressHud:10.0f];
+    [self hideProgressHud:PROGRESS_TIMEOUT_IN_SECONDS];
 }
 
-#pragma mark - Authentication Delegate
+#pragma mark - KXAuthenticationDelegate
 
 - (void)userAuthenticated
 {
     NSLog(@"Callback: User authenticated.");
-    
-    [self.progressHud hide:YES];
-    // [[self appDelegate] saveLastActiveUser];
-    // [[self appDelegate] loadLastActiveUser];
+    [self hideProgressHud:0.0f];
     [self performSegueWithIdentifier:@"presentMainFromLogin" sender:nil];
 }
 
 - (void)userNotAuthenticated
 {
     NSLog(@"Callback: User not authenticated.");
-    
-    [self.progressHud hide:YES];
-    [[self appDelegate] setTempUserId:@""];
-    [[self appDelegate] setTempPassword:@""];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"jid"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+    [[self appDelegate] disconnect];
+    [self hideProgressHud:0.0f];
 }
 
-#pragma mark - Private Utilities
+#pragma mark - Private Methods
 
 - (void)dismissKeyboard
 {

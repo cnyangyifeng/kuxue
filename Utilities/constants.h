@@ -9,4 +9,8 @@
 #define XMPP_HOST_NAME @"42.96.184.90"
 #define XMPP_HOST_PORT 5222
 
-#define GUEST_ID @"guest"
+#define DEFAULT_FONT_SIZE 15.0f
+#define DEFAULT_AVATAR_NAME @"male.jpg"
+#define DEFAULT_THEME_NAME @"theme-1.jpg"
+
+#define PROGRESS_TIMEOUT_IN_SECONDS 10.0f

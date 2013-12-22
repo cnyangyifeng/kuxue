@@ -8,11 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "KXAppDelegate.h"
-#import "constants.h"
 
 @interface KXTableViewController : UITableViewController
-
-- (NSManagedObjectContext *)managedObjectContext;
 
 - (KXAppDelegate *)appDelegate;
 

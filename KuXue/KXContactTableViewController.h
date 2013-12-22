@@ -16,7 +16,6 @@
 @interface KXContactTableViewController : KXTableViewController
 
 @property (strong, nonatomic) XMPPUserCoreDataStorageObject *contact;
-
 @property (strong, nonatomic) NSMutableArray *ideas;
 
 @end

@@ -18,13 +18,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *userIdTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
-@property (weak, nonatomic) IBOutlet UIButton *asGuestButton;
 @property (weak, nonatomic) UIButton *registerButton;
 
 @property (weak, nonatomic) MBProgressHUD *progressHud;
 
 - (IBAction)textFieldDidEndOnExit:(id)sender;
 - (IBAction)loginButtonTapped:(id)sender;
-- (IBAction)asGuestButtonTapped:(id)sender;
 
 @end
