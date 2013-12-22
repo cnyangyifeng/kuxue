@@ -15,7 +15,6 @@
 		0F06BFFF1832278700FDF785 /* KXContactsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F06BFFE1832278700FDF785 /* KXContactsTableViewCell.m */; };
 		0F06C0031832586800FDF785 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F06C0021832586800FDF785 /* pinyin.c */; };
 		0F06C00C1833CA0200FDF785 /* KXIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F06C00B1833CA0200FDF785 /* KXIdea.m */; };
-		0F06C0141834813000FDF785 /* KXContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F06C0131834813000FDF785 /* KXContact.m */; };
 		0F06C03318349DB800FDF785 /* fanlang.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F06C01718349DB800FDF785 /* fanlang.jpg */; };
 		0F06C03418349DB800FDF785 /* guichun.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F06C01818349DB800FDF785 /* guichun.jpg */; };
 		0F06C03618349DB800FDF785 /* kongwei.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F06C01A18349DB800FDF785 /* kongwei.jpg */; };
@@ -230,8 +229,6 @@
 		0F06C0021832586800FDF785 /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pinyin.c; sourceTree = "<group>"; };
 		0F06C00A1833CA0200FDF785 /* KXIdea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXIdea.h; sourceTree = "<group>"; };
 		0F06C00B1833CA0200FDF785 /* KXIdea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXIdea.m; sourceTree = "<group>"; };
-		0F06C0121834813000FDF785 /* KXContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXContact.h; sourceTree = "<group>"; };
-		0F06C0131834813000FDF785 /* KXContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContact.m; sourceTree = "<group>"; };
 		0F06C01718349DB800FDF785 /* fanlang.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fanlang.jpg; sourceTree = "<group>"; };
 		0F06C01818349DB800FDF785 /* guichun.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = guichun.jpg; sourceTree = "<group>"; };
 		0F06C01A18349DB800FDF785 /* kongwei.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = kongwei.jpg; sourceTree = "<group>"; };
@@ -1485,8 +1482,6 @@
 				0F761B03183C96C300651F7F /* KXChatTableViewCell.m */,
 				0FC6F06F18392E58009683D4 /* KXChatViewController.h */,
 				0FC6F07018392E58009683D4 /* KXChatViewController.m */,
-				0F06C0121834813000FDF785 /* KXContact.h */,
-				0F06C0131834813000FDF785 /* KXContact.m */,
 				0FC6F0661838FA8B009683D4 /* KXContactHeaderTableViewCell.h */,
 				0FC6F0671838FA8B009683D4 /* KXContactHeaderTableViewCell.m */,
 				0F26E219185D4948001F4725 /* KXContactsDelegate.h */,
@@ -1772,7 +1767,6 @@
 				0F223B19185F04C200EA921A /* XEP_0223.m in Sources */,
 				0FC6F0651838F6BE009683D4 /* KXContactTableViewController.m in Sources */,
 				0F223B2E185F04C200EA921A /* NSString+DDXML.m in Sources */,
-				0F06C0141834813000FDF785 /* KXContact.m in Sources */,
 				0F223ACF185F04C200EA921A /* XMPPRoster.xcdatamodel in Sources */,
 				0F223B18185F04C200EA921A /* NSXMLElement+XEP_0203.m in Sources */,
 				0F223AE8185F04C200EA921A /* XMPPMessage+XEP0045.m in Sources */,
