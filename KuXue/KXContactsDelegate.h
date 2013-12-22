@@ -12,6 +12,6 @@
 
 @required
 
-- (void)contactsUpdated:(NSArray *)items;
+- (void)contactsUpdated;
 
 @end

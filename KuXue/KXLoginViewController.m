@@ -135,14 +135,14 @@
     
     [self dismissKeyboard];
     
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXUser"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId==%@", GUEST_ID];
-    [request setPredicate:predicate];
-    [request setFetchLimit:1];
-    KXUser *usr = (KXUser *)[[[context executeFetchRequest:request error:nil] mutableCopy] objectAtIndex:0];
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXUser"];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"userId==%@", GUEST_ID];
+//    [request setPredicate:predicate];
+//    [request setFetchLimit:1];
+    // KXUser *usr = (KXUser *)[[[context executeFetchRequest:request error:nil] mutableCopy] objectAtIndex:0];
     
-    [self loginWithUserId:usr.userId password:usr.password];
+    // [self loginWithUserId:usr.userId password:usr.password];
 }
 
 - (void)registerButtonTapped
@@ -170,8 +170,8 @@
     NSLog(@"Callback: User authenticated.");
     
     [self.progressHud hide:YES];
-    [[self appDelegate] saveLastActiveUser];
-    [[self appDelegate] loadLastActiveUser];
+    // [[self appDelegate] saveLastActiveUser];
+    // [[self appDelegate] loadLastActiveUser];
     [self performSegueWithIdentifier:@"presentMainFromLogin" sender:nil];
 }
 

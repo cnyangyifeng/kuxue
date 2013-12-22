@@ -289,7 +289,7 @@
         
         NSXMLElement *msg = [NSXMLElement elementWithName:@"message"];
         [msg addAttributeWithName:@"type" stringValue:@"chat"];
-        [msg addAttributeWithName:@"to" stringValue:self.contact.userId];
+        [msg addAttributeWithName:@"to" stringValue:self.contact.jidStr];
         [msg addChild:body];
         
         [[[self appDelegate] xmppStream] sendElement:msg];
@@ -298,9 +298,9 @@
         
         NSManagedObjectContext *context = [self managedObjectContext];
         KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-        KXUser *usr = [[self appDelegate] lastActivateUser];
-        message.contactAvatar = usr.avatar;
-        message.contactName = usr.nickname;
+        // KXUser *usr = [[self appDelegate] lastActivateUser];
+        // message.contactAvatar = usr.avatar;
+        // message.contactName = usr.nickname;
         message.messageContent = messageContent;
         message.messageReceivedTime = [NSDate date];
         message.messageType = @"outgoing";

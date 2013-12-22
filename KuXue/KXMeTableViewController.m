@@ -50,9 +50,9 @@
 
 - (void)initUserProfile
 {
-    KXUser *usr = [[self appDelegate] lastActivateUser];
-    self.avatarImageView.image = [UIImage imageNamed:usr.avatar];
-    self.nicknameLabel.text = usr.nickname;
+//    KXUser *usr = [[self appDelegate] lastActivateUser];
+//    self.avatarImageView.image = [UIImage imageNamed:usr.avatar];
+//    self.nicknameLabel.text = usr.nickname;
 }
 
 - (void)initLogoutButton

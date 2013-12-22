@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <DAKeyboardControl/DAKeyboardControl.h>
 #import "KXChatTableViewCell.h"
-#import "KXContact.h"
 #import "KXMessage.h"
 #import "KXMessageDelegate.h"
 #import "KXUser.h"
@@ -60,7 +59,7 @@
 
 @property (nonatomic) BOOL isAudioChatType;
 
-@property (strong, nonatomic) KXContact *contact;
+@property (strong, nonatomic) XMPPUserCoreDataStorageObject *contact;
 
 - (void)sendMessage;
 

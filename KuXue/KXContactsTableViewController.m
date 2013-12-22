@@ -56,18 +56,12 @@
 
 - (void)loadContacts
 {
-    NSLog(@"Fetches roster.");
-    
-    [[self appDelegate] fetchRoster];
 }
 
 - (void)loadContactsFromLocalStorage
 {
-    // Fetches the application mock data.
-    
-    NSManagedObjectContext *context = [self managedObjectContext];
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXContact"];
+    NSManagedObjectContext *context = [[self appDelegate] managedRosterObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPUserCoreDataStorageObject"];
     NSMutableArray *raw = [[context executeFetchRequest:request error:nil] mutableCopy];
     self.contacts = [self partitionObjects:raw collationStringSelector:@selector(getSortableName)];
 }
@@ -105,9 +99,9 @@
     static NSString *cellIdentifier = @"contactsTableViewCell";
     KXContactsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    KXContact *contact = [[self.contacts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    cell.contactAvatarImageView.image = [UIImage imageNamed:contact.avatar];
-    cell.contactNameLabel.text = contact.nickname;
+    XMPPUserCoreDataStorageObject *contact = [[self.contacts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    cell.contactAvatarImageView.image = contact.photo;
+    cell.contactNameLabel.text = contact.displayName;
     
     return cell;
 }
@@ -118,7 +112,7 @@
 {
     if ([segue.identifier isEqualToString:@"pushContactFromContacts"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        KXContact *contact = [[self.contacts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        XMPPUserCoreDataStorageObject *contact = [[self.contacts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
         
         KXContactTableViewController *contactTableViewController = segue.destinationViewController;
         contactTableViewController.contact = contact;
@@ -160,43 +154,50 @@
 
 #pragma mark - KXContactsDelegate
 
-- (void)contactsUpdated:(NSArray *)items
+- (void)contactsUpdated
 {
     NSLog(@"Callback: Contacts updated.");
     
+    NSManagedObjectContext *context = [[self appDelegate] managedRosterObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPUserCoreDataStorageObject"];
+    NSMutableArray *raw = [[context executeFetchRequest:request error:nil] mutableCopy];
+    self.contacts = [self partitionObjects:raw collationStringSelector:@selector(getSortableName)];
+    
+    NSLog(@"%@", self.contacts);
+    
     // Deletes all contacts from core data storage.
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXContact"];
-    [request setIncludesPropertyValues:NO];
-    NSArray *contacts = [context executeFetchRequest:request error:nil];
-    for (NSManagedObject *obj in contacts) {
-        [context deleteObject:obj];
-    }
-    NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"Data not deleted. %@, %@", error, [error userInfo]);
-        return;
-    }
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXContact"];
+//    [request setIncludesPropertyValues:NO];
+//    NSArray *contacts = [context executeFetchRequest:request error:nil];
+//    for (NSManagedObject *obj in contacts) {
+//        [context deleteObject:obj];
+//    }
+//    NSError *error;
+//    if (![context save:&error]) {
+//        NSLog(@"Data not deleted. %@, %@", error, [error userInfo]);
+//        return;
+//    }
     
     // Inserts new contacts.
-    for (NSXMLElement *item in items) {
-        NSString *jid = [item attributeStringValueForName:@"jid"];
-        
-        NSManagedObjectContext *context = [self managedObjectContext];
-        
-        NSManagedObject *contact = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
-        [contact setValue:@"new_yorker.jpg" forKey:@"avatar"];
-        [contact setValue:jid forKey:@"nickname"];
-        [contact setValue:@"theme-1.jpg" forKey:@"theme"];
-        [contact setValue:jid forKey:@"userId"];
-        
-        NSError *error;
-        if (![context save:&error]) {
-            NSLog(@"Data not saved. %@, %@", error, [error userInfo]);
-        }
-    }
+//    for (NSXMLElement *item in items) {
+//        NSString *jid = [item attributeStringValueForName:@"jid"];
+//        
+//        NSManagedObjectContext *context = [self managedObjectContext];
+//        
+//        NSManagedObject *contact = [NSEntityDescription insertNewObjectForEntityForName:@"KXContact" inManagedObjectContext:context];
+//        [contact setValue:@"new_yorker.jpg" forKey:@"avatar"];
+//        [contact setValue:jid forKey:@"nickname"];
+//        [contact setValue:@"theme-1.jpg" forKey:@"theme"];
+//        [contact setValue:jid forKey:@"userId"];
+//        
+//        NSError *error;
+//        if (![context save:&error]) {
+//            NSLog(@"Data not saved. %@, %@", error, [error userInfo]);
+//        }
+//    }
     
-    [self loadContactsFromLocalStorage];
+    // [self loadContactsFromLocalStorage];
     
     // Reloads table data every time this view appears.
     [self.tableView reloadData];

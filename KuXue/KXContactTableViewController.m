@@ -82,9 +82,18 @@
     
     if (indexPath.row == 0) {
         KXContactHeaderTableViewCell *headerCell = [tableView dequeueReusableCellWithIdentifier:headerCellIdendifier forIndexPath:indexPath];
-        headerCell.themeImageView.image = [UIImage imageNamed:self.contact.theme];
-        headerCell.contactNameLabel.text = self.contact.nickname;
-        headerCell.contactAvatarImageView.image = [UIImage imageNamed:self.contact.avatar];
+        headerCell.themeImageView.image = [UIImage imageNamed:@"theme-1.jpg"];
+        headerCell.contactNameLabel.text = self.contact.displayName;
+        if (self.contact.photo != nil) {
+            headerCell.contactAvatarImageView.image = self.contact.photo;
+        } else {
+            NSData *photoData = [[[self appDelegate] xmppvCardAvatarModule] photoDataForJID:self.contact.jid];
+            if (photoData != nil) {
+                headerCell.imageView.image = [UIImage imageWithData:photoData];
+            } else {
+                headerCell.imageView.image = [UIImage imageNamed:@"male.jpg"];
+            }
+        }
         headerCell.backgroundColor = [UIColor groupTableViewBackgroundColor];
         return headerCell;
     } else {

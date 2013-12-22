@@ -10,7 +10,6 @@
 #import "KXContactsDelegate.h"
 #import "KXContactsTableViewCell.h"
 #import "KXContactTableViewController.h"
-#import "KXContact.h"
 #import "KXTableViewController.h"
 
 @interface KXContactsTableViewController : KXTableViewController <KXContactsDelegate>

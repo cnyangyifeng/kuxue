@@ -10,11 +10,10 @@
 #import "KXAuthenticationDelegate.h"
 #import "KXContactsDelegate.h"
 #import "KXMessageDelegate.h"
-#import "KXUser.h"
 #import "XMPPFramework.h"
 #import "constants.h"
 
-@interface KXAppDelegate : UIResponder <UIApplicationDelegate> {
+@interface KXAppDelegate : UIResponder <UIApplicationDelegate, XMPPStreamDelegate, XMPPReconnectDelegate, XMPPRosterDelegate, XMPPvCardTempModuleDelegate, XMPPvCardAvatarDelegate, XMPPCapabilitiesDelegate> {
     UIWindow *window;
     UIViewController *mainTabBarController;
     
@@ -46,8 +45,6 @@
 
 @property (nonatomic) BOOL autoConnect;
 
-@property (strong, nonatomic) KXUser *lastActivateUser;
-
 @property (strong, nonatomic) NSString *tempUserId;
 @property (strong, nonatomic) NSString *tempPassword;
 
@@ -78,11 +75,5 @@
 
 - (BOOL)authenticate;
 - (BOOL)isAuthenticated;
-
-- (void)fetchRoster;
-
-- (void)loadLastActiveUser;
-- (void)unloadLastActiveUser;
-- (void)saveLastActiveUser;
 
 @end

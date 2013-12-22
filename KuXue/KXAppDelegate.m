@@ -25,7 +25,6 @@
 
 @synthesize autoConnect;
 
-@synthesize lastActivateUser = _lastActivateUser;
 @synthesize tempUserId = _tempUserId;
 @synthesize tempPassword = _tempPassword;
 
@@ -40,6 +39,8 @@
 @synthesize messageDelegate = _messageDelegate;
 
 @synthesize badgeNumber = _badgeNumber;
+
+#pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -58,9 +59,9 @@
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [self loadLastActiveUser];
-    self.tempUserId = self.lastActivateUser.userId;
-    self.tempPassword = self.lastActivateUser.password;
+    // [self loadLastActiveUser];
+    // self.tempUserId = self.lastActivateUser.userId;
+    // self.tempPassword = self.lastActivateUser.password;
     
     [self setUpStream];
     [self connect:YES];
@@ -238,7 +239,7 @@
     return [xmppStream isAuthenticated];
 }
 
-#pragma mark - XMPPStream Delegate
+#pragma mark - XMPPStreamDelegate
 
 - (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket
 {
@@ -249,6 +250,11 @@
 {
     NSLog(@"XMPP stream did connect.");
     [self authenticate];
+}
+
+- (void)xmppStreamConnectDidTimeout:(XMPPStream *)sender
+{
+    NSLog(@"XMPP stream connect did timeout.");
 }
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
@@ -270,9 +276,8 @@
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
-    NSLog(@"XMPP stream did receive IQ. %@", iq);
+    NSLog(@"XMPP stream did receive IQ, type: %@, description: %@.", iq.type, iq.description);
     
-    // Deprecated
     // Returns roster result.
 //    if ([iq.type isEqualToString:@"result"]) {
 //        NSXMLElement *query = iq.childElement;
@@ -314,7 +319,7 @@
     NSString *presenceFromUser = [[presence from] user];
     
     if (![presenceFromUser isEqualToString:usr]) {
-        NSLog(@"XMPP stream did receive presence: %@. From: %@, Sender: %@.", presenceType, presenceFromUser, usr);
+        NSLog(@"XMPP stream did receive presence, type: %@, from: %@, sender: %@.", presenceType, presenceFromUser, usr);
         if ([presenceType isEqualToString:@"available"]) {
             // Sets new contact online.
         } else if ([presenceType isEqualToString:@"unavailable"]) {
@@ -333,7 +338,13 @@
     NSLog(@"XMPP stream did disconnect.");
 }
 
-#pragma mark - XMPPRoster Delegate
+#pragma mark - XMPPRosterDelegate
+
+- (void)xmppRosterDidEndPopulating:(XMPPRoster *)sender
+{
+    NSLog(@"XMPP Roster did end populating.");
+    [self.contactsDelegate contactsUpdated];
+}
 
 - (void)xmppRoster:(XMPPRoster *)sender didReceiveBuddyRequest:(XMPPPresence *)presence
 {
@@ -358,7 +369,7 @@
     }
 }
 
-#pragma mark - Private XMPP Utilities
+#pragma mark - Private XMPP Methods
 
 - (void)setUpStream
 {
@@ -472,50 +483,39 @@
     }
 }
 
-- (void)loadLastActiveUser
-{
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXUser"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"lastActiveTime" ascending:NO];
-    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
-    NSMutableArray *records = [[context executeFetchRequest:request error:nil] mutableCopy];
-    if (records != nil && [records count] > 0) {
-        self.lastActivateUser = (KXUser *)[records objectAtIndex:0];
-    }
-    NSLog(@"User loaded.");
-}
-
-- (void)unloadLastActiveUser
-{
-    self.lastActivateUser = nil;
-    NSLog(@"User unloaded.");
-}
-
-- (void)saveLastActiveUser
-{
-    NSManagedObjectContext *context = [self managedObjectContext];
-    KXUser *usr = [NSEntityDescription insertNewObjectForEntityForName:@"KXUser" inManagedObjectContext:context];
-    [usr setValue:@"male.jpg" forKey:@"avatar"];
-    [usr setValue:[NSDate date] forKey:@"lastActiveTime"];
-    [usr setValue:self.tempUserId forKey:@"nickname"];
-    [usr setValue:self.tempPassword forKey:@"password"];
-    [usr setValue:self.tempUserId forKey:@"userId"];
-    NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
-        return;
-    }
-}
-
-#pragma mark - Deprecated
-
-- (void)fetchRoster
-{
-    // Deprecated
-    // XMPPRosterMemoryStorage *rosterStorage = [[XMPPRosterMemoryStorage alloc] init];
-    // xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:rosterStorage];
-    // [xmppRoster activate:xmppStream];
-    // [xmppRoster fetchRoster];
-}
+//- (void)loadLastActiveUser
+//{
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXUser"];
+//    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"lastActiveTime" ascending:NO];
+//    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
+//    NSMutableArray *records = [[context executeFetchRequest:request error:nil] mutableCopy];
+//    if (records != nil && [records count] > 0) {
+//        self.lastActivateUser = (KXUser *)[records objectAtIndex:0];
+//    }
+//    NSLog(@"User loaded.");
+//}
+//
+//- (void)unloadLastActiveUser
+//{
+//    self.lastActivateUser = nil;
+//    NSLog(@"User unloaded.");
+//}
+//
+//- (void)saveLastActiveUser
+//{
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    KXUser *usr = [NSEntityDescription insertNewObjectForEntityForName:@"KXUser" inManagedObjectContext:context];
+//    [usr setValue:@"male.jpg" forKey:@"avatar"];
+//    [usr setValue:[NSDate date] forKey:@"lastActiveTime"];
+//    [usr setValue:self.tempUserId forKey:@"nickname"];
+//    [usr setValue:self.tempPassword forKey:@"password"];
+//    [usr setValue:self.tempUserId forKey:@"userId"];
+//    NSError *error;
+//    if (![context save:&error]) {
+//        NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
+//        return;
+//    }
+//}
 
 @end
