@@ -7,6 +7,7 @@
 
 #import "XMPPUser.h"
 #import "XMPP.h"
+#import "pinyin.h"
 
 @class XMPPGroupCoreDataStorageObject;
 @class XMPPResourceCoreDataStorageObject;

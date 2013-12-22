@@ -473,4 +473,17 @@
 	return [NSSet setWithObject:@"resources"];
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Kuxue customized method
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (NSString *)getSortableName
+{
+    if ([self.nickname canBeConvertedToEncoding:NSASCIIStringEncoding]) {
+        return self.nickname;
+    } else {
+        return [NSString stringWithFormat:@"%c", pinyinFirstLetter([self.displayName characterAtIndex:0])];
+    }
+}
+
 @end
