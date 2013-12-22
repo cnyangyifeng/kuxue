@@ -474,13 +474,13 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Kuxue customized method
+#pragma mark KuXue customized method
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (NSString *)getSortableName
 {
-    if ([self.nickname canBeConvertedToEncoding:NSASCIIStringEncoding]) {
-        return self.nickname;
+    if ([self.displayName canBeConvertedToEncoding:NSASCIIStringEncoding]) {
+        return self.displayName;
     } else {
         return [NSString stringWithFormat:@"%c", pinyinFirstLetter([self.displayName characterAtIndex:0])];
     }
