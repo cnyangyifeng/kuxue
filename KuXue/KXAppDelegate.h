@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KXAuthenticationDelegate.h"
+#import "KXChatDelegate.h"
 #import "KXContactsDelegate.h"
-#import "KXMessageDelegate.h"
+#import "KXHomeDelegate.h"
+#import "KXLoginDelegate.h"
 #import "XMPPFramework.h"
 #import "constants.h"
 
@@ -53,10 +54,10 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 
-@property (weak, nonatomic) id authenticationDelegate;
-@property (weak, nonatomic) id contactsDelegate;
-@property (weak, nonatomic) id messageDelegate;
 @property (weak, nonatomic) id chatDelegate;
+@property (weak, nonatomic) id contactsDelegate;
+@property (weak, nonatomic) id homeDelegate;
+@property (weak, nonatomic) id loginDelegate;
 
 @property (nonatomic) NSInteger badgeNumber;
 
@@ -67,7 +68,6 @@
 
 - (BOOL)connect:(BOOL)automatic;
 - (void)disconnect;
-- (BOOL)isConnected;
 
 - (XMPPUserCoreDataStorageObject *)user;
 

@@ -200,7 +200,7 @@
 		0F06BFFE1832278700FDF785 /* KXContactsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactsTableViewCell.m; sourceTree = "<group>"; };
 		0F06C0011832582800FDF785 /* pinyin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
 		0F06C0021832586800FDF785 /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pinyin.c; sourceTree = "<group>"; };
-		0F12B223185C6FD100C5A14F /* KXAuthenticationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXAuthenticationDelegate.h; sourceTree = "<group>"; };
+		0F12B223185C6FD100C5A14F /* KXLoginDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXLoginDelegate.h; sourceTree = "<group>"; };
 		0F223973185F04C100EA921A /* XMPPAnonymousAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPAnonymousAuthentication.h; sourceTree = "<group>"; };
 		0F223974185F04C100EA921A /* XMPPAnonymousAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPAnonymousAuthentication.m; sourceTree = "<group>"; };
 		0F223976185F04C100EA921A /* XMPPDeprecatedDigestAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPDeprecatedDigestAuthentication.h; sourceTree = "<group>"; };
@@ -465,7 +465,7 @@
 		0F26E17F185CCAA7001F4725 /* KXUserProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXUserProfileTableViewController.h; sourceTree = "<group>"; };
 		0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXUserProfileTableViewController.m; sourceTree = "<group>"; };
 		0F26E219185D4948001F4725 /* KXContactsDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXContactsDelegate.h; sourceTree = "<group>"; };
-		0F35AC1A184A4610003E7A6D /* KXMessageDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXMessageDelegate.h; sourceTree = "<group>"; };
+		0F35AC1A184A4610003E7A6D /* KXHomeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXHomeDelegate.h; sourceTree = "<group>"; };
 		0F35AD53184D831A003E7A6D /* KXUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXUser.h; sourceTree = "<group>"; };
 		0F35AD54184D831A003E7A6D /* KXUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXUser.m; sourceTree = "<group>"; };
 		0F523F8218406CE900F967BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1397,7 +1397,6 @@
 				0F223B381861EC6B00EA921A /* Images.xcassets */,
 				0FE7CF6E1830B70600CC502F /* KXAppDelegate.h */,
 				0FE7CF6F1830B70600CC502F /* KXAppDelegate.m */,
-				0F12B223185C6FD100C5A14F /* KXAuthenticationDelegate.h */,
 				0F223B4918673E2A00EA921A /* KXChatDelegate.h */,
 				0F761B02183C96C300651F7F /* KXChatTableViewCell.h */,
 				0F761B03183C96C300651F7F /* KXChatTableViewCell.m */,
@@ -1414,15 +1413,16 @@
 				0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */,
 				0FC6F0631838F6BE009683D4 /* KXContactTableViewController.h */,
 				0FC6F0641838F6BE009683D4 /* KXContactTableViewController.m */,
+				0F35AC1A184A4610003E7A6D /* KXHomeDelegate.h */,
 				0F06BFF41831380C00FDF785 /* KXHomeTableViewCell.h */,
 				0F06BFF51831380C00FDF785 /* KXHomeTableViewCell.m */,
 				0F06BFF11831379700FDF785 /* KXHomeTableViewController.h */,
 				0F06BFF21831379700FDF785 /* KXHomeTableViewController.m */,
+				0F12B223185C6FD100C5A14F /* KXLoginDelegate.h */,
 				0FC755C5184ED49E008B081A /* KXLoginViewController.h */,
 				0FC755C6184ED49E008B081A /* KXLoginViewController.m */,
 				0F761B07183CE8CE00651F7F /* KXMessage.h */,
 				0F761B08183CE8CE00651F7F /* KXMessage.m */,
-				0F35AC1A184A4610003E7A6D /* KXMessageDelegate.h */,
 				0FC756131856B409008B081A /* KXMeTableViewController.h */,
 				0FC756141856B409008B081A /* KXMeTableViewController.m */,
 				0FC7560F1855AF91008B081A /* KXTableViewController.h */,

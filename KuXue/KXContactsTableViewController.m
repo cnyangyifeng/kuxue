@@ -163,7 +163,7 @@
 
 - (void)contactsUpdated
 {
-    NSLog(@"Callback: Contacts updated.");
+    NSLog(@"KXContactsDelegate callback: Contacts updated.");
     [self loadContactsFromCoreDataStorage];
     [self.tableView reloadData];
 }

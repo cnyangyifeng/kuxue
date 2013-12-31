@@ -27,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self appDelegate] setMessageDelegate:self];
+    [[self appDelegate] setHomeDelegate:self];
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 }
 
@@ -35,6 +35,8 @@
 {
     [super viewWillAppear:animated];
     [self initData];
+    
+    [[self appDelegate] connect:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,11 +116,23 @@
 {
 }
 
-#pragma mark - KXMessageDelegate
+#pragma mark - KXHomeDelegate
 
-- (void)newMessageReceived:(XMPPMessage *)message
+- (void)didConnect
 {
-    NSLog(@"Callback: New messsage received, home view updated.");
+    NSLog(@"KXHomeDelegate callback: User did connect.");
+    self.navigationItem.title = @"KuXue";
+}
+
+- (void)didDisconnect
+{
+    NSLog(@"KXHomeDelegate callback: User did disconnect.");
+    self.navigationItem.title = @"Disconnected";
+}
+
+- (void)didReceiveMessage:(XMPPMessage *)message
+{
+    NSLog(@"KXHomeDelegate callback: New messsage received, home view updated.");
     XMPPUserCoreDataStorageObject *contact = [[[self appDelegate] xmppRosterCoreDataStorage] userForJID:[message from] xmppStream:[[self appDelegate] xmppStream] managedObjectContext:[[self appDelegate] managedRosterObjectContext]];
     NSString *body = [[message elementForName:@"body"] stringValue];
     

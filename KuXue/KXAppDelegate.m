@@ -31,10 +31,10 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 
-@synthesize authenticationDelegate = _authenticationDelegate;
-@synthesize contactsDelegate = _contactsDelegate;
-@synthesize messageDelegate = _messageDelegate;
 @synthesize chatDelegate = _chatDelegate;
+@synthesize contactsDelegate = _contactsDelegate;
+@synthesize homeDelegate = _homeDelegate;
+@synthesize loginDelegate = _loginDelegate;
 
 @synthesize badgeNumber = _badgeNumber;
 
@@ -180,7 +180,7 @@
 {
     autoConnect = automatic;
     
-    if ([self isConnected]) {
+    if ([[self xmppStream] isConnected]) {
         NSLog(@"XMPP server connected, connection kept alive.");
         return YES;
     }
@@ -212,12 +212,6 @@
     [xmppStream disconnect];
 }
 
-- (BOOL)isConnected
-{
-    NSLog(@"XMPP server connected? %d.", [xmppStream isConnected]);
-    return [xmppStream isConnected];
-}
-
 - (XMPPUserCoreDataStorageObject *)user
 {
     XMPPUserCoreDataStorageObject *userCoreDataStorage = [xmppRosterCoreDataStorage myUserForXMPPStream:[self xmppStream] managedObjectContext:[self managedRosterObjectContext]];
@@ -234,6 +228,7 @@
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
     NSLog(@"XMPP stream did connect.");
+    [self.homeDelegate didConnect];
     NSError *error = nil;
     if (![xmppStream authenticateWithPassword:password error:&error]) {
         NSLog(@"XMPP stream authenticate with password error.");
@@ -250,7 +245,7 @@
     NSLog(@"XMPP stream did authenticate, user: %@.", [[xmppStream myJID] user]);
     [self goOnline];
     if (!self.autoConnect) {
-        [self.authenticationDelegate userAuthenticated];
+        [self.loginDelegate didAuthenticate];
     }
 }
 
@@ -258,7 +253,7 @@
 {
     NSLog(@"XMPP stream did not authenticate, user: %@.", [[xmppStream myJID] user]);
     if (!self.autoConnect) {
-        [self.authenticationDelegate userNotAuthenticated];
+        [self.loginDelegate didNotAuthenticate];
     }
 }
 
@@ -277,8 +272,8 @@
         NSString *displayName = [userStorageObject displayName];
         
         if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
-            [self.messageDelegate newMessageReceived:message];
-            [self.chatDelegate newMessageReceived:message];
+            [self.homeDelegate didReceiveMessage:message];
+            [self.chatDelegate didReceiveMessage:message];
         } else {
             NSLog(@"Presents a local notification.");
             self.badgeNumber++;
@@ -315,6 +310,7 @@
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
 {
     NSLog(@"XMPP stream did disconnect.");
+    [self.homeDelegate didDisconnect];
 }
 
 #pragma mark - XMPPRosterDelegate

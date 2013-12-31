@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <MBProgressHUD/MBProgressHUD.h>
-#import "KXAuthenticationDelegate.h"
+#import "KXLoginDelegate.h"
 #import "KXViewController.h"
 
 #define REGISTER_BUTTON_HEIGHT 45.0f
 
-@interface KXLoginViewController : KXViewController <MBProgressHUDDelegate, KXAuthenticationDelegate>
+@interface KXLoginViewController : KXViewController <MBProgressHUDDelegate, KXLoginDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *userIdTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;

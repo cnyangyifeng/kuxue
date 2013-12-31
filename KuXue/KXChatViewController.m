@@ -418,9 +418,9 @@
 
 #pragma mark - KXChatDelegate
 
-- (void)newMessageReceived:(XMPPMessage *)message
+- (void)didReceiveMessage:(XMPPMessage *)message
 {
-    NSLog(@"Callback: New messsage received.");
+    NSLog(@"KXChatDelegate callback: New messsage received.");
     XMPPUserCoreDataStorageObject *userStorageObject = [[[self appDelegate] xmppRosterCoreDataStorage] userForJID:[message from] xmppStream:[[self appDelegate] xmppStream] managedObjectContext:[[self appDelegate] managedRosterObjectContext]];
     NSString *body = [[message elementForName:@"body"] stringValue];
     NSString *displayName = [userStorageObject displayName];

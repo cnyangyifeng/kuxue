@@ -33,7 +33,7 @@
 {
     [super viewDidLoad];
     
-    [[self appDelegate] setAuthenticationDelegate:self];
+    [[self appDelegate] setLoginDelegate:self];
     
     [self initUserIdTextField];
     [self initPasswordTextField];
@@ -139,18 +139,18 @@
     [self hideProgressHud:PROGRESS_TIMEOUT_IN_SECONDS];
 }
 
-#pragma mark - KXAuthenticationDelegate
+#pragma mark - KXLoginDelegate
 
-- (void)userAuthenticated
+- (void)didAuthenticate
 {
-    NSLog(@"Callback: User authenticated.");
+    NSLog(@"KXLoginDelegate callback: User did authenticated.");
     [self hideProgressHud:0.0f];
     [self performSegueWithIdentifier:@"presentMainFromLogin" sender:nil];
 }
 
-- (void)userNotAuthenticated
+- (void)didNotAuthenticate
 {
-    NSLog(@"Callback: User not authenticated.");
+    NSLog(@"KXLoginDelegate callback: User did not authenticated.");
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"jid"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
     [[self appDelegate] disconnect];
