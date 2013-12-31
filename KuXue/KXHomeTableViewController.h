@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "KXContactTableViewController.h"
 #import "KXHomeTableViewCell.h"
-#import "KXIdea.h"
+#import "KXMessage.h"
+#import "KXMessageDelegate.h"
 #import "KXTableViewController.h"
 
-@interface KXHomeTableViewController : KXTableViewController
+@interface KXHomeTableViewController : KXTableViewController <KXMessageDelegate>
 
-@property (strong, nonatomic) NSMutableArray *ideas;
+@property (strong, nonatomic) NSMutableArray *messages;
 
 @end

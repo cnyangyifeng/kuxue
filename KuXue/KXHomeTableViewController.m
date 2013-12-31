@@ -14,7 +14,7 @@
 
 @implementation KXHomeTableViewController
 
-@synthesize ideas = _ideas;
+@synthesize messages = _messages;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,15 +27,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [[self appDelegate] setMessageDelegate:self];
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    [self initMockData];
+    [self initData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,16 +44,11 @@
 
 #pragma mark - Initializations
 
-- (void)initMockData
+- (void)initData
 {
     NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXIdea"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"sid" ascending:YES];
-    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
-    self.ideas = [[context executeFetchRequest:request error:nil] mutableCopy];
-    
-    // Reloads table data every time this view appears.
-    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXMessage"];
+    self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
     [self.tableView reloadData];
 }
 
@@ -67,21 +61,18 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.ideas.count;
+    return self.messages.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIdentifier = @"homeTableViewCell";
-    
     KXHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    KXIdea *idea = [self.ideas objectAtIndex:indexPath.row];
-    cell.contactAvatarImageView.image = [UIImage imageNamed:idea.contactAvatar];
-    cell.contactNameLabel.text = idea.contactName;
-    cell.ideaThumbnailImageView.image = [UIImage imageNamed:idea.ideaThumbnail];
-    cell.ideaTitleLabel.text = idea.ideaTitle;
-    cell.ideaTimeReceivedLabel.text = idea.ideaTimeReceived;
+    KXMessage *message = [self.messages objectAtIndex:indexPath.row];
+    cell.contactAvatarImageView.image = [UIImage imageNamed:message.contactAvatar];
+    cell.contactNameLabel.text = message.contactName;
+    cell.messageBodyLabel.text = message.messageContent;
     
     return cell;
 }
@@ -97,15 +88,23 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Deletes the selected record from core data.
-        [context deleteObject:[self.ideas objectAtIndex:indexPath.row]];
+        [context deleteObject:[self.messages objectAtIndex:indexPath.row]];
         NSError *error;
         if (![context save:&error]) {
             NSLog(@"Data not deleted. %@, %@", error, [error userInfo]);
             return;
         }
         // Removes the selected row from table view.
-        [self.ideas removeObjectAtIndex:indexPath.row];
+        [self.messages removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+- (void)scrollTableView
+{
+    if (self.messages.count > 1) {
+        NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
 }
 
@@ -113,7 +112,36 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //
+}
+
+#pragma mark - KXMessageDelegate
+
+- (void)newMessageReceived:(XMPPMessage *)message
+{
+    NSLog(@"Callback: New messsage received, home view updated.");
+    XMPPUserCoreDataStorageObject *contact = [[[self appDelegate] xmppRosterCoreDataStorage] userForJID:[message from] xmppStream:[[self appDelegate] xmppStream] managedObjectContext:[[self appDelegate] managedRosterObjectContext]];
+    NSString *body = [[message elementForName:@"body"] stringValue];
+    
+    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
+    KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
+    msg.contactAvatar = DEFAULT_AVATAR_NAME;
+    if (contact.nickname != nil) {
+        msg.contactName = contact.nickname;
+    } else {
+        msg.contactName = [[contact jid] user];
+    }
+    msg.messageContent = body;
+    msg.messageReceivedTime = [NSDate date];
+    msg.messageType = @"incoming";
+    [context insertObject:msg];
+    NSError *error;
+    if (![context save:&error]) {
+        NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
+        return;
+    }
+    [self.messages addObject:msg];
+    [self.tableView reloadData];
+    [self scrollTableView];
 }
 
 @end

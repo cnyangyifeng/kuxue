@@ -29,12 +29,9 @@
 @synthesize insertOrAudioSendButton = _insertOrAudioSendButton;
 
 @synthesize talkHud = _talkHud;
-
-@synthesize messages = _messages;
-@synthesize turnSockets = _turnSockets;
-
 @synthesize isAudioChatType = _isAudioChatType;
 
+@synthesize messages = _messages;
 @synthesize contact = _contact;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -43,51 +40,35 @@
     if (self) {
         [self initMainView];
     }
-    
-    self.turnSockets = [[NSMutableArray alloc] init];
-    [[self appDelegate] setMessageDelegate:self];
-    
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [[self appDelegate] setChatDelegate:self];
     [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-    
-    // Open TURN Socket.
-    // KXUser *user = [[self appDelegate] user];
-    // NSString *jid = @"contact@42.96.184.90";
-    
-    // TURNSocket *socket = [[TURNSocket alloc] initWithStream:[self xmppStream] toJID:[XMPPJID jidWithString:jid]];
-    // [self.turnSockets addObject:socket];
-    // [socket startWithDelegate:self delegateQueue:dispatch_get_main_queue()];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [self addKeyboardControl];
-
-    [self initMockData];
-    // [self initData];
+    [self initData];
+    [self.chatTableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     [self scrollTableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
     [self removeKeyboardControl];
     [self.talkHud commitRecording];
 }
@@ -99,22 +80,13 @@
 
 #pragma mark - Initializations
 
-- (void)initMockData
+- (void)initData
 {
     NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXMessage"];
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"messageReceivedTime" ascending:YES];
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
     self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
-    
-    // Reloads table data every time this view appears.
-    
-    [self.chatTableView reloadData];
-}
-
-- (void)initData
-{
-    self.messages = [[NSMutableArray alloc] init];
 }
 
 - (void)initMainView
@@ -322,13 +294,6 @@
     NSLog(@"Voice recording cancelled for HUD: %@", voiceHUD);
 }
 
-#pragma mark - Emoticon Button & Insert Button
-
-- (void)hideKeyboard
-{
-    [self.view hideKeyboard];
-}
-
 #pragma mark - Keyboard Control
 
 - (void)addKeyboardControl
@@ -356,6 +321,11 @@
 - (void)removeKeyboardControl
 {
     [self.view removeKeyboardControl];
+}
+
+- (void)hideKeyboard
+{
+    [self.view hideKeyboard];
 }
 
 #pragma mark - Table View
@@ -446,7 +416,7 @@
     }
 }
 
-#pragma mark - Message Delegate
+#pragma mark - KXChatDelegate
 
 - (void)newMessageReceived:(XMPPMessage *)message
 {
@@ -472,21 +442,6 @@
     [self.messages addObject:msg];
     [self.chatTableView reloadData];
     [self scrollTableView];
-}
-
-#pragma mark - TURN Socket
-
-- (void)turnSocket:(TURNSocket *)sender didSucceed:(GCDAsyncSocket *)socket
-{
-    NSLog(@"TURN Connection succeeded!");
-    NSLog(@"You now have a socket that you can use to send/receive data to/from the other person.");
-    [self.turnSockets removeObject:sender];
-}
-
-- (void)turnSocketDidFail:(TURNSocket *)sender
-{
-    NSLog(@"TURN Connection failed!");
-    [self.turnSockets removeObject:sender];
 }
 
 @end

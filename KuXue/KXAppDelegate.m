@@ -28,12 +28,13 @@
 @synthesize firstRun = _firstRun;
 
 @synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize managedObjectModel = _managedObjectModel;
 
 @synthesize authenticationDelegate = _authenticationDelegate;
 @synthesize contactsDelegate = _contactsDelegate;
 @synthesize messageDelegate = _messageDelegate;
+@synthesize chatDelegate = _chatDelegate;
 
 @synthesize badgeNumber = _badgeNumber;
 
@@ -277,6 +278,7 @@
         
         if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
             [self.messageDelegate newMessageReceived:message];
+            [self.chatDelegate newMessageReceived:message];
         } else {
             NSLog(@"Presents a local notification.");
             self.badgeNumber++;

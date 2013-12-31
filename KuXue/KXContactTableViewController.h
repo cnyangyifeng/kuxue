@@ -10,7 +10,6 @@
 #import "KXChatViewController.h"
 #import "KXContactHeaderTableViewCell.h"
 #import "KXContactTableViewCell.h"
-#import "KXIdea.h"
 #import "KXTableViewController.h"
 
 @interface KXContactTableViewController : KXTableViewController

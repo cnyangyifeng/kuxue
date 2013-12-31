@@ -12,9 +12,7 @@
 
 @synthesize contactAvatarImageView = _contactAvatarImageView;
 @synthesize contactNameLabel = _contactNameLabel;
-@synthesize ideaThumbnailImageView = _ideaThumbnailImageView;
-@synthesize ideaTitleLabel = _ideaTitleLabel;
-@synthesize ideaTimeReceivedLabel = _ideaTimeReceivedLabel;
+@synthesize messageBodyLabel = _messageBodyLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

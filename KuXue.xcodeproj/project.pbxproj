@@ -14,7 +14,6 @@
 		0F06BFFC1832276E00FDF785 /* KXContactsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F06BFFB1832276E00FDF785 /* KXContactsTableViewController.m */; };
 		0F06BFFF1832278700FDF785 /* KXContactsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F06BFFE1832278700FDF785 /* KXContactsTableViewCell.m */; };
 		0F06C0031832586800FDF785 /* pinyin.c in Sources */ = {isa = PBXBuildFile; fileRef = 0F06C0021832586800FDF785 /* pinyin.c */; };
-		0F06C00C1833CA0200FDF785 /* KXIdea.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F06C00B1833CA0200FDF785 /* KXIdea.m */; };
 		0F223AB7185F04C200EA921A /* XMPPAnonymousAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F223974185F04C100EA921A /* XMPPAnonymousAuthentication.m */; };
 		0F223AB8185F04C200EA921A /* XMPPDeprecatedDigestAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F223977185F04C100EA921A /* XMPPDeprecatedDigestAuthentication.m */; };
 		0F223AB9185F04C200EA921A /* XMPPDeprecatedPlainAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F22397A185F04C100EA921A /* XMPPDeprecatedPlainAuthentication.m */; };
@@ -154,7 +153,6 @@
 		0FC6F0621838DF78009683D4 /* KXContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */; };
 		0FC6F0651838F6BE009683D4 /* KXContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0641838F6BE009683D4 /* KXContactTableViewController.m */; };
 		0FC6F0681838FA8B009683D4 /* KXContactHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0671838FA8B009683D4 /* KXContactHeaderTableViewCell.m */; };
-		0FC6F06B18390CD0009683D4 /* KXIdeaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F06A18390CD0009683D4 /* KXIdeaViewController.m */; };
 		0FC6F07118392E58009683D4 /* KXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F07018392E58009683D4 /* KXChatViewController.m */; };
 		0FC755C7184ED49E008B081A /* KXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC755C6184ED49E008B081A /* KXLoginViewController.m */; };
 		0FC7560E18558FCD008B081A /* KXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC7560D18558FCD008B081A /* KXViewController.m */; };
@@ -202,8 +200,6 @@
 		0F06BFFE1832278700FDF785 /* KXContactsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactsTableViewCell.m; sourceTree = "<group>"; };
 		0F06C0011832582800FDF785 /* pinyin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pinyin.h; sourceTree = "<group>"; };
 		0F06C0021832586800FDF785 /* pinyin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pinyin.c; sourceTree = "<group>"; };
-		0F06C00A1833CA0200FDF785 /* KXIdea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXIdea.h; sourceTree = "<group>"; };
-		0F06C00B1833CA0200FDF785 /* KXIdea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXIdea.m; sourceTree = "<group>"; };
 		0F12B223185C6FD100C5A14F /* KXAuthenticationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXAuthenticationDelegate.h; sourceTree = "<group>"; };
 		0F223973185F04C100EA921A /* XMPPAnonymousAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPAnonymousAuthentication.h; sourceTree = "<group>"; };
 		0F223974185F04C100EA921A /* XMPPAnonymousAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPAnonymousAuthentication.m; sourceTree = "<group>"; };
@@ -465,6 +461,7 @@
 		0F223B4018672D7300EA921A /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male.png; sourceTree = "<group>"; };
 		0F223B4218672D7300EA921A /* keep_calm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = keep_calm.png; sourceTree = "<group>"; };
 		0F223B4418672D7300EA921A /* thumbnail-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "thumbnail-1.jpg"; sourceTree = "<group>"; };
+		0F223B4918673E2A00EA921A /* KXChatDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXChatDelegate.h; sourceTree = "<group>"; };
 		0F26E17F185CCAA7001F4725 /* KXUserProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXUserProfileTableViewController.h; sourceTree = "<group>"; };
 		0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXUserProfileTableViewController.m; sourceTree = "<group>"; };
 		0F26E219185D4948001F4725 /* KXContactsDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXContactsDelegate.h; sourceTree = "<group>"; };
@@ -487,8 +484,6 @@
 		0FC6F0641838F6BE009683D4 /* KXContactTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactTableViewController.m; sourceTree = "<group>"; };
 		0FC6F0661838FA8B009683D4 /* KXContactHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXContactHeaderTableViewCell.h; sourceTree = "<group>"; };
 		0FC6F0671838FA8B009683D4 /* KXContactHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactHeaderTableViewCell.m; sourceTree = "<group>"; };
-		0FC6F06918390CD0009683D4 /* KXIdeaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXIdeaViewController.h; sourceTree = "<group>"; };
-		0FC6F06A18390CD0009683D4 /* KXIdeaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXIdeaViewController.m; sourceTree = "<group>"; };
 		0FC6F06F18392E58009683D4 /* KXChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXChatViewController.h; sourceTree = "<group>"; };
 		0FC6F07018392E58009683D4 /* KXChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXChatViewController.m; sourceTree = "<group>"; };
 		0FC755C5184ED49E008B081A /* KXLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXLoginViewController.h; sourceTree = "<group>"; };
@@ -1403,6 +1398,7 @@
 				0FE7CF6E1830B70600CC502F /* KXAppDelegate.h */,
 				0FE7CF6F1830B70600CC502F /* KXAppDelegate.m */,
 				0F12B223185C6FD100C5A14F /* KXAuthenticationDelegate.h */,
+				0F223B4918673E2A00EA921A /* KXChatDelegate.h */,
 				0F761B02183C96C300651F7F /* KXChatTableViewCell.h */,
 				0F761B03183C96C300651F7F /* KXChatTableViewCell.m */,
 				0FC6F06F18392E58009683D4 /* KXChatViewController.h */,
@@ -1422,10 +1418,6 @@
 				0F06BFF51831380C00FDF785 /* KXHomeTableViewCell.m */,
 				0F06BFF11831379700FDF785 /* KXHomeTableViewController.h */,
 				0F06BFF21831379700FDF785 /* KXHomeTableViewController.m */,
-				0F06C00A1833CA0200FDF785 /* KXIdea.h */,
-				0F06C00B1833CA0200FDF785 /* KXIdea.m */,
-				0FC6F06918390CD0009683D4 /* KXIdeaViewController.h */,
-				0FC6F06A18390CD0009683D4 /* KXIdeaViewController.m */,
 				0FC755C5184ED49E008B081A /* KXLoginViewController.h */,
 				0FC755C6184ED49E008B081A /* KXLoginViewController.m */,
 				0F761B07183CE8CE00651F7F /* KXMessage.h */,
@@ -1721,7 +1713,6 @@
 				0F761B04183C96C300651F7F /* KXChatTableViewCell.m in Sources */,
 				0F223ABD185F04C200EA921A /* NSData+XMPP.m in Sources */,
 				0F223AE2185F04C200EA921A /* XMPPRoomHybridStorage.m in Sources */,
-				0F06C00C1833CA0200FDF785 /* KXIdea.m in Sources */,
 				0F223AFE185F04C200EA921A /* XMPPMessage+XEP_0066.m in Sources */,
 				0F223AE1185F04C200EA921A /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				0F223B05185F04C200EA921A /* XMPPCapabilities.xcdatamodel in Sources */,
@@ -1764,7 +1755,6 @@
 				0F223AFA185F04C200EA921A /* XMPPIQ+XEP_0060.m in Sources */,
 				0F523F881840702100F967BF /* KXVoiceHUD.m in Sources */,
 				0F223B0D185F04C200EA921A /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
-				0FC6F06B18390CD0009683D4 /* KXIdeaViewController.m in Sources */,
 				0F223B1C185F04C200EA921A /* NSXMLElement+XEP_0297.m in Sources */,
 				0F223B1D185F04C200EA921A /* XMPPMessage+XEP_0308.m in Sources */,
 				0F223B2B185F04C200EA921A /* ContextFilterLogFormatter.m in Sources */,

@@ -50,12 +50,13 @@
 @property (nonatomic) BOOL firstRun;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 
 @property (weak, nonatomic) id authenticationDelegate;
 @property (weak, nonatomic) id contactsDelegate;
 @property (weak, nonatomic) id messageDelegate;
+@property (weak, nonatomic) id chatDelegate;
 
 @property (nonatomic) NSInteger badgeNumber;
 

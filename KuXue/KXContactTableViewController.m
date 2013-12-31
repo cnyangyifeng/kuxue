@@ -82,9 +82,9 @@
         return headerCell;
     } else {
         KXContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-        KXIdea *idea = [self.ideas objectAtIndex:indexPath.row - 1];
-        cell.ideaThumbnailImageView.image = [UIImage imageNamed:idea.ideaThumbnail];
-        cell.ideaTitleLabel.text = idea.ideaTitle;
+//        KXIdea *idea = [self.ideas objectAtIndex:indexPath.row - 1];
+//        cell.ideaThumbnailImageView.image = [UIImage imageNamed:idea.ideaThumbnail];
+//        cell.ideaTitleLabel.text = idea.ideaTitle;
         return cell;
     }
 }
@@ -114,11 +114,11 @@
 
 - (void)loadContactFromCoreDataStorage
 {
-    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXIdea"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"sid" ascending:YES];
-    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
-    self.ideas = [[context executeFetchRequest:request error:nil] mutableCopy];
+//    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
+//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXIdea"];
+//    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"sid" ascending:YES];
+//    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
+//    self.ideas = [[context executeFetchRequest:request error:nil] mutableCopy];
 }
 
 @end

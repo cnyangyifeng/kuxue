@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <DAKeyboardControl/DAKeyboardControl.h>
+#import "KXChatDelegate.h"
 #import "KXChatTableViewCell.h"
 #import "KXMessage.h"
-#import "KXMessageDelegate.h"
 #import "KXUser.h"
 #import "KXViewController.h"
 #import "KXVoiceHUDDelegate.h"
@@ -36,7 +36,7 @@
 #define MAX_MESSAGE_CONTENT_WIDTH 230.0f
 #define MAX_MESSAGE_CONTENT_HEIGHT 10000.0f
 
-@interface KXChatViewController : KXViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, KXVoiceHUDDelegate, KXMessageDelegate>
+@interface KXChatViewController : KXViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, KXVoiceHUDDelegate, KXChatDelegate>
 
 @property (strong, nonatomic) UITableView *chatTableView;
 @property (strong, nonatomic) UIToolbar *chatToolbar;
@@ -53,13 +53,10 @@
 @property (strong, nonatomic) UIButton *insertOrAudioSendButton;
 
 @property (strong, nonatomic) KXVoiceHUD *talkHud;
-
-@property (strong, nonatomic) NSMutableArray *messages;
-@property (strong, nonatomic) NSMutableArray *turnSockets;
-
 @property (nonatomic) BOOL isAudioChatType;
 
 @property (strong, nonatomic) XMPPUserCoreDataStorageObject *contact;
+@property (strong, nonatomic) NSMutableArray *messages;
 
 - (void)sendMessage;
 

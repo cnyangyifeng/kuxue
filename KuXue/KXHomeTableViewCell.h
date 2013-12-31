@@ -12,8 +12,6 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *contactAvatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contactNameLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *ideaThumbnailImageView;
-@property (weak, nonatomic) IBOutlet UILabel *ideaTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *ideaTimeReceivedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *messageBodyLabel;
 
 @end
