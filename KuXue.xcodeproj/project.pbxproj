@@ -516,6 +516,8 @@
 		0FE7CF9B1831169800CC502F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0FE7CF9D183116FC00CC502F /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		0FE7D02E18312CE000CC502F /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		0FE87D711873D2D000F7C0E7 /* KXMeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMeDelegate.h; sourceTree = "<group>"; };
+		0FE87D721873D4A500F7C0E7 /* KXUserProfileDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXUserProfileDelegate.h; sourceTree = "<group>"; };
 		A4B3FC2ECF9644C395A81B8D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1421,6 +1423,7 @@
 				0F12B223185C6FD100C5A14F /* KXLoginDelegate.h */,
 				0FC755C5184ED49E008B081A /* KXLoginViewController.h */,
 				0FC755C6184ED49E008B081A /* KXLoginViewController.m */,
+				0FE87D711873D2D000F7C0E7 /* KXMeDelegate.h */,
 				0F761B07183CE8CE00651F7F /* KXMessage.h */,
 				0F761B08183CE8CE00651F7F /* KXMessage.m */,
 				0FC756131856B409008B081A /* KXMeTableViewController.h */,
@@ -1429,6 +1432,7 @@
 				0FC756101855AF91008B081A /* KXTableViewController.m */,
 				0F35AD53184D831A003E7A6D /* KXUser.h */,
 				0F35AD54184D831A003E7A6D /* KXUser.m */,
+				0FE87D721873D4A500F7C0E7 /* KXUserProfileDelegate.h */,
 				0F26E17F185CCAA7001F4725 /* KXUserProfileTableViewController.h */,
 				0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */,
 				0FC7560C18558FCD008B081A /* KXViewController.h */,

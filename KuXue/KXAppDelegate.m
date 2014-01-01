@@ -35,6 +35,8 @@
 @synthesize contactsDelegate = _contactsDelegate;
 @synthesize homeDelegate = _homeDelegate;
 @synthesize loginDelegate = _loginDelegate;
+@synthesize meDelegate = _meDelegate;
+@synthesize userProfileDelegate = _userProfileDelegate;
 
 @synthesize badgeNumber = _badgeNumber;
 
@@ -93,6 +95,8 @@
     NSLog(@"Application did become active.");
     self.badgeNumber = 0;
     application.applicationIconBadgeNumber = 0;
+    // FIXME: Detects network reachability.
+    [self connect:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -212,10 +216,14 @@
     [xmppStream disconnect];
 }
 
-- (XMPPUserCoreDataStorageObject *)user
+- (void)fetchMyUser
 {
-    XMPPUserCoreDataStorageObject *userCoreDataStorage = [xmppRosterCoreDataStorage myUserForXMPPStream:[self xmppStream] managedObjectContext:[self managedRosterObjectContext]];
-    return userCoreDataStorage;
+    NSString *myJid = [[NSUserDefaults standardUserDefaults] stringForKey:@"jid"];
+    // BUG: Ignores the core data storage and fetches my user information every time from the server, because of the libxml2 error.
+    // [xmppvCardTempModule myvCardTemp];
+    [xmppvCardTempModule fetchvCardTempForJID:[XMPPJID jidWithString:myJid] ignoreStorage:YES];
+    // XMPPvCardTemp *vCard = [xmppvCardTempModule vCardTempForJID:[XMPPJID jidWithString:myJid] shouldFetch:YES];
+    // NSLog(@"vCard: %@", [vCard jid]);
 }
 
 #pragma mark - XMPPStreamDelegate
@@ -228,6 +236,7 @@
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
     NSLog(@"XMPP stream did connect.");
+    // FIXME: Detects network reachability.
     [self.homeDelegate didConnect];
     NSError *error = nil;
     if (![xmppStream authenticateWithPassword:password error:&error]) {
@@ -259,7 +268,15 @@
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
-    NSLog(@"XMPP stream did receive IQ, type: %@.", iq.type);
+    NSLog(@"XMPP stream did receive IQ, description: %@.", iq.description);
+    if ([iq.type isEqualToString:@"result"]) {
+        NSXMLElement *element = (NSXMLElement *)[iq.children objectAtIndex:0];
+        if ([element.name isEqualToString:@"vCard"]) {
+            XMPPvCardTemp *vCardTemp = [XMPPvCardTemp vCardTempCopyFromIQ:iq];
+            [self.meDelegate didReceivevCardTemp:vCardTemp];
+            [self.userProfileDelegate didReceivevCardTemp:vCardTemp];
+        }
+    }
     return NO;
 }
 
@@ -310,6 +327,7 @@
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
 {
     NSLog(@"XMPP stream did disconnect.");
+    // FIXME: Detects network reachability.
     [self.homeDelegate didDisconnect];
 }
 
@@ -324,6 +342,23 @@
 - (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterItem:(NSXMLElement *)item
 {
     NSLog(@"XMPP roster did receive roster item.");
+}
+
+#pragma mark - XMPPvCardTempModuleDelegate
+
+- (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp forJID:(XMPPJID *)jid
+{
+    NSLog(@"XMPP vCard temp module did receive vCard temp, jid: %@.", jid);
+}
+
+- (void)xmppvCardTempModuleDidUpdateMyvCard:(XMPPvCardTempModule *)vCardTempModule
+{
+    NSLog(@"XMPP vCard temp did update my vCard.");
+}
+
+- (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error
+{
+    NSLog(@"XMPP vCard temp failed to update my vCard.");
 }
 
 #pragma mark - XMPPvCardAvatarDelegate

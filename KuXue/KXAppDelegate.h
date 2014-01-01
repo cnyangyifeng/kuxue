@@ -11,6 +11,8 @@
 #import "KXContactsDelegate.h"
 #import "KXHomeDelegate.h"
 #import "KXLoginDelegate.h"
+#import "KXMeDelegate.h"
+#import "KXUserProfileDelegate.h"
 #import "XMPPFramework.h"
 #import "constants.h"
 
@@ -58,6 +60,8 @@
 @property (weak, nonatomic) id contactsDelegate;
 @property (weak, nonatomic) id homeDelegate;
 @property (weak, nonatomic) id loginDelegate;
+@property (weak, nonatomic) id meDelegate;
+@property (weak, nonatomic) id userProfileDelegate;
 
 @property (nonatomic) NSInteger badgeNumber;
 
@@ -69,6 +73,6 @@
 - (BOOL)connect:(BOOL)automatic;
 - (void)disconnect;
 
-- (XMPPUserCoreDataStorageObject *)user;
+- (void)fetchMyUser;
 
 @end

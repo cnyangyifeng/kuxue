@@ -35,7 +35,7 @@
 {
     [super viewWillAppear:animated];
     [self initData];
-    
+    // FIXME: Detects network reachability.
     [[self appDelegate] connect:YES];
 }
 

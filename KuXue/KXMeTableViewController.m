@@ -30,14 +30,17 @@
 {
     [super viewDidLoad];
     
-    CGRect frame = self.tableView.frame;
-    frame.origin.x += 10.0f;
-    frame.origin.y += 10.0f;
-    frame.size.width -= 20.0f;
-    frame.size.height -= 10.0f;
-    self.tableView.frame = frame;
+    [[self appDelegate] setMeDelegate:self];
     
+    self.avatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
+    self.nicknameLabel.text = @"Anonymous";
     [self initLogoutButton];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[self appDelegate] fetchMyUser];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,20 +48,7 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self initUserProfile];
-    [self.view setNeedsDisplay];
-}
-
 #pragma mark - Initializations
-
-- (void)initUserProfile
-{
-    self.avatarImageView.image = [[[self appDelegate] user] photo];
-    self.nicknameLabel.text = [[[self appDelegate] user] displayName];
-}
 
 - (void)initLogoutButton
 {
@@ -83,6 +73,25 @@
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"jid"];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
         [[self appDelegate] disconnect];
+    } else if ([segue.identifier isEqualToString:@"pushUserProfileFromMe"]) {
+        KXTableViewController *destinationViewController = segue.destinationViewController;
+        destinationViewController.hidesBottomBarWhenPushed = YES;
+    }
+}
+
+#pragma mark - KXMeDelegate
+
+- (void)didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
+{
+    if (vCardTemp.photo != nil) {
+        self.avatarImageView.image = [UIImage imageWithData:vCardTemp.photo];
+    } else {
+        self.avatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
+    }
+    if (vCardTemp.nickname != nil) {
+        self.nicknameLabel.text = vCardTemp.nickname;
+    } else {
+        self.nicknameLabel.text = [[vCardTemp jid] user];
     }
 }
 

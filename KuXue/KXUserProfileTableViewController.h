@@ -7,8 +7,9 @@
 //
 
 #import "KXTableViewController.h"
+#import "KXUserProfileDelegate.h"
 
-@interface KXUserProfileTableViewController : KXTableViewController
+@interface KXUserProfileTableViewController : KXTableViewController <KXUserProfileDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;

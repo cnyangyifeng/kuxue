@@ -104,9 +104,7 @@
 {
     KXChatViewController *chatViewController = [[KXChatViewController alloc] init];
     chatViewController.contact = self.contact;
-    
     chatViewController.hidesBottomBarWhenPushed = YES;
-    
     [self.navigationController pushViewController:chatViewController animated:YES];
 }
 

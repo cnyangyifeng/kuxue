@@ -29,7 +29,7 @@
 
 //#import "XMPPBandwidthMonitor.h"
 //
-//#import "XMPPCoreDataStorage.h"
+#import "XMPPCoreDataStorage.h"
 //
 #import "XMPPReconnect.h"
 //
@@ -49,6 +49,7 @@
 #import "XMPPRoomCoreDataStorage.h"
 //#import "XMPPRoomHybridStorage.h"
 //
+#import "XMPPvCardTemp.h"
 #import "XMPPvCardTempModule.h"
 #import "XMPPvCardCoreDataStorage.h"
 //
