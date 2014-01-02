@@ -27,6 +27,8 @@
     XMPPvCardTempModule *xmppvCardTempModule;
     XMPPvCardAvatarModule *xmppvCardAvatarModule;
     XMPPvCardCoreDataStorage *xmppvCardCoreDataStorage;
+    XMPPMessageArchiving *xmppMessageArchiving;
+    XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingCoreDataStorage;
     XMPPCapabilities *xmppCapabilities;
     XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesCoreDataStorage;
     
@@ -45,6 +47,8 @@
 @property (strong, readonly, nonatomic) XMPPvCardTempModule *xmppvCardTempModule;
 @property (strong, readonly, nonatomic) XMPPvCardAvatarModule *xmppvCardAvatarModule;
 @property (strong, readonly, nonatomic) XMPPvCardCoreDataStorage *xmppvCardCoreDataStorage;
+@property (strong, readonly, nonatomic) XMPPMessageArchiving *xmppMessageArchiving;
+@property (strong, readonly, nonatomic) XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingCoreDataStorage;
 @property (strong, readonly, nonatomic) XMPPCapabilities *xmppCapabilities;
 @property (strong, readonly, nonatomic) XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesCoreDataStorage;
 
@@ -68,11 +72,10 @@
 - (NSManagedObjectContext *)managedObjectContext;
 - (NSManagedObjectContext *)managedRosterObjectContext;
 - (NSManagedObjectContext *)managedvCardObjectContext;
+- (NSManagedObjectContext *)managedMessageArchivingObjectContext;
 - (NSManagedObjectContext *)managedCapabilitiesObjectContext;
 
 - (BOOL)connect:(BOOL)automatic;
 - (void)disconnect;
-
-- (void)fetchMyUser;
 
 @end

@@ -29,18 +29,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [[self appDelegate] setMeDelegate:self];
-    
-    self.avatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
-    self.nicknameLabel.text = @"Anonymous";
     [self initLogoutButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[self appDelegate] fetchMyUser];
+    XMPPvCardTemp *vCardTemp = [[[self appDelegate] xmppvCardTempModule] myvCardTemp];
+    [self showUserInfo:vCardTemp];
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,6 +79,13 @@
 #pragma mark - KXMeDelegate
 
 - (void)didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
+{
+    NSLog(@"KXMeDelegate callback: did receive vCard temp.");
+}
+
+#pragma mark - Private Methods
+
+- (void)showUserInfo:(XMPPvCardTemp *)vCardTemp
 {
     if (vCardTemp.photo != nil) {
         self.avatarImageView.image = [UIImage imageWithData:vCardTemp.photo];

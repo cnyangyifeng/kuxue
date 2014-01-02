@@ -20,6 +20,8 @@
 @synthesize xmppvCardTempModule;
 @synthesize xmppvCardAvatarModule;
 @synthesize xmppvCardCoreDataStorage;
+@synthesize xmppMessageArchiving;
+@synthesize xmppMessageArchivingCoreDataStorage;
 @synthesize xmppCapabilities;
 @synthesize xmppCapabilitiesCoreDataStorage;
 
@@ -95,8 +97,6 @@
     NSLog(@"Application did become active.");
     self.badgeNumber = 0;
     application.applicationIconBadgeNumber = 0;
-    // FIXME: Detects network reachability.
-    [self connect:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -149,6 +149,11 @@
 - (NSManagedObjectContext *)managedvCardObjectContext
 {
     return [xmppvCardCoreDataStorage mainThreadManagedObjectContext];
+}
+
+- (NSManagedObjectContext *)managedMessageArchivingObjectContext
+{
+    return [xmppMessageArchivingCoreDataStorage mainThreadManagedObjectContext];
 }
 
 - (NSManagedObjectContext *)managedCapabilitiesObjectContext
@@ -216,16 +221,6 @@
     [xmppStream disconnect];
 }
 
-- (void)fetchMyUser
-{
-    NSString *myJid = [[NSUserDefaults standardUserDefaults] stringForKey:@"jid"];
-    // BUG: Ignores the core data storage and fetches my user information every time from the server, because of the libxml2 error.
-    // [xmppvCardTempModule myvCardTemp];
-    [xmppvCardTempModule fetchvCardTempForJID:[XMPPJID jidWithString:myJid] ignoreStorage:YES];
-    // XMPPvCardTemp *vCard = [xmppvCardTempModule vCardTempForJID:[XMPPJID jidWithString:myJid] shouldFetch:YES];
-    // NSLog(@"vCard: %@", [vCard jid]);
-}
-
 #pragma mark - XMPPStreamDelegate
 
 - (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket
@@ -268,14 +263,9 @@
 
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
-    NSLog(@"XMPP stream did receive IQ, description: %@.", iq.description);
     if ([iq.type isEqualToString:@"result"]) {
         NSXMLElement *element = (NSXMLElement *)[iq.children objectAtIndex:0];
-        if ([element.name isEqualToString:@"vCard"]) {
-            XMPPvCardTemp *vCardTemp = [XMPPvCardTemp vCardTempCopyFromIQ:iq];
-            [self.meDelegate didReceivevCardTemp:vCardTemp];
-            [self.userProfileDelegate didReceivevCardTemp:vCardTemp];
-        }
+        NSLog(@"XMPP stream did receive IQ, type: %@, name: %@.", iq.type, element.name);
     }
     return NO;
 }
@@ -388,6 +378,10 @@
     xmppvCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:xmppvCardCoreDataStorage];
     xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:xmppvCardTempModule];
     
+    xmppMessageArchivingCoreDataStorage = [XMPPMessageArchivingCoreDataStorage sharedInstance];
+    xmppMessageArchiving = [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:xmppMessageArchivingCoreDataStorage];
+    xmppMessageArchiving.clientSideMessageArchivingOnly = YES;
+    
     xmppCapabilitiesCoreDataStorage = [XMPPCapabilitiesCoreDataStorage sharedInstance];
     xmppCapabilities = [[XMPPCapabilities alloc] initWithCapabilitiesStorage:xmppCapabilitiesCoreDataStorage];
     xmppCapabilities.autoFetchHashedCapabilities = YES;
@@ -397,11 +391,16 @@
     [xmppRoster activate:xmppStream];
     [xmppvCardTempModule activate:xmppStream];
     [xmppvCardAvatarModule activate:xmppStream];
+    [xmppMessageArchiving activate:xmppStream];
     [xmppCapabilities activate:xmppStream];
     
     [xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
     [xmppReconnect addDelegate:self delegateQueue:dispatch_get_main_queue()];
     [xmppRoster addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [xmppvCardTempModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [xmppvCardAvatarModule addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [xmppMessageArchiving addDelegate:self delegateQueue:dispatch_get_main_queue()];
+    [xmppCapabilities addDelegate:self delegateQueue:dispatch_get_main_queue()];
     
     [xmppStream setHostName:XMPP_HOST_NAME];
     [xmppStream setHostPort:XMPP_HOST_PORT];
@@ -414,11 +413,16 @@
     [xmppStream removeDelegate:self];
     [xmppReconnect removeDelegate:self];
     [xmppRoster removeDelegate:self];
+    [xmppvCardTempModule removeDelegate:self];
+    [xmppvCardAvatarModule removeDelegate:self];
+    [xmppMessageArchiving removeDelegate:self];
+    [xmppCapabilities removeDelegate:self];
     
     [xmppReconnect deactivate];
     [xmppRoster deactivate];
     [xmppvCardTempModule deactivate];
     [xmppvCardAvatarModule deactivate];
+    [xmppMessageArchiving deactivate];
     [xmppCapabilities deactivate];
     
     [xmppStream disconnect];
@@ -430,6 +434,8 @@
     xmppvCardTempModule = nil;
     xmppvCardAvatarModule = nil;
     xmppvCardCoreDataStorage = nil;
+    xmppMessageArchiving = nil;
+    xmppMessageArchivingCoreDataStorage = nil;
     xmppCapabilities = nil;
     xmppCapabilitiesCoreDataStorage = nil;
 }

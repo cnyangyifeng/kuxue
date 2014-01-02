@@ -56,7 +56,7 @@
 {
     [super viewWillAppear:animated];
     [self addKeyboardControl];
-    [self initData];
+    [self loadMessagesFromCoreDataStorage];
     [self.chatTableView reloadData];
 }
 
@@ -82,11 +82,11 @@
 
 - (void)initData
 {
-    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXMessage"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"messageReceivedTime" ascending:YES];
-    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
-    self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
+//    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
+//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXMessage"];
+//    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"messageReceivedTime" ascending:YES];
+//    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
+//    self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
 }
 
 - (void)initMainView
@@ -265,21 +265,22 @@
         
         self.inputTextField.text = @"";
         
-        NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-        KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-        // KXUser *usr = [[self appDelegate] lastActivateUser];
-        message.contactAvatar = DEFAULT_AVATAR_NAME;
-        // message.contactName = usr.nickname;
-        message.messageContent = messageContent;
-        message.messageReceivedTime = [NSDate date];
-        message.messageType = @"outgoing";
-        [context insertObject:message];
-        NSError *error;
-        if (![context save:&error]) {
-            NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
-            return;
-        }
-        [self.messages addObject:message];
+//        NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
+//        KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
+//        // KXUser *usr = [[self appDelegate] lastActivateUser];
+//        message.contactAvatar = DEFAULT_AVATAR_NAME;
+//        // message.contactName = usr.nickname;
+//        message.messageContent = messageContent;
+//        message.messageReceivedTime = [NSDate date];
+//        message.messageType = @"outgoing";
+//        [context insertObject:message];
+//        NSError *error;
+//        if (![context save:&error]) {
+//            NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
+//            return;
+//        }
+//        [self.messages addObject:message];
+        [self loadMessagesFromCoreDataStorage];
         [self.chatTableView reloadData];
     }
 }
@@ -344,13 +345,20 @@
 {
     KXChatTableViewCell *cell = [[KXChatTableViewCell alloc] init];
     
-    KXMessage *message = [self.messages objectAtIndex:indexPath.row];
+    // KXMessage *message = [self.messages objectAtIndex:indexPath.row];
+    XMPPMessageArchiving_Message_CoreDataObject *message = [self.messages objectAtIndex:indexPath.row];
     
     // Sets the contact avatar.
-    cell.contactAvatarImageView.image = [UIImage imageNamed:message.contactAvatar];
-    if ([message.messageType isEqualToString:@"incoming"]) {
+//    cell.contactAvatarImageView.image = [UIImage imageNamed:message.contactAvatar];
+//    if ([message.messageType isEqualToString:@"incoming"]) {
+//        [cell.contactAvatarImageView setFrame:CGRectMake(0.0f, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
+//    } else if ([message.messageType isEqualToString:@"outgoing"]) {
+//        [cell.contactAvatarImageView setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
+//    }
+    cell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
+    if (message.isOutgoing) {
         [cell.contactAvatarImageView setFrame:CGRectMake(0.0f, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
-    } else if ([message.messageType isEqualToString:@"outgoing"]) {
+    } else {
         [cell.contactAvatarImageView setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
     }
     
@@ -363,18 +371,31 @@
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     NSDictionary *attributes = @{NSFontAttributeName: cell.messageContentLabel.font, NSParagraphStyleAttributeName: paragraphStyle};
-    CGSize size = [message.messageContent boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
-    cell.messageContentLabel.text = message.messageContent;
+//    CGSize size = [message.messageContent boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+//    cell.messageContentLabel.text = message.messageContent;
+    CGSize size = [message.body boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+    cell.messageContentLabel.text = message.body;
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.userInteractionEnabled = NO;
     
     UIImage *bgImage = nil;
-    if ([message.messageType isEqualToString:@"incoming"]) {
+//    if ([message.messageType isEqualToString:@"incoming"]) {
+//        [cell.messageContentLabel setFrame:CGRectMake(CONTACT_AVATAR_IMAGE_VIEW_WIDTH + MESSAGE_MARGIN + MESSAGE_PADDING_CALLOUT, MESSAGE_PADDING, size.width, size.height)];
+//        bgImage = [[UIImage imageNamed:@"MessageIncoming"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
+//        cell.messageBackgroundImageView.image = bgImage;
+//        [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING_CALLOUT, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING + MESSAGE_PADDING_TOP_SPACE, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
+//    } else if ([message.messageType isEqualToString:@"outgoing"]) {
+//        [cell.messageContentLabel setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH - MESSAGE_MARGIN - MESSAGE_PADDING_CALLOUT - size.width, MESSAGE_PADDING, size.width, size.height)];
+//        bgImage = [[UIImage imageNamed:@"MessageOutgoing"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
+//        cell.messageBackgroundImageView.image = bgImage;
+//        [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING + MESSAGE_PADDING_TOP_SPACE, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
+//    }
+    if (message.isOutgoing) {
         [cell.messageContentLabel setFrame:CGRectMake(CONTACT_AVATAR_IMAGE_VIEW_WIDTH + MESSAGE_MARGIN + MESSAGE_PADDING_CALLOUT, MESSAGE_PADDING, size.width, size.height)];
         bgImage = [[UIImage imageNamed:@"MessageIncoming"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
         cell.messageBackgroundImageView.image = bgImage;
         [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING_CALLOUT, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING + MESSAGE_PADDING_TOP_SPACE, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
-    } else if ([message.messageType isEqualToString:@"outgoing"]) {
+    } else {
         [cell.messageContentLabel setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH - MESSAGE_MARGIN - MESSAGE_PADDING_CALLOUT - size.width, MESSAGE_PADDING, size.width, size.height)];
         bgImage = [[UIImage imageNamed:@"MessageOutgoing"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
         cell.messageBackgroundImageView.image = bgImage;
@@ -386,13 +407,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    KXMessage *message = [self.messages objectAtIndex:indexPath.row];
+    XMPPMessageArchiving_Message_CoreDataObject *message = [self.messages objectAtIndex:indexPath.row];
 
     CGSize textSize = { MAX_MESSAGE_CONTENT_WIDTH, MAX_MESSAGE_CONTENT_HEIGHT };
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:DEFAULT_FONT_SIZE], NSParagraphStyleAttributeName: paragraphStyle};
-    CGSize size = [message.messageContent boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+    CGSize size = [message.body boundingRectWithSize:textSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
     size.height += MESSAGE_PADDING * 2;
     
     CGFloat height = size.height + TABLE_VIEW_CELL_HEIGHT_SPACE;
@@ -416,30 +437,47 @@
     }
 }
 
+#pragma mark - Core Data
+
+- (void)loadMessagesFromCoreDataStorage
+{
+    //    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
+    //    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXMessage"];
+    //    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"messageReceivedTime" ascending:YES];
+    //    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
+    //    self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
+    
+    NSManagedObjectContext *context = [[self appDelegate] managedMessageArchivingObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPMessageArchiving_Message_CoreDataObject"];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
+    self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
+}
+
 #pragma mark - KXChatDelegate
 
 - (void)didReceiveMessage:(XMPPMessage *)message
 {
     NSLog(@"KXChatDelegate callback: New messsage received.");
-    XMPPUserCoreDataStorageObject *userStorageObject = [[[self appDelegate] xmppRosterCoreDataStorage] userForJID:[message from] xmppStream:[[self appDelegate] xmppStream] managedObjectContext:[[self appDelegate] managedRosterObjectContext]];
-    NSString *body = [[message elementForName:@"body"] stringValue];
-    NSString *displayName = [userStorageObject displayName];
-    
-    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-    KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-    
-    msg.contactAvatar = DEFAULT_AVATAR_NAME;
-    msg.contactName = displayName;
-    msg.messageContent = body;
-    msg.messageReceivedTime = [NSDate date];
-    msg.messageType = @"incoming";
-    [context insertObject:msg];
-    NSError *error;
-    if (![context save:&error]) {
-        NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
-        return;
-    }
-    [self.messages addObject:msg];
+//    XMPPUserCoreDataStorageObject *userStorageObject = [[[self appDelegate] xmppRosterCoreDataStorage] userForJID:[message from] xmppStream:[[self appDelegate] xmppStream] managedObjectContext:[[self appDelegate] managedRosterObjectContext]];
+//    NSString *body = [[message elementForName:@"body"] stringValue];
+//    NSString *displayName = [userStorageObject displayName];
+//    
+//    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
+//    KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
+//    msg.contactAvatar = DEFAULT_AVATAR_NAME;
+//    msg.contactName = displayName;
+//    msg.messageContent = body;
+//    msg.messageReceivedTime = [NSDate date];
+//    msg.messageType = @"incoming";
+//    [context insertObject:msg];
+//    NSError *error;
+//    if (![context save:&error]) {
+//        NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
+//        return;
+//    }
+//    [self.messages addObject:msg];
+    [self loadMessagesFromCoreDataStorage];
     [self.chatTableView reloadData];
     [self scrollTableView];
 }
