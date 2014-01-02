@@ -90,9 +90,9 @@
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 //{
 //    if (indexPath.row == 0) {
-//        return 140.0f;
+//        return 150.0f;
 //    } else {
-//        return 90.0f;
+//        return 50.0f;
 //    }
 //}
 
@@ -101,8 +101,10 @@
 - (IBAction)pushChatViewController:(id)sender
 {
     KXChatViewController *chatViewController = [[KXChatViewController alloc] init];
+    
     chatViewController.contact = self.contact;
     chatViewController.hidesBottomBarWhenPushed = YES;
+    
     [self.navigationController pushViewController:chatViewController animated:YES];
 }
 

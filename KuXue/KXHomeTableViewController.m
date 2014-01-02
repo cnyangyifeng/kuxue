@@ -64,12 +64,23 @@
     KXHomeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     XMPPMessageArchiving_Contact_CoreDataObject *conversation = [self.conversations objectAtIndex:indexPath.row];
-    // cell.contactAvatarImageView.image = [UIImage imageNamed:message.contactAvatar];
-    cell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
+    KXAppDelegate *delegate = [self appDelegate];
+    XMPPUserCoreDataStorageObject *contact = [[delegate xmppRosterCoreDataStorage] userForJID:[conversation bareJid] xmppStream:[delegate xmppStream] managedObjectContext:[delegate managedRosterObjectContext]];
+    if (contact.photo != nil) {
+        cell.contactAvatarImageView.image = contact.photo;
+    } else {
+        NSData *photoData = [[[self appDelegate] xmppvCardAvatarModule] photoDataForJID:contact.jid];
+        if (photoData != nil) {
+            cell.contactAvatarImageView.image = [UIImage imageWithData:photoData];
+        } else {
+            cell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
+        }
+    }
     cell.contactNameLabel.text = [[conversation bareJid] user];
     cell.messageTimestampLabel.text = [NSDateFormatter localizedStringFromDate:conversation.mostRecentMessageTimestamp dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
     cell.messageTypeImageView.image = [UIImage imageNamed:@"MessageTypeVoice"];
     cell.messageBodyLabel.text = conversation.mostRecentMessageBody;
+    
     return cell;
 }
 
@@ -98,8 +109,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     KXChatViewController *chatViewController = [[KXChatViewController alloc] init];
-    // chatViewController.contact = self.contact;
+    
+    XMPPMessageArchiving_Contact_CoreDataObject *conversation = [self.conversations objectAtIndex:indexPath.row];
+    KXAppDelegate *delegate = [self appDelegate];
+    XMPPUserCoreDataStorageObject *contact = [[delegate xmppRosterCoreDataStorage] userForJID:[conversation bareJid] xmppStream:[delegate xmppStream] managedObjectContext:[delegate managedRosterObjectContext]];
+    chatViewController.contact = contact;
     chatViewController.hidesBottomBarWhenPushed = YES;
+    
     [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
