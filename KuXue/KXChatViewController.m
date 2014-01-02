@@ -250,11 +250,11 @@
 
 - (void)sendMessage
 {
-    NSString *messageContent = self.inputTextField.text;
+    NSString *messageBody = self.inputTextField.text;
     
-    if (messageContent.length > 0) {
+    if (messageBody.length > 0) {
         NSXMLElement *body = [NSXMLElement elementWithName:@"body"];
-        [body setStringValue:messageContent];
+        [body setStringValue:messageBody];
         
         NSXMLElement *msg = [NSXMLElement elementWithName:@"message"];
         [msg addAttributeWithName:@"type" stringValue:@"chat"];
@@ -280,8 +280,9 @@
 //            return;
 //        }
 //        [self.messages addObject:message];
-        [self loadMessagesFromCoreDataStorage];
-        [self.chatTableView reloadData];
+        
+//        [self loadMessagesFromCoreDataStorage];
+//        [self.chatTableView reloadData];
     }
 }
 
@@ -356,7 +357,7 @@
 //        [cell.contactAvatarImageView setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
 //    }
     cell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
-    if (message.isOutgoing) {
+    if (!message.isOutgoing) {
         [cell.contactAvatarImageView setFrame:CGRectMake(0.0f, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
     } else {
         [cell.contactAvatarImageView setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
@@ -390,7 +391,7 @@
 //        cell.messageBackgroundImageView.image = bgImage;
 //        [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING + MESSAGE_PADDING_TOP_SPACE, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
 //    }
-    if (message.isOutgoing) {
+    if (!message.isOutgoing) {
         [cell.messageContentLabel setFrame:CGRectMake(CONTACT_AVATAR_IMAGE_VIEW_WIDTH + MESSAGE_MARGIN + MESSAGE_PADDING_CALLOUT, MESSAGE_PADDING, size.width, size.height)];
         bgImage = [[UIImage imageNamed:@"MessageIncoming"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
         cell.messageBackgroundImageView.image = bgImage;
@@ -451,6 +452,8 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPMessageArchiving_Message_CoreDataObject"];
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr=%@", self.contact.jidStr];
+    [request setPredicate:predicate];
     self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
 }
 
@@ -477,6 +480,14 @@
 //        return;
 //    }
 //    [self.messages addObject:msg];
+    [self loadMessagesFromCoreDataStorage];
+    [self.chatTableView reloadData];
+    [self scrollTableView];
+}
+
+- (void)didSendMessage:(XMPPMessage *)message
+{
+    NSLog(@"KXChatDelegate callback: New message sent.");
     [self loadMessagesFromCoreDataStorage];
     [self.chatTableView reloadData];
     [self scrollTableView];

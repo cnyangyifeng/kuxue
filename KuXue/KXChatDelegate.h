@@ -14,5 +14,6 @@
 @required
 
 - (void)didReceiveMessage:(XMPPMessage *)message;
+- (void)didSendMessage:(XMPPMessage *)message;
 
 @end

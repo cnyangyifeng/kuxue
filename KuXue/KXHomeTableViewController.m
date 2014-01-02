@@ -36,7 +36,9 @@
     [super viewWillAppear:animated];
     [self initData];
     // FIXME: Detects network reachability.
-    [[self appDelegate] connect:YES];
+    if ([[[self appDelegate] xmppStream] isDisconnected]) {
+        [[self appDelegate] connect:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning

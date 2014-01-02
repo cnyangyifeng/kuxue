@@ -244,6 +244,13 @@
     NSLog(@"XMPP stream connect did timeout.");
 }
 
+- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
+{
+    NSLog(@"XMPP stream did disconnect.");
+    // FIXME: Detects network reachability.
+    [self.homeDelegate didDisconnect];
+}
+
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
     NSLog(@"XMPP stream did authenticate, user: %@.", [[xmppStream myJID] user]);
@@ -314,11 +321,10 @@
     NSLog(@"XMPP stream did receive error.");
 }
 
-- (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
+- (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
 {
-    NSLog(@"XMPP stream did disconnect.");
-    // FIXME: Detects network reachability.
-    [self.homeDelegate didDisconnect];
+    NSLog(@"XMPP stream did send message: %@", message.body);
+    [[self chatDelegate] didSendMessage:message];
 }
 
 #pragma mark - XMPPRosterDelegate
