@@ -10,7 +10,6 @@
 
 @interface KXContactHeaderTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *themeImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contactNameLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *contactAvatarImageView;
 

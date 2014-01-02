@@ -15,6 +15,6 @@
 
 @interface KXHomeTableViewController : KXTableViewController <KXHomeDelegate>
 
-@property (strong, nonatomic) NSMutableArray *messages;
+@property (strong, nonatomic) NSMutableArray *conversations;
 
 @end

@@ -47,7 +47,7 @@
 {
     [super viewDidLoad];
     [[self appDelegate] setChatDelegate:self];
-    [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [self.view setBackgroundColor:[UIColor darkGrayColor]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
@@ -80,19 +80,10 @@
 
 #pragma mark - Initializations
 
-- (void)initData
-{
-//    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXMessage"];
-//    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"messageReceivedTime" ascending:YES];
-//    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
-//    self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
-}
-
 - (void)initMainView
 {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - CHAT_TOOLBAR_HEIGHT)];
-    [tableView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [tableView setBackgroundColor:[UIColor darkGrayColor]];
     [tableView setSeparatorInset:UIEdgeInsetsZero];
     [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     tableView.dataSource = self;
@@ -452,7 +443,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPMessageArchiving_Message_CoreDataObject"];
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr=%@", self.contact.jidStr];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr==%@ AND streamBareJidStr==%@", self.contact.jidStr, self.contact.streamBareJidStr];
     [request setPredicate:predicate];
     self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
 }

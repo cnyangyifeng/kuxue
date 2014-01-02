@@ -28,14 +28,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self loadContactFromCoreDataStorage];
-    [self.tableView reloadData];
+//    [self loadContactFromCoreDataStorage];
+//    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,58 +44,57 @@
 
 #pragma mark - Table View
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//    return 1;
+//}
+//
+//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//    return self.ideas.count + 1;
+//}
+//
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString *headerCellIdendifier = @"contactHeaderTableViewCell";
+//    static NSString *cellIdentifier = @"contactTableViewCell";
+//    
+//    if (indexPath.row == 0) {
+//        KXContactHeaderTableViewCell *headerCell = [tableView dequeueReusableCellWithIdentifier:headerCellIdendifier forIndexPath:indexPath];
+//        if (self.contact.photo != nil) {
+//            headerCell.contactAvatarImageView.image = self.contact.photo;
+//        } else {
+//            NSData *photoData = [[[self appDelegate] xmppvCardAvatarModule] photoDataForJID:self.contact.jid];
+//            if (photoData != nil) {
+//                headerCell.contactAvatarImageView.image = [UIImage imageWithData:photoData];
+//            } else {
+//                headerCell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
+//            }
+//        }
+//        if (self.contact.nickname != nil) {
+//            headerCell.contactNameLabel.text = self.contact.nickname;
+//        } else {
+//            headerCell.contactNameLabel.text = [[self.contact jid] user];
+//        }
+//        headerCell.backgroundColor = [UIColor whiteColor];
+//        return headerCell;
+//    } else {
+//        KXContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+////        KXIdea *idea = [self.ideas objectAtIndex:indexPath.row - 1];
+////        cell.ideaThumbnailImageView.image = [UIImage imageNamed:idea.ideaThumbnail];
+////        cell.ideaTitleLabel.text = idea.ideaTitle;
+//        return cell;
+//    }
+//}
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.ideas.count + 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *headerCellIdendifier = @"contactHeaderTableViewCell";
-    static NSString *cellIdentifier = @"contactTableViewCell";
-    
-    if (indexPath.row == 0) {
-        KXContactHeaderTableViewCell *headerCell = [tableView dequeueReusableCellWithIdentifier:headerCellIdendifier forIndexPath:indexPath];
-        headerCell.themeImageView.image = [UIImage imageNamed:DEFAULT_THEME_NAME];
-        if (self.contact.photo != nil) {
-            headerCell.contactAvatarImageView.image = self.contact.photo;
-        } else {
-            NSData *photoData = [[[self appDelegate] xmppvCardAvatarModule] photoDataForJID:self.contact.jid];
-            if (photoData != nil) {
-                headerCell.contactAvatarImageView.image = [UIImage imageWithData:photoData];
-            } else {
-                headerCell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
-            }
-        }
-        if (self.contact.nickname != nil) {
-            headerCell.contactNameLabel.text = self.contact.nickname;
-        } else {
-            headerCell.contactNameLabel.text = [[self.contact jid] user];
-        }
-        headerCell.backgroundColor = [UIColor groupTableViewBackgroundColor];
-        return headerCell;
-    } else {
-        KXContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-//        KXIdea *idea = [self.ideas objectAtIndex:indexPath.row - 1];
-//        cell.ideaThumbnailImageView.image = [UIImage imageNamed:idea.ideaThumbnail];
-//        cell.ideaTitleLabel.text = idea.ideaTitle;
-        return cell;
-    }
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        return 315.0f;
-    } else {
-        return 90.0f;
-    }
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (indexPath.row == 0) {
+//        return 140.0f;
+//    } else {
+//        return 90.0f;
+//    }
+//}
 
 #pragma mark - Navigations
 

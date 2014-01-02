@@ -10,7 +10,6 @@
 
 @implementation KXContactHeaderTableViewCell
 
-@synthesize themeImageView = _themeImageView;
 @synthesize contactNameLabel = _contactNameLabel;
 @synthesize contactAvatarImageView = _contactAvatarImageView;
 
@@ -25,6 +24,15 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    frame.origin.x += 5;
+    frame.origin.y += 5;
+    frame.size.width -= 10;
+    frame.size.height -= 5;
+    [super setFrame:frame];
 }
 
 @end

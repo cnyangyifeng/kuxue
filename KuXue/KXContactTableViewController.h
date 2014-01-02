@@ -17,4 +17,6 @@
 @property (strong, nonatomic) XMPPUserCoreDataStorageObject *contact;
 @property (strong, nonatomic) NSMutableArray *ideas;
 
+- (IBAction)pushChatViewController:(id)sender;
+
 @end

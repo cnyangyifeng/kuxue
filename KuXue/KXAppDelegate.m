@@ -249,6 +249,8 @@
     NSLog(@"XMPP stream did disconnect.");
     // FIXME: Detects network reachability.
     [self.homeDelegate didDisconnect];
+    // Connects again.
+    [self connect:YES];
 }
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
@@ -289,6 +291,8 @@
             [self.homeDelegate didReceiveMessage:message];
             [self.chatDelegate didReceiveMessage:message];
         } else {
+            [self.homeDelegate didReceiveMessage:message];
+            [self.chatDelegate didReceiveMessage:message];
             NSLog(@"Presents a local notification.");
             self.badgeNumber++;
             UILocalNotification *localNotification = [[UILocalNotification alloc] init];

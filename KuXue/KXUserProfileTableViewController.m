@@ -58,10 +58,16 @@
     }
     if (vCardTemp.nickname != nil) {
         self.nicknameLabel.text = vCardTemp.nickname;
-    } else {
+    } else if (vCardTemp.jid != nil) {
         self.nicknameLabel.text = [[vCardTemp jid] user];
+    } else {
+        self.nicknameLabel.text = [[[[self appDelegate] xmppStream] myJID] user];
     }
-    self.userIdLabel.text = [[vCardTemp jid] user];
+    if (vCardTemp.jid != nil) {
+        self.userIdLabel.text = [[vCardTemp jid] user];
+    } else {
+        self.userIdLabel.text = [[[[self appDelegate] xmppStream] myJID] user];
+    }
 }
 
 @end
