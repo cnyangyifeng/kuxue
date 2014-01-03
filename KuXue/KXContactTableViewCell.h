@@ -10,7 +10,4 @@
 
 @interface KXContactTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *ideaThumbnailImageView;
-@property (weak, nonatomic) IBOutlet UILabel *ideaTitleLabel;
-
 @end

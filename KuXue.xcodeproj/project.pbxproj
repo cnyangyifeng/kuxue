@@ -150,7 +150,6 @@
 		0F761B09183CE8CE00651F7F /* KXMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F761B08183CE8CE00651F7F /* KXMessage.m */; };
 		0FC6F0621838DF78009683D4 /* KXContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */; };
 		0FC6F0651838F6BE009683D4 /* KXContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0641838F6BE009683D4 /* KXContactTableViewController.m */; };
-		0FC6F0681838FA8B009683D4 /* KXContactHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0671838FA8B009683D4 /* KXContactHeaderTableViewCell.m */; };
 		0FC6F07118392E58009683D4 /* KXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F07018392E58009683D4 /* KXChatViewController.m */; };
 		0FC755C7184ED49E008B081A /* KXLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC755C6184ED49E008B081A /* KXLoginViewController.m */; };
 		0FC7560E18558FCD008B081A /* KXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC7560D18558FCD008B081A /* KXViewController.m */; };
@@ -482,8 +481,6 @@
 		0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactTableViewCell.m; sourceTree = "<group>"; };
 		0FC6F0631838F6BE009683D4 /* KXContactTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXContactTableViewController.h; sourceTree = "<group>"; };
 		0FC6F0641838F6BE009683D4 /* KXContactTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactTableViewController.m; sourceTree = "<group>"; };
-		0FC6F0661838FA8B009683D4 /* KXContactHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXContactHeaderTableViewCell.h; sourceTree = "<group>"; };
-		0FC6F0671838FA8B009683D4 /* KXContactHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactHeaderTableViewCell.m; sourceTree = "<group>"; };
 		0FC6F06F18392E58009683D4 /* KXChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXChatViewController.h; sourceTree = "<group>"; };
 		0FC6F07018392E58009683D4 /* KXChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXChatViewController.m; sourceTree = "<group>"; };
 		0FC755C5184ED49E008B081A /* KXLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXLoginViewController.h; sourceTree = "<group>"; };
@@ -1410,8 +1407,6 @@
 				0F761B03183C96C300651F7F /* KXChatTableViewCell.m */,
 				0FC6F06F18392E58009683D4 /* KXChatViewController.h */,
 				0FC6F07018392E58009683D4 /* KXChatViewController.m */,
-				0FC6F0661838FA8B009683D4 /* KXContactHeaderTableViewCell.h */,
-				0FC6F0671838FA8B009683D4 /* KXContactHeaderTableViewCell.m */,
 				0F26E219185D4948001F4725 /* KXContactsDelegate.h */,
 				0F06BFFD1832278700FDF785 /* KXContactsTableViewCell.h */,
 				0F06BFFE1832278700FDF785 /* KXContactsTableViewCell.m */,
@@ -1658,7 +1653,6 @@
 				0F26E181185CCAA7001F4725 /* KXUserProfileTableViewController.m in Sources */,
 				0F223B0A185F04C200EA921A /* XMPPMessageArchiving.xcdatamodeld in Sources */,
 				0F223AF1185F04C200EA921A /* XMPPvCardTempAdr.m in Sources */,
-				0FC6F0681838FA8B009683D4 /* KXContactHeaderTableViewCell.m in Sources */,
 				0FE7CF6C1830B70600CC502F /* main.m in Sources */,
 				0F223ADD185F04C200EA921A /* XMPPRoom.xcdatamodeld in Sources */,
 				0F223B2C185F04C200EA921A /* DispatchQueueLogFormatter.m in Sources */,

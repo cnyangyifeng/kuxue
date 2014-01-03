@@ -10,9 +10,6 @@
 
 @implementation KXContactTableViewCell
 
-@synthesize ideaThumbnailImageView = _ideaThumbnailImageView;
-@synthesize ideaTitleLabel = _ideaTitleLabel;
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

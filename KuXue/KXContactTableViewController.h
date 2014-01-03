@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "KXChatViewController.h"
-#import "KXContactHeaderTableViewCell.h"
 #import "KXContactTableViewCell.h"
 #import "KXTableViewController.h"
 
 @interface KXContactTableViewController : KXTableViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *contactAvatarImageView;
+@property (weak, nonatomic) IBOutlet UILabel *contactNameLabel;
+@property (weak, nonatomic) IBOutlet UIButton *messageButton;
+@property (weak, nonatomic) IBOutlet UILabel *summaryLabel;
+
 @property (strong, nonatomic) XMPPUserCoreDataStorageObject *contact;
-@property (strong, nonatomic) NSMutableArray *ideas;
 
 - (IBAction)pushChatViewController:(id)sender;
 

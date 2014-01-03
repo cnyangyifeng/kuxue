@@ -760,11 +760,11 @@
                         <sections>
                             <tableViewSection id="b2Q-p3-4fp">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactHeaderTableViewCell" rowHeight="150" id="kuP-oi-MYw" customClass="KXContactHeaderTableViewCell">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="150"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="contactHeaderTableViewCell" rowHeight="130" id="kuP-oi-MYw" customClass="KXContactTableViewCell">
+                                        <rect key="frame" x="0.0" y="99" width="320" height="130"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kuP-oi-MYw" id="XZO-iy-RYH">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="149"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="129"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FXQ-K9-znx">
@@ -778,7 +778,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WlO-B7-JkM">
-                                                    <rect key="frame" x="10" y="90" width="290" height="45"/>
+                                                    <rect key="frame" x="0.0" y="90" width="310" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -798,17 +798,13 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="contactAvatarImageView" destination="FXQ-K9-znx" id="X6X-Xt-cBc"/>
-                                            <outlet property="contactNameLabel" destination="vuq-Q6-ohN" id="G2Z-rF-ufd"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="3dP-NJ-p3x">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="contactTableViewCell" id="a9j-7k-MjY" customClass="KXContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="269" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="249" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a9j-7k-MjY" id="UkP-FM-Gez">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="49"/>
@@ -827,13 +823,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="ideaThumbnailImageView" destination="3yp-xU-ndL" id="GGj-lI-X1H"/>
-                                            <outlet property="ideaTitleLabel" destination="zcd-Dd-UP0" id="q3M-5l-SqQ"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="contactTableViewCell" id="FAy-cn-Uar" customClass="KXContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="319" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="299" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FAy-cn-Uar" id="vJZ-U6-tLh">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="49"/>
@@ -852,19 +844,15 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="ideaThumbnailImageView" destination="Tgd-Xj-1TT" id="XHF-U2-fok"/>
-                                            <outlet property="ideaTitleLabel" destination="gVb-xV-iHf" id="beL-n7-yXU"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Summary" id="W93-al-aAU">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactTableViewCell" rowHeight="80" id="AAf-xh-gSL" customClass="KXContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="417" width="320" height="80"/>
+                                        <rect key="frame" x="0.0" y="397" width="320" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AAf-xh-gSL" id="Dbv-Lu-Eo4">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="AAf-xh-gSL" id="Dbv-Lu-Eo4">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -877,9 +865,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="ideaTitleLabel" destination="iC6-cM-CDO" id="GJF-3h-bMv"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -890,6 +875,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Contact" id="zaq-4U-rqy"/>
+                    <connections>
+                        <outlet property="contactAvatarImageView" destination="FXQ-K9-znx" id="r8F-9t-cQu"/>
+                        <outlet property="contactNameLabel" destination="vuq-Q6-ohN" id="z79-vJ-AA2"/>
+                        <outlet property="messageButton" destination="WlO-B7-JkM" id="9ev-29-HPk"/>
+                        <outlet property="summaryLabel" destination="iC6-cM-CDO" id="1Rk-ld-wNX"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mJO-eO-lkg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

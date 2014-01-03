@@ -14,8 +14,12 @@
 
 @implementation KXContactTableViewController
 
+@synthesize contactAvatarImageView = _contactAvatarImageView;
+@synthesize contactNameLabel = _contactNameLabel;
+@synthesize messageButton = _messageButton;
+@synthesize summaryLabel = _summaryLabel;
+
 @synthesize contact = _contact;
-@synthesize ideas = _ideas;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -33,8 +37,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self loadContactFromCoreDataStorage];
-//    [self.tableView reloadData];
+    [self initTableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,81 +45,35 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Table View
+#pragma mark - Initializations
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return 1;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    return self.ideas.count + 1;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *headerCellIdendifier = @"contactHeaderTableViewCell";
-//    static NSString *cellIdentifier = @"contactTableViewCell";
-//    
-//    if (indexPath.row == 0) {
-//        KXContactHeaderTableViewCell *headerCell = [tableView dequeueReusableCellWithIdentifier:headerCellIdendifier forIndexPath:indexPath];
-//        if (self.contact.photo != nil) {
-//            headerCell.contactAvatarImageView.image = self.contact.photo;
-//        } else {
-//            NSData *photoData = [[[self appDelegate] xmppvCardAvatarModule] photoDataForJID:self.contact.jid];
-//            if (photoData != nil) {
-//                headerCell.contactAvatarImageView.image = [UIImage imageWithData:photoData];
-//            } else {
-//                headerCell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
-//            }
-//        }
-//        if (self.contact.nickname != nil) {
-//            headerCell.contactNameLabel.text = self.contact.nickname;
-//        } else {
-//            headerCell.contactNameLabel.text = [[self.contact jid] user];
-//        }
-//        headerCell.backgroundColor = [UIColor whiteColor];
-//        return headerCell;
-//    } else {
-//        KXContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-////        KXIdea *idea = [self.ideas objectAtIndex:indexPath.row - 1];
-////        cell.ideaThumbnailImageView.image = [UIImage imageNamed:idea.ideaThumbnail];
-////        cell.ideaTitleLabel.text = idea.ideaTitle;
-//        return cell;
-//    }
-//}
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (indexPath.row == 0) {
-//        return 150.0f;
-//    } else {
-//        return 50.0f;
-//    }
-//}
+- (void)initTableView
+{
+    if (self.contact.photo != nil) {
+        self.contactAvatarImageView.image = self.contact.photo;
+    } else {
+        NSData *photoData = [[[self appDelegate] xmppvCardAvatarModule] photoDataForJID:self.contact.jid];
+        if (photoData != nil) {
+            self.contactAvatarImageView.image = [UIImage imageWithData:photoData];
+        } else {
+            self.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
+        }
+    }
+    if (self.contact.nickname != nil) {
+        self.contactNameLabel.text = self.contact.nickname;
+    } else {
+        self.contactNameLabel.text = [[self.contact jid] user];
+    }
+}
 
 #pragma mark - Navigations
 
 - (IBAction)pushChatViewController:(id)sender
 {
     KXChatViewController *chatViewController = [[KXChatViewController alloc] init];
-    
     chatViewController.contact = self.contact;
     chatViewController.hidesBottomBarWhenPushed = YES;
-    
     [self.navigationController pushViewController:chatViewController animated:YES];
-}
-
-#pragma mark - Core Data
-
-- (void)loadContactFromCoreDataStorage
-{
-//    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"KXIdea"];
-//    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"sid" ascending:YES];
-//    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
-//    self.ideas = [[context executeFetchRequest:request error:nil] mutableCopy];
 }
 
 @end
