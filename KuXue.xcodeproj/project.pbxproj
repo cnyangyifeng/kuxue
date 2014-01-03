@@ -174,6 +174,8 @@
 		0FE7CF9E183116FC00CC502F /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF9D183116FC00CC502F /* libresolv.dylib */; };
 		0FFE1075187559AF00B24D6D /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FFE1074187559AF00B24D6D /* default.png */; };
 		0FFE10781875C2F500B24D6D /* KXMeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFE10771875C2F500B24D6D /* KXMeTableViewCell.m */; };
+		0FFE107A1876582D00B24D6D /* XMPPFramework_Notices.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 0FFE10791876582D00B24D6D /* XMPPFramework_Notices.rtf */; };
+		0FFE107C1876680200B24D6D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE107B1876680200B24D6D /* SystemConfiguration.framework */; };
 		9ED5EA570FE54895A1D5975B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B3FC2ECF9644C395A81B8D /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -519,6 +521,8 @@
 		0FFE1074187559AF00B24D6D /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		0FFE10761875C2F500B24D6D /* KXMeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMeTableViewCell.h; sourceTree = "<group>"; };
 		0FFE10771875C2F500B24D6D /* KXMeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMeTableViewCell.m; sourceTree = "<group>"; };
+		0FFE10791876582D00B24D6D /* XMPPFramework_Notices.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = XMPPFramework_Notices.rtf; sourceTree = "<group>"; };
+		0FFE107B1876680200B24D6D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A4B3FC2ECF9644C395A81B8D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -527,6 +531,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FFE107C1876680200B24D6D /* SystemConfiguration.framework in Frameworks */,
 				0F523F8518406CF900F967BF /* QuartzCore.framework in Frameworks */,
 				0F523F8318406CE900F967BF /* AVFoundation.framework in Frameworks */,
 				0F523F8118406CDB00F967BF /* AudioToolbox.framework in Frameworks */,
@@ -1376,6 +1381,7 @@
 		0FE7CF5E1830B70600CC502F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0FFE107B1876680200B24D6D /* SystemConfiguration.framework */,
 				0F523F8418406CF900F967BF /* QuartzCore.framework */,
 				0F523F8218406CE900F967BF /* AVFoundation.framework */,
 				0F981660183DB35700EBD0B5 /* AudioToolbox.framework */,
@@ -1456,6 +1462,7 @@
 				0FE7CF6B1830B70600CC502F /* main.m */,
 				0FE7CF6D1830B70600CC502F /* KuXue-Prefix.pch */,
 				0F06BFEE1831367200FDF785 /* KuXue.xcdatamodeld */,
+				0FFE10791876582D00B24D6D /* XMPPFramework_Notices.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1572,6 +1579,7 @@
 				0FE7CF6A1830B70600CC502F /* InfoPlist.strings in Resources */,
 				0F223B391861EC6B00EA921A /* Images.xcassets in Resources */,
 				0F223B4818672D7300EA921A /* thumbnail-1.jpg in Resources */,
+				0FFE107A1876582D00B24D6D /* XMPPFramework_Notices.rtf in Resources */,
 				0FE7CF731830B70600CC502F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

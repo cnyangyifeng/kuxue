@@ -15,6 +15,7 @@
 @synthesize messageTimestampLabel = _messageTimestampLabel;
 @synthesize messageTypeImageView = _messageTypeImageView;
 @synthesize messageBodyLabel = _messageBodyLabel;
+@synthesize unreadLabel = _unreadLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -35,10 +35,6 @@
     [super viewWillAppear:animated];
     [self loadConversationsFromCoreDataStorage];
     [self.tableView reloadData];
-    // FIXME: Detects network reachability.
-    if ([[[self appDelegate] xmppStream] isDisconnected]) {
-        [[self appDelegate] connect:YES];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,6 +76,7 @@
     cell.messageTimestampLabel.text = [NSDateFormatter localizedStringFromDate:conversation.mostRecentMessageTimestamp dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
     cell.messageTypeImageView.image = [UIImage imageNamed:@"MessageTypeVoice"];
     cell.messageBodyLabel.text = conversation.mostRecentMessageBody;
+    cell.unreadLabel.text = [contact.unreadMessages stringValue];
     
     return cell;
 }
@@ -133,6 +130,8 @@
 {
     NSManagedObjectContext *context = [[self appDelegate] managedMessageArchivingObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPMessageArchiving_Contact_CoreDataObject"];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"mostRecentMessageTimestamp" ascending:YES];
+    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"streamBareJidStr==%@", [[[[self appDelegate] xmppStream] myJID] bare]];
     [request setPredicate:predicate];
     self.conversations = [[context executeFetchRequest:request error:nil] mutableCopy];

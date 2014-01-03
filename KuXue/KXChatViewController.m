@@ -280,11 +280,12 @@
 #pragma mark - Talk HUD
 
 - (void)KXVoiceHUD:(KXVoiceHUD *)voiceHUD voiceRecorded:(NSString *)recordPath length:(float)recordLength {
-    NSLog(@"Sound recorded with file %@ for %.2f seconds", [recordPath lastPathComponent], recordLength);
+    // NSLog(@"Sound recorded with file %@ for %.2f seconds", [recordPath lastPathComponent], recordLength);
+    NSLog(@"Sound recorded for %.2f seconds.", recordLength);
 }
 
 - (void)voiceRecordCancelledByUser:(KXVoiceHUD *)voiceHUD {
-    NSLog(@"Voice recording cancelled for HUD: %@", voiceHUD);
+    NSLog(@"Voice recording cancelled for HUD: %@.", voiceHUD);
 }
 
 #pragma mark - Keyboard Control

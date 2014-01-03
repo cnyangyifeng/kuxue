@@ -231,7 +231,6 @@
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
     NSLog(@"XMPP stream did connect.");
-    // FIXME: Detects network reachability.
     [self.homeDelegate didConnect];
     NSError *error = nil;
     if (![xmppStream authenticateWithPassword:password error:&error]) {
@@ -247,10 +246,12 @@
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
 {
     NSLog(@"XMPP stream did disconnect.");
-    // FIXME: Detects network reachability.
     [self.homeDelegate didDisconnect];
     // Connects again.
-    [self connect:YES];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_TIMEOUT_IN_SECONDS * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self connect:YES];
+    });
 }
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
