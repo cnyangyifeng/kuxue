@@ -822,13 +822,11 @@ enum XMPPRosterFlags
 	// This method is invoked on the moduleQueue.
 	
 	XMPPLogTrace();
-	
-    // KuXue Customization
     
-	// [xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
+	[xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
 	
-	// [self _setRequestedRoster:NO];
-	// [self _setHasRoster:NO];
+	[self _setRequestedRoster:NO];
+	[self _setHasRoster:NO];
 	
 	[earlyPresenceElements removeAllObjects];
 }
