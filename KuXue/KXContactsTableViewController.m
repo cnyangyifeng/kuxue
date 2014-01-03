@@ -163,7 +163,7 @@
 
 - (void)xmppRosterDidEndPopulating
 {
-    NSLog(@"KXContactsDelegate callback: Contacts updated.");
+    NSLog(@"KXContactsDelegate callback: Roster did end populating.");
     [self loadContactsFromCoreDataStorage];
     [self.tableView reloadData];
 }

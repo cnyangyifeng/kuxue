@@ -136,7 +136,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:@"password"];
     [[self appDelegate] connect:NO];
     [self showProgressHud];
-    [self hideProgressHud:PROGRESS_TIMEOUT_IN_SECONDS];
+    [self hideProgressHud:PROGRESS_TIME_IN_SECONDS];
 }
 
 #pragma mark - KXLoginDelegate

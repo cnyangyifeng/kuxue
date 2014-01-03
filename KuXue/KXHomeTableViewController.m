@@ -88,17 +88,18 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
+    NSManagedObjectContext *context = [[self appDelegate] managedMessageArchivingObjectContext];
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Deletes the selected record from core data.
+        // FIXME: Should also delete related messages.
+        /* Deletes the selected record from core data. */
         [context deleteObject:[self.conversations objectAtIndex:indexPath.row]];
         NSError *error;
         if (![context save:&error]) {
             NSLog(@"Data not deleted. %@, %@", error, [error userInfo]);
             return;
         }
-        // Removes the selected row from table view.
+        /* Removes the selected row from table view. */
         [self.conversations removeObjectAtIndex:indexPath.row];
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -146,30 +147,11 @@
 - (void)didReceiveMessage:(XMPPMessage *)message
 {
     NSLog(@"KXHomeDelegate callback: New messsage received, home view updated.");
-//    XMPPUserCoreDataStorageObject *contact = [[[self appDelegate] xmppRosterCoreDataStorage] userForJID:[message from] xmppStream:[[self appDelegate] xmppStream] managedObjectContext:[[self appDelegate] managedRosterObjectContext]];
-//    NSString *body = [[message elementForName:@"body"] stringValue];
-//    
-//    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-//    KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-//    msg.contactAvatar = DEFAULT_AVATAR_NAME;
-//    if (contact.nickname != nil) {
-//        msg.contactName = contact.nickname;
-//    } else {
-//        msg.contactName = [[contact jid] user];
-//    }
-//    msg.messageContent = body;
-//    msg.messageReceivedTime = [NSDate date];
-//    msg.messageType = @"incoming";
-//    [context insertObject:msg];
-//    NSError *error;
-//    if (![context save:&error]) {
-//        NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
-//        return;
-//    }
-//    [self.conversations addObject:msg];
-    
-    [self loadConversationsFromCoreDataStorage];
-    [self.tableView reloadData];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_VERY_SHORT_TIME_IN_SECONDS * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self loadConversationsFromCoreDataStorage];
+        [self.tableView reloadData];
+    });
 }
 
 @end

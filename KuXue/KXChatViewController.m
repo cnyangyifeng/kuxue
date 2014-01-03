@@ -58,13 +58,17 @@
     [super viewWillAppear:animated];
     [self addKeyboardControl];
     [self.contact setUnreadMessages:[NSNumber numberWithInt:0]];
-    [self loadMessagesFromCoreDataStorage];
+    /* Loads messages. */
+    NSError *error = nil;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    }
+    [self scrollTableView];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self scrollTableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -77,7 +81,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    self.fetchedResultsController = nil;
 }
 
 #pragma mark - Initializations
@@ -257,25 +260,6 @@
         [[[self appDelegate] xmppStream] sendElement:msg];
         
         self.inputTextField.text = @"";
-        
-//        NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-//        KXMessage *message = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-//        // KXUser *usr = [[self appDelegate] lastActivateUser];
-//        message.contactAvatar = DEFAULT_AVATAR_NAME;
-//        // message.contactName = usr.nickname;
-//        message.messageContent = messageContent;
-//        message.messageReceivedTime = [NSDate date];
-//        message.messageType = @"outgoing";
-//        [context insertObject:message];
-//        NSError *error;
-//        if (![context save:&error]) {
-//            NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
-//            return;
-//        }
-//        [self.messages addObject:message];
-        
-//        [self loadMessagesFromCoreDataStorage];
-//        [self.chatTableView reloadData];
     }
 }
 
@@ -333,9 +317,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // return self.messages.count;
-    id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return [[[_fetchedResultsController sections] objectAtIndex:section] numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -347,7 +329,6 @@
 
 - (void)configureCell:(KXChatTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    // XMPPMessageArchiving_Message_CoreDataObject *message = [self.messages objectAtIndex:indexPath.row];
     XMPPMessageArchiving_Message_CoreDataObject *message = [_fetchedResultsController objectAtIndexPath:indexPath];
     
     /* Sets the contact avatar. */
@@ -403,7 +384,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // XMPPMessageArchiving_Message_CoreDataObject *message = [self.messages objectAtIndex:indexPath.row];
     XMPPMessageArchiving_Message_CoreDataObject *message = [_fetchedResultsController objectAtIndexPath:indexPath];
     
     CGSize textSize = { MAX_MESSAGE_CONTENT_WIDTH, MAX_MESSAGE_CONTENT_HEIGHT };
@@ -422,19 +402,12 @@
 {
     [self hideKeyboard];
     [self scrollTableView];
-    
     return indexPath;
 }
 
 - (void)scrollTableView
 {
-//    if (self.messages.count > 1) {
-//        NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
-//        [self.chatTableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-//    }
-    
-    id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:0];
-    NSInteger rows = [sectionInfo numberOfObjects];
+    NSInteger rows = [[[_fetchedResultsController sections] objectAtIndex:0] numberOfObjects];
     if (rows > 1) {
         NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:rows - 1 inSection:0];
         [self.chatTableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
@@ -442,22 +415,6 @@
 }
 
 #pragma mark - Core Data
-
-- (void)loadMessagesFromCoreDataStorage
-{
-//    NSManagedObjectContext *context = [[self appDelegate] managedMessageArchivingObjectContext];
-//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPMessageArchiving_Message_CoreDataObject"];
-//    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
-//    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
-//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr==%@ AND streamBareJidStr==%@", self.contact.jidStr, self.contact.streamBareJidStr];
-//    [request setPredicate:predicate];
-//    self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
-    
-    NSError *error = nil;
-    if (![[self fetchedResultsController] performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-    }
-}
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
@@ -473,7 +430,7 @@
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr==%@ AND streamBareJidStr==%@", self.contact.jidStr, self.contact.streamBareJidStr];
     [request setPredicate:predicate];
-    [request setFetchBatchSize:100];
+    [request setFetchBatchSize:5];
     
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
     frc.delegate = self;
@@ -531,37 +488,12 @@
 - (void)didReceiveMessage:(XMPPMessage *)message
 {
     NSLog(@"KXChatDelegate callback: New messsage received.");
-    
-//    XMPPUserCoreDataStorageObject *userStorageObject = [[[self appDelegate] xmppRosterCoreDataStorage] userForJID:[message from] xmppStream:[[self appDelegate] xmppStream] managedObjectContext:[[self appDelegate] managedRosterObjectContext]];
-//    NSString *body = [[message elementForName:@"body"] stringValue];
-//    NSString *displayName = [userStorageObject displayName];
-//    
-//    NSManagedObjectContext *context = [[self appDelegate] managedObjectContext];
-//    KXMessage *msg = [NSEntityDescription insertNewObjectForEntityForName:@"KXMessage" inManagedObjectContext:context];
-//    msg.contactAvatar = DEFAULT_AVATAR_NAME;
-//    msg.contactName = displayName;
-//    msg.messageContent = body;
-//    msg.messageReceivedTime = [NSDate date];
-//    msg.messageType = @"incoming";
-//    [context insertObject:msg];
-//    NSError *error;
-//    if (![context save:&error]) {
-//        NSLog(@"Data not inserted. %@, %@", error, [error userInfo]);
-//        return;
-//    }
-//    [self.messages addObject:msg];
-//    [self loadMessagesFromCoreDataStorage];
-//    [self.chatTableView reloadData];
     [self scrollTableView];
 }
 
 - (void)didSendMessage:(XMPPMessage *)message
 {
     NSLog(@"KXChatDelegate callback: New message sent.");
-    
-//    [self loadMessagesFromCoreDataStorage];
-//    [self.chatTableView reloadData];
-    [self scrollTableView];
 }
 
 @end
