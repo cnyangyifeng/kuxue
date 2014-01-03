@@ -130,7 +130,7 @@
 {
     NSManagedObjectContext *context = [[self appDelegate] managedMessageArchivingObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPMessageArchiving_Contact_CoreDataObject"];
-    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"mostRecentMessageTimestamp" ascending:YES];
+    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"mostRecentMessageTimestamp" ascending:NO];
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"streamBareJidStr==%@", [[[[self appDelegate] xmppStream] myJID] bare]];
     [request setPredicate:predicate];

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Reachability/Reachability.h>
 #import "KXChatDelegate.h"
 #import "KXContactsDelegate.h"
 #import "KXHomeDelegate.h"

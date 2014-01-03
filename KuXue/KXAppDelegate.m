@@ -54,7 +54,7 @@
     if (![defaults objectForKey:@"firstRun"]) {
         self.firstRun = TRUE;
         [defaults setObject:[NSDate date] forKey:@"firstRun"];
-        // TODO: Initialize application data.
+        // TODO: Initializes application data.
     } else {
         self.firstRun = FALSE;
     }
@@ -68,6 +68,11 @@
             [self.mainTabBarController performSegueWithIdentifier:@"presentLoginFromMain" sender:nil];
         });
     }
+    
+    /* Checks network reachablity. */
+    Reachability *reach = [Reachability reachabilityWithHostname:@"42.96.184.90"];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    [reach startNotifier];
     
     return YES;
 }
@@ -247,11 +252,6 @@
 {
     NSLog(@"XMPP stream did disconnect.");
     [self.homeDelegate didDisconnect];
-    // Connects again.
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_TIMEOUT_IN_SECONDS * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self connect:YES];
-    });
 }
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
@@ -314,9 +314,9 @@
     if (![presenceFromUser isEqualToString:usr]) {
         NSLog(@"XMPP stream did receive '%@' presence of '%@'.", presenceType, presenceFromUser);
         if ([presenceType isEqualToString:@"available"]) {
-            // Sets new contact online.
+            // TODO: Sets new contact online.
         } else if ([presenceType isEqualToString:@"unavailable"]) {
-            // Sets contact went offline.
+            // TODO: Sets contact went offline.
         }
     }
 }
@@ -463,6 +463,20 @@
     NSLog(@"Goes offline.");
     XMPPPresence *presence = [XMPPPresence presenceWithType:@"unavailable"];
     [xmppStream sendElement:presence];
+}
+
+#pragma mark - Reachability
+
+-(void)reachabilityChanged:(NSNotification*)note
+{
+    Reachability *reach = [note object];
+    if ([reach isReachable]) {
+        NSLog(@"Network reachable. Connects.");
+        [self connect:YES];
+    } else {
+        NSLog(@"Network not reachable. Disconnects.");
+        [self disconnect];
+    }
 }
 
 @end
