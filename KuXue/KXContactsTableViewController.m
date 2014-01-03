@@ -161,7 +161,7 @@
 
 #pragma mark - KXContactsDelegate
 
-- (void)contactsUpdated
+- (void)xmppRosterDidEndPopulating
 {
     NSLog(@"KXContactsDelegate callback: Contacts updated.");
     [self loadContactsFromCoreDataStorage];

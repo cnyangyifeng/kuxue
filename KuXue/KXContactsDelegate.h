@@ -12,6 +12,6 @@
 
 @required
 
-- (void)contactsUpdated;
+- (void)xmppRosterDidEndPopulating;
 
 @end

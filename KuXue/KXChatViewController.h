@@ -36,7 +36,7 @@
 #define MAX_MESSAGE_CONTENT_WIDTH 230.0f
 #define MAX_MESSAGE_CONTENT_HEIGHT 10000.0f
 
-@interface KXChatViewController : KXViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, KXVoiceHUDDelegate, KXChatDelegate>
+@interface KXChatViewController : KXViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, NSFetchedResultsControllerDelegate,KXVoiceHUDDelegate, KXChatDelegate>
 
 @property (strong, nonatomic) UITableView *chatTableView;
 @property (strong, nonatomic) UIToolbar *chatToolbar;
@@ -56,7 +56,8 @@
 @property (nonatomic) BOOL isAudioChatType;
 
 @property (strong, nonatomic) XMPPUserCoreDataStorageObject *contact;
-@property (strong, nonatomic) NSMutableArray *messages;
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 - (void)sendMessage;
 

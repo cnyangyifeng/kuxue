@@ -252,6 +252,10 @@
 {
     NSLog(@"XMPP stream did disconnect.");
     [self.homeDelegate didDisconnect];
+    NSString *myJid = [[NSUserDefaults standardUserDefaults] stringForKey:@"jid"];
+    if (myJid != nil) {
+        [self connect:YES];
+    }
 }
 
 - (void)xmppStreamDidAuthenticate:(XMPPStream *)sender
@@ -286,19 +290,21 @@
     if ([message isChatMessageWithBody]) {
         XMPPUserCoreDataStorageObject *userStorageObject = [xmppRosterCoreDataStorage userForJID:[message from] xmppStream:xmppStream managedObjectContext:[self managedRosterObjectContext]];
         NSString *body = [[message elementForName:@"body"] stringValue];
-        NSString *displayName = [userStorageObject displayName];
+        NSString *from = [[userStorageObject jid] user];
         
         if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
             [self.homeDelegate didReceiveMessage:message];
             [self.chatDelegate didReceiveMessage:message];
+            userStorageObject.unreadMessages = [NSNumber numberWithInt:[userStorageObject.unreadMessages intValue] + 1];
         } else {
             [self.homeDelegate didReceiveMessage:message];
             [self.chatDelegate didReceiveMessage:message];
+            userStorageObject.unreadMessages = [NSNumber numberWithInt:[userStorageObject.unreadMessages intValue] + 1];
             NSLog(@"Presents a local notification.");
             self.badgeNumber++;
             UILocalNotification *localNotification = [[UILocalNotification alloc] init];
             localNotification.alertAction = @"View";
-            localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", displayName, body];
+            localNotification.alertBody = [NSString stringWithFormat:@"%@: %@", from, body];
             localNotification.soundName = UILocalNotificationDefaultSoundName;
             localNotification.applicationIconBadgeNumber = self.badgeNumber;
             [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
@@ -337,7 +343,7 @@
 - (void)xmppRosterDidEndPopulating:(XMPPRoster *)sender
 {
     NSLog(@"XMPP roster did end populating.");
-    [self.contactsDelegate contactsUpdated];
+    [self.contactsDelegate xmppRosterDidEndPopulating];
 }
 
 - (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterItem:(NSXMLElement *)item

@@ -31,8 +31,9 @@
 @synthesize talkHud = _talkHud;
 @synthesize isAudioChatType = _isAudioChatType;
 
-@synthesize messages = _messages;
 @synthesize contact = _contact;
+
+@synthesize fetchedResultsController = _fetchedResultsController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,8 +57,8 @@
 {
     [super viewWillAppear:animated];
     [self addKeyboardControl];
+    [self.contact setUnreadMessages:[NSNumber numberWithInt:0]];
     [self loadMessagesFromCoreDataStorage];
-    [self.chatTableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -76,6 +77,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    self.fetchedResultsController = nil;
 }
 
 #pragma mark - Initializations
@@ -331,16 +333,24 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.messages.count;
+    // return self.messages.count;
+    id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     KXChatTableViewCell *cell = [[KXChatTableViewCell alloc] init];
+    [self configureCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (void)configureCell:(KXChatTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    // XMPPMessageArchiving_Message_CoreDataObject *message = [self.messages objectAtIndex:indexPath.row];
+    XMPPMessageArchiving_Message_CoreDataObject *message = [_fetchedResultsController objectAtIndexPath:indexPath];
     
-    XMPPMessageArchiving_Message_CoreDataObject *message = [self.messages objectAtIndex:indexPath.row];
-    
-    // Sets the contact avatar.
+    /* Sets the contact avatar. */
     if (!message.isOutgoing) {
         [cell.contactAvatarImageView setFrame:CGRectMake(0.0f, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
         if (self.contact.photo != nil) {
@@ -363,7 +373,7 @@
         }
     }
     
-    // Sets the message content.
+    /* Sets the message content. */
     cell.messageContentLabel.font = [UIFont systemFontOfSize:DEFAULT_FONT_SIZE];
     cell.messageContentLabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.messageContentLabel.numberOfLines = 0;
@@ -389,14 +399,13 @@
         cell.messageBackgroundImageView.image = bgImage;
         [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING + MESSAGE_PADDING_TOP_SPACE, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
     }
-    
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    XMPPMessageArchiving_Message_CoreDataObject *message = [self.messages objectAtIndex:indexPath.row];
-
+    // XMPPMessageArchiving_Message_CoreDataObject *message = [self.messages objectAtIndex:indexPath.row];
+    XMPPMessageArchiving_Message_CoreDataObject *message = [_fetchedResultsController objectAtIndexPath:indexPath];
+    
     CGSize textSize = { MAX_MESSAGE_CONTENT_WIDTH, MAX_MESSAGE_CONTENT_HEIGHT };
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
@@ -419,8 +428,15 @@
 
 - (void)scrollTableView
 {
-    if (self.messages.count > 1) {
-        NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
+//    if (self.messages.count > 1) {
+//        NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:self.messages.count - 1 inSection:0];
+//        [self.chatTableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+//    }
+    
+    id sectionInfo = [[_fetchedResultsController sections] objectAtIndex:0];
+    NSInteger rows = [sectionInfo numberOfObjects];
+    if (rows > 1) {
+        NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:rows - 1 inSection:0];
         [self.chatTableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
 }
@@ -429,13 +445,85 @@
 
 - (void)loadMessagesFromCoreDataStorage
 {
+//    NSManagedObjectContext *context = [[self appDelegate] managedMessageArchivingObjectContext];
+//    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPMessageArchiving_Message_CoreDataObject"];
+//    NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+//    [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr==%@ AND streamBareJidStr==%@", self.contact.jidStr, self.contact.streamBareJidStr];
+//    [request setPredicate:predicate];
+//    self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
+    
+    NSError *error = nil;
+    if (![[self fetchedResultsController] performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+    }
+}
+
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSManagedObjectContext *context = [[self appDelegate] managedMessageArchivingObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPMessageArchiving_Message_CoreDataObject"];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"XMPPMessageArchiving_Message_CoreDataObject" inManagedObjectContext:context];
+    [request setEntity:entity];
     NSSortDescriptor *sorter = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
     [request setSortDescriptors:[NSArray arrayWithObject:sorter]];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr==%@ AND streamBareJidStr==%@", self.contact.jidStr, self.contact.streamBareJidStr];
     [request setPredicate:predicate];
-    self.messages = [[context executeFetchRequest:request error:nil] mutableCopy];
+    [request setFetchBatchSize:100];
+    
+    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:nil];
+    frc.delegate = self;
+    self.fetchedResultsController = frc;
+    
+    return _fetchedResultsController;
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.chatTableView beginUpdates];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.chatTableView endUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+{
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+        [self.chatTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        break;
+        case NSFetchedResultsChangeDelete:
+        [self.chatTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        break;
+        case NSFetchedResultsChangeUpdate:
+        [self configureCell:(KXChatTableViewCell *)[self.chatTableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+        break;
+        case NSFetchedResultsChangeMove:
+        [self.chatTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.chatTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        break;
+        default:
+        break;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch (type) {
+        case NSFetchedResultsChangeInsert:
+        [self.chatTableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+        break;
+        case NSFetchedResultsChangeDelete:
+        [self.chatTableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+        default:
+        break;
+    }
 }
 
 #pragma mark - KXChatDelegate
@@ -443,6 +531,7 @@
 - (void)didReceiveMessage:(XMPPMessage *)message
 {
     NSLog(@"KXChatDelegate callback: New messsage received.");
+    
 //    XMPPUserCoreDataStorageObject *userStorageObject = [[[self appDelegate] xmppRosterCoreDataStorage] userForJID:[message from] xmppStream:[[self appDelegate] xmppStream] managedObjectContext:[[self appDelegate] managedRosterObjectContext]];
 //    NSString *body = [[message elementForName:@"body"] stringValue];
 //    NSString *displayName = [userStorageObject displayName];
@@ -461,16 +550,17 @@
 //        return;
 //    }
 //    [self.messages addObject:msg];
-    [self loadMessagesFromCoreDataStorage];
-    [self.chatTableView reloadData];
+//    [self loadMessagesFromCoreDataStorage];
+//    [self.chatTableView reloadData];
     [self scrollTableView];
 }
 
 - (void)didSendMessage:(XMPPMessage *)message
 {
     NSLog(@"KXChatDelegate callback: New message sent.");
-    [self loadMessagesFromCoreDataStorage];
-    [self.chatTableView reloadData];
+    
+//    [self loadMessagesFromCoreDataStorage];
+//    [self.chatTableView reloadData];
     [self scrollTableView];
 }
 

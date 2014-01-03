@@ -116,14 +116,6 @@
     [self.navigationController pushViewController:chatViewController animated:YES];
 }
 
-- (void)scrollTableView
-{
-    if (self.conversations.count > 1) {
-        NSIndexPath *topIndexPath = [NSIndexPath indexPathForRow:self.conversations.count - 1 inSection:0];
-        [self.tableView scrollToRowAtIndexPath:topIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    }
-}
-
 #pragma mark - Core Data
 
 - (void)loadConversationsFromCoreDataStorage
@@ -178,7 +170,6 @@
     
     [self loadConversationsFromCoreDataStorage];
     [self.tableView reloadData];
-    [self scrollTableView];
 }
 
 @end
