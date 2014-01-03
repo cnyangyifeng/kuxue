@@ -823,10 +823,12 @@ enum XMPPRosterFlags
 	
 	XMPPLogTrace();
 	
-	[xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
+    // KuXue Customization
+    
+	// [xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
 	
-	[self _setRequestedRoster:NO];
-	[self _setHasRoster:NO];
+	// [self _setRequestedRoster:NO];
+	// [self _setHasRoster:NO];
 	
 	[earlyPresenceElements removeAllObjects];
 }
