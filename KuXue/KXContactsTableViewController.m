@@ -32,6 +32,11 @@
 {
     [super viewDidLoad];
     [[self appDelegate] setContactsDelegate:self];
+    /* Adds the pull-to-refresh capability. */
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+    [refreshControl addTarget:self action:@selector(refreshContacts) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -166,6 +171,23 @@
     NSLog(@"KXContactsDelegate callback: Roster did end populating.");
     [self loadContactsFromCoreDataStorage];
     [self.tableView reloadData];
+}
+
+#pragma mark - Pull to Refresh
+
+- (void)refreshContacts
+{
+    [self.contacts removeAllObjects];
+    
+    [self loadContactsFromCoreDataStorage];
+    [self.tableView reloadData];
+    
+    [self performSelector:@selector(endRefreshingContacts) withObject:nil afterDelay:0.0f];
+}
+
+- (void)endRefreshingContacts
+{
+    [self.refreshControl endRefreshing];
 }
 
 @end

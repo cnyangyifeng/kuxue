@@ -28,6 +28,13 @@
 {
     [super viewDidLoad];
     [[self appDelegate] setHomeDelegate:self];
+    /* Adds the pull-to-refresh capability. */
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:dict];
+    [refreshControl addTarget:self action:@selector(refreshContacts) forControlEvents:UIControlEventValueChanged];
+    [refreshControl setTintColor:[UIColor whiteColor]];
+    self.refreshControl = refreshControl;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -91,10 +98,19 @@
     NSManagedObjectContext *context = [[self appDelegate] managedMessageArchivingObjectContext];
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // FIXME: Should also delete related messages.
-        /* Deletes the selected record from core data. */
-        [context deleteObject:[self.conversations objectAtIndex:indexPath.row]];
         NSError *error;
+        XMPPMessageArchiving_Contact_CoreDataObject *contact = [self.conversations objectAtIndex:indexPath.row];
+        /* Deletes the selected record (XMPPMessageArchiving_Message_CoreDataObject) from core data. */
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"XMPPMessageArchiving_Message_CoreDataObject"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bareJidStr==%@ AND streamBareJidStr==%@", contact.bareJidStr, contact.streamBareJidStr];
+        [request setPredicate:predicate];
+        NSArray *messages = [context executeFetchRequest:request error:&error];
+        for (NSManagedObject *message in messages) {
+            [context deleteObject:message];
+        }
+        /* Deletes the selected record (XMPPMessageArchiving_Contact_CoreDataObject) from core data. */
+        [context deleteObject:contact];
+        /* Executes core data operations. */
         if (![context save:&error]) {
             NSLog(@"Data not deleted. %@, %@", error, [error userInfo]);
             return;
@@ -152,6 +168,23 @@
         [self loadConversationsFromCoreDataStorage];
         [self.tableView reloadData];
     });
+}
+
+#pragma mark - Pull to Refresh
+
+- (void)refreshContacts
+{
+    [self.conversations removeAllObjects];
+    
+    [self loadConversationsFromCoreDataStorage];
+    [self.tableView reloadData];
+    
+    [self performSelector:@selector(endRefreshingContacts) withObject:nil afterDelay:0.0f];
+}
+
+- (void)endRefreshingContacts
+{
+    [self.refreshControl endRefreshing];
 }
 
 @end
