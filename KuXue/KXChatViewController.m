@@ -67,6 +67,12 @@
     [self scrollTableView];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self scrollTableView];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -483,12 +489,20 @@
 - (void)didReceiveMessage:(XMPPMessage *)message
 {
     NSLog(@"KXChatDelegate callback: New messsage received.");
-    [self scrollTableView];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_VERY_SHORT_TIME_IN_SECONDS * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self scrollTableView];
+    });
 }
 
 - (void)didSendMessage:(XMPPMessage *)message
 {
     NSLog(@"KXChatDelegate callback: New message sent.");
+    NSLog(@"KXChatDelegate callback: New messsage received.");
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_VERY_SHORT_TIME_IN_SECONDS * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self scrollTableView];
+    });
 }
 
 @end
