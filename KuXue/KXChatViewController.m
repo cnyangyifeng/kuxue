@@ -29,7 +29,8 @@
 @synthesize insertOrAudioSendButton = _insertOrAudioSendButton;
 
 @synthesize talkHud = _talkHud;
-@synthesize isAudioChatType = _isAudioChatType;
+
+@synthesize chatType = _chatType;
 
 @synthesize contact = _contact;
 
@@ -64,11 +65,6 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
     }
     [self scrollTableView];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -156,7 +152,7 @@
     UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     fixedSpace.width = CHAT_TOOLBAR_LEFT_FIXED_SPACE;
     
-    self.isAudioChatType = NO;
+    self.chatType = CHAT_TYPE_TEXT;
     [toolbar setItems:[NSArray arrayWithObjects:fixedSpace, leftButtonItem, textFieldButtonItem, middleButtonItem, rightButtonItem, nil]];
     
     KXVoiceHUD *voiceHud = [[KXVoiceHUD alloc] initWithParentView:self.view];
@@ -188,21 +184,21 @@
 
 - (void)switchChatType
 {
-    if (self.isAudioChatType) {
-        [self.view hideKeyboard];
-        [self.chatTypeButton setImage:[UIImage imageNamed:@"Microphone"] forState:UIControlStateNormal];
-        [self.talkButton becomeFirstResponder];
-        [self.emoticonOrAudioPlayButton setImage:[UIImage imageNamed:@"Emoticon"] forState:UIControlStateNormal];
-        [self.insertOrAudioSendButton setImage:[UIImage imageNamed:@"Insert"] forState:UIControlStateNormal];
-        [self.chatToolbar setItems:[NSArray arrayWithObjects:self.fixedToolbarButtonItemSpace, self.chatTypeButtonItem, self.inputTextFieldButtonItem, self.emoticonOrAudioPlayButtonItem, self.insertOrAudioSendButtonItem, nil]];
-        self.isAudioChatType = NO;
-    } else {
+    [self scrollTableView];
+    
+    if ([self.chatType isEqualToString:CHAT_TYPE_TEXT]) {
         [self.chatTypeButton setImage:[UIImage imageNamed:@"Keyboard"] forState:UIControlStateNormal];
-        [self.inputTextField becomeFirstResponder];
         [self.emoticonOrAudioPlayButton setImage:[UIImage imageNamed:@"Volume"] forState:UIControlStateNormal];
         [self.insertOrAudioSendButton setImage:[UIImage imageNamed:@"Send"] forState:UIControlStateNormal];
         [self.chatToolbar setItems:[NSArray arrayWithObjects:self.fixedToolbarButtonItemSpace, self.chatTypeButtonItem, self.talkButtonItem, self.emoticonOrAudioPlayButtonItem, self.insertOrAudioSendButtonItem, nil]];
-        self.isAudioChatType = YES;
+        self.chatType = CHAT_TYPE_AUDIO;
+    } else if ([self.chatType isEqualToString:CHAT_TYPE_AUDIO]) {
+        [self.chatTypeButton setImage:[UIImage imageNamed:@"Microphone"] forState:UIControlStateNormal];
+        [self.emoticonOrAudioPlayButton setImage:[UIImage imageNamed:@"Emoticon"] forState:UIControlStateNormal];
+        [self.insertOrAudioSendButton setImage:[UIImage imageNamed:@"Insert"] forState:UIControlStateNormal];
+        [self.chatToolbar setItems:[NSArray arrayWithObjects:self.fixedToolbarButtonItemSpace, self.chatTypeButtonItem, self.inputTextFieldButtonItem, self.emoticonOrAudioPlayButtonItem, self.insertOrAudioSendButtonItem, nil]];
+        [self.inputTextField becomeFirstResponder];
+        self.chatType = CHAT_TYPE_TEXT;
     }
 }
 
@@ -216,7 +212,7 @@
 
 - (void)tapToInsertEmoticonOrPlayAudio
 {
-    if (self.isAudioChatType) {
+    if ([self.chatType isEqualToString:CHAT_TYPE_AUDIO]) {
         NSURL *url = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/Documents/KuXue.caf", NSHomeDirectory()]];
         [self.talkHud playRecording:url];
     }
@@ -237,8 +233,8 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self hideKeyboard];
     [self scrollTableView];
+    // FIXME: Displays the outgoing indicator.
     [self sendMessage];
     
     return YES;
@@ -401,7 +397,6 @@
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self hideKeyboard];
-    [self scrollTableView];
     return indexPath;
 }
 

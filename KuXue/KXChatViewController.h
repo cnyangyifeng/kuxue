@@ -53,7 +53,8 @@
 @property (strong, nonatomic) UIButton *insertOrAudioSendButton;
 
 @property (strong, nonatomic) KXVoiceHUD *talkHud;
-@property (nonatomic) BOOL isAudioChatType;
+
+@property (strong, nonatomic) NSString *chatType;
 
 @property (strong, nonatomic) XMPPUserCoreDataStorageObject *contact;
 
