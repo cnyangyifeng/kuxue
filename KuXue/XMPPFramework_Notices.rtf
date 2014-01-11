@@ -42,8 +42,35 @@ KuXue Modifications\
 
 \f0\fs24 \cf0 \CocoaLigature1 2. In order to keep contacts visible even when disconnected, I commented out 3 lines of "xmppStreamDidDisconnect" in "XMPPRoster
 \f1 .m
-\f0 ", which won't work.\
+\f0 ", which needs further discussion.\
 \
+\pard\tx529\pardeftab529\pardirnatural
+
+\f2\fs22 \cf0 \CocoaLigature0 - (\cf3 void\cf0 )xmppStreamDidAuthenticate:(\cf2 XMPPStream\cf0  *)sender\
+\{\
+	\cf5 // This method is invoked on the moduleQueue.\cf0 \
+	\
+	\cf3 XMPPLogTrace\cf0 ();\
+	\
+    \cf5 // KuXue Customization\cf0 \
+    \
+    [\cf2 xmppRosterStorage\cf0  \cf2 clearAllUsersAndResourcesForXMPPStream\cf0 :\cf2 xmppStream\cf0 ];\
+	\
+	[\cf3 self\cf0  \cf2 _setRequestedRoster\cf0 :\cf3 NO\cf0 ];\
+	[\cf3 self\cf0  \cf2 _setHasRoster\cf0 :\cf3 NO\cf0 ];\
+	   \
+	[\cf2 earlyPresenceElements\cf0  \cf2 removeAllObjects\cf0 ];\
+    \
+    \cf5 // End Customization\cf0 \
+    \
+	\cf3 if\cf0  ([\cf3 self\cf0  \cf2 autoFetchRoster\cf0 ])\
+	\{\
+		[\cf3 self\cf0  \cf2 fetchRoster\cf0 ];\
+	\}\
+\}
+\f0\fs24 \CocoaLigature1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \
 \pard\tx529\pardeftab529\pardirnatural
 
 \f2\fs22 \cf0 \CocoaLigature0 - (\cf3 void\cf0 )xmppStreamDidDisconnect:(\cf2 XMPPStream\cf0  *)sender withError:(\cf2 NSError\cf0  *)error\
@@ -51,13 +78,16 @@ KuXue Modifications\
 	\cf5 // This method is invoked on the moduleQueue.\cf0 \
 	\
 	\cf3 XMPPLogTrace\cf0 ();\
+    \
+    \cf5 // KuXue Customization\cf0 \
+    \
+	\cf5 // [xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];\cf0 \
 	\
-	// [\cf2 xmppRosterStorage\cf0  \cf2 clearAllUsersAndResourcesForXMPPStream\cf0 :\cf2 xmppStream\cf0 ];\
+	\cf5 // [self _setRequestedRoster:NO];\cf0 \
+	\cf5 // [self _setHasRoster:NO];\cf0 \
 	\
-	// [\cf3 self\cf0  \cf2 _setRequestedRoster\cf0 :\cf3 NO\cf0 ];\
-	// [\cf3 self\cf0  \cf2 _setHasRoster\cf0 :\cf3 NO\cf0 ];\
-	\
-	[\cf2 earlyPresenceElements\cf0  \cf2 removeAllObjects\cf0 ];\
+	\cf5 // [earlyPresenceElements removeAllObjects];\cf0 \
+    \
+    \cf5 // End Customization\cf0 \
 \}\
-\
 }

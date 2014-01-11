@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 kuxue.me. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "KXContactsDelegate.h"
 #import "KXContactsTableViewCell.h"
 #import "KXContactTableViewController.h"

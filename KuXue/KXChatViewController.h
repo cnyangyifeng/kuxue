@@ -6,12 +6,9 @@
 //  Copyright (c) 2013 kuxue.me. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <DAKeyboardControl/DAKeyboardControl.h>
 #import "KXChatDelegate.h"
 #import "KXChatTableViewCell.h"
-#import "KXMessage.h"
-#import "KXUser.h"
 #import "KXViewController.h"
 #import "KXVoiceHUDDelegate.h"
 #import "KXVoiceHUD.h"

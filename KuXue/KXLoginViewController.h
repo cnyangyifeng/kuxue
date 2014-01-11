@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 kuxue.me. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "KXLoginDelegate.h"
 #import "KXViewController.h"

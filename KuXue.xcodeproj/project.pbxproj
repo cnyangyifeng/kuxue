@@ -141,13 +141,15 @@
 		0F223B4718672D7300EA921A /* keep_calm.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F223B4218672D7300EA921A /* keep_calm.png */; };
 		0F223B4818672D7300EA921A /* thumbnail-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F223B4418672D7300EA921A /* thumbnail-1.jpg */; };
 		0F26E181185CCAA7001F4725 /* KXUserProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */; };
-		0F35AD55184D831A003E7A6D /* KXUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F35AD54184D831A003E7A6D /* KXUser.m */; };
 		0F523F8118406CDB00F967BF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F981660183DB35700EBD0B5 /* AudioToolbox.framework */; };
 		0F523F8318406CE900F967BF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F523F8218406CE900F967BF /* AVFoundation.framework */; };
 		0F523F8518406CF900F967BF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F523F8418406CF900F967BF /* QuartzCore.framework */; };
 		0F523F881840702100F967BF /* KXVoiceHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F523F871840702100F967BF /* KXVoiceHUD.m */; };
+		0F632B0D1880DF2100CECF0B /* KXGroupsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F632B0C1880DF2100CECF0B /* KXGroupsTableViewCell.m */; };
+		0F632B101880DF4500CECF0B /* KXGroupsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F632B0F1880DF4500CECF0B /* KXGroupsTableViewController.m */; };
+		0F632B131880E53E00CECF0B /* KXCoursesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F632B121880E53E00CECF0B /* KXCoursesTableViewController.m */; };
+		0F632B161880E8B500CECF0B /* KXCoursesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F632B151880E8B500CECF0B /* KXCoursesTableViewCell.m */; };
 		0F761B04183C96C300651F7F /* KXChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F761B03183C96C300651F7F /* KXChatTableViewCell.m */; };
-		0F761B09183CE8CE00651F7F /* KXMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F761B08183CE8CE00651F7F /* KXMessage.m */; };
 		0FC6F0621838DF78009683D4 /* KXContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */; };
 		0FC6F0651838F6BE009683D4 /* KXContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0641838F6BE009683D4 /* KXContactTableViewController.m */; };
 		0FC6F07118392E58009683D4 /* KXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F07018392E58009683D4 /* KXChatViewController.m */; };
@@ -465,17 +467,21 @@
 		0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXUserProfileTableViewController.m; sourceTree = "<group>"; };
 		0F26E219185D4948001F4725 /* KXContactsDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXContactsDelegate.h; sourceTree = "<group>"; };
 		0F35AC1A184A4610003E7A6D /* KXHomeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXHomeDelegate.h; sourceTree = "<group>"; };
-		0F35AD53184D831A003E7A6D /* KXUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXUser.h; sourceTree = "<group>"; };
-		0F35AD54184D831A003E7A6D /* KXUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXUser.m; sourceTree = "<group>"; };
 		0F523F8218406CE900F967BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0F523F8418406CF900F967BF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0F523F861840702100F967BF /* KXVoiceHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KXVoiceHUD.h; path = ../../../Workspace/KuXue/KuXue/KXVoiceHUD.h; sourceTree = "<group>"; };
 		0F523F871840702100F967BF /* KXVoiceHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KXVoiceHUD.m; path = ../../../Workspace/KuXue/KuXue/KXVoiceHUD.m; sourceTree = "<group>"; };
 		0F523F891840717A00F967BF /* KXVoiceHUDDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KXVoiceHUDDelegate.h; path = ../../../Workspace/KuXue/KuXue/KXVoiceHUDDelegate.h; sourceTree = "<group>"; };
+		0F632B0B1880DF2100CECF0B /* KXGroupsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXGroupsTableViewCell.h; sourceTree = "<group>"; };
+		0F632B0C1880DF2100CECF0B /* KXGroupsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXGroupsTableViewCell.m; sourceTree = "<group>"; };
+		0F632B0E1880DF4500CECF0B /* KXGroupsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXGroupsTableViewController.h; sourceTree = "<group>"; };
+		0F632B0F1880DF4500CECF0B /* KXGroupsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXGroupsTableViewController.m; sourceTree = "<group>"; };
+		0F632B111880E53E00CECF0B /* KXCoursesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXCoursesTableViewController.h; sourceTree = "<group>"; };
+		0F632B121880E53E00CECF0B /* KXCoursesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXCoursesTableViewController.m; sourceTree = "<group>"; };
+		0F632B141880E8B500CECF0B /* KXCoursesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXCoursesTableViewCell.h; sourceTree = "<group>"; };
+		0F632B151880E8B500CECF0B /* KXCoursesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXCoursesTableViewCell.m; sourceTree = "<group>"; };
 		0F761B02183C96C300651F7F /* KXChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXChatTableViewCell.h; sourceTree = "<group>"; };
 		0F761B03183C96C300651F7F /* KXChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXChatTableViewCell.m; sourceTree = "<group>"; };
-		0F761B07183CE8CE00651F7F /* KXMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMessage.h; sourceTree = "<group>"; };
-		0F761B08183CE8CE00651F7F /* KXMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMessage.m; sourceTree = "<group>"; };
 		0F981660183DB35700EBD0B5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		0FC6F0601838DF78009683D4 /* KXContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXContactTableViewCell.h; sourceTree = "<group>"; };
 		0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactTableViewCell.m; sourceTree = "<group>"; };
@@ -1416,6 +1422,14 @@
 				0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */,
 				0FC6F0631838F6BE009683D4 /* KXContactTableViewController.h */,
 				0FC6F0641838F6BE009683D4 /* KXContactTableViewController.m */,
+				0F632B141880E8B500CECF0B /* KXCoursesTableViewCell.h */,
+				0F632B151880E8B500CECF0B /* KXCoursesTableViewCell.m */,
+				0F632B111880E53E00CECF0B /* KXCoursesTableViewController.h */,
+				0F632B121880E53E00CECF0B /* KXCoursesTableViewController.m */,
+				0F632B0B1880DF2100CECF0B /* KXGroupsTableViewCell.h */,
+				0F632B0C1880DF2100CECF0B /* KXGroupsTableViewCell.m */,
+				0F632B0E1880DF4500CECF0B /* KXGroupsTableViewController.h */,
+				0F632B0F1880DF4500CECF0B /* KXGroupsTableViewController.m */,
 				0F35AC1A184A4610003E7A6D /* KXHomeDelegate.h */,
 				0F06BFF41831380C00FDF785 /* KXHomeTableViewCell.h */,
 				0F06BFF51831380C00FDF785 /* KXHomeTableViewCell.m */,
@@ -1425,16 +1439,12 @@
 				0FC755C5184ED49E008B081A /* KXLoginViewController.h */,
 				0FC755C6184ED49E008B081A /* KXLoginViewController.m */,
 				0FE87D711873D2D000F7C0E7 /* KXMeDelegate.h */,
-				0F761B07183CE8CE00651F7F /* KXMessage.h */,
-				0F761B08183CE8CE00651F7F /* KXMessage.m */,
 				0FFE10761875C2F500B24D6D /* KXMeTableViewCell.h */,
 				0FFE10771875C2F500B24D6D /* KXMeTableViewCell.m */,
 				0FC756131856B409008B081A /* KXMeTableViewController.h */,
 				0FC756141856B409008B081A /* KXMeTableViewController.m */,
 				0FC7560F1855AF91008B081A /* KXTableViewController.h */,
 				0FC756101855AF91008B081A /* KXTableViewController.m */,
-				0F35AD53184D831A003E7A6D /* KXUser.h */,
-				0F35AD54184D831A003E7A6D /* KXUser.m */,
 				0FE87D721873D4A500F7C0E7 /* KXUserProfileDelegate.h */,
 				0F26E17F185CCAA7001F4725 /* KXUserProfileTableViewController.h */,
 				0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */,
@@ -1670,13 +1680,14 @@
 				0F223AE8185F04C200EA921A /* XMPPMessage+XEP0045.m in Sources */,
 				0F223B07185F04C200EA921A /* XMPPCapsCoreDataStorageObject.m in Sources */,
 				0F223AEA185F04C200EA921A /* XMPPRoom.m in Sources */,
+				0F632B161880E8B500CECF0B /* KXCoursesTableViewCell.m in Sources */,
 				0F223AD4185F04C200EA921A /* XMPPUserMemoryStorageObject.m in Sources */,
-				0F35AD55184D831A003E7A6D /* KXUser.m in Sources */,
 				0F223AEF185F04C200EA921A /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
 				0F223AE5185F04C200EA921A /* XMPPRoomMemoryStorage.m in Sources */,
 				0F223AF0185F04C200EA921A /* XMPPvCardTemp.m in Sources */,
 				0F223AC4185F04C200EA921A /* XMPPModule.m in Sources */,
 				0F223B30185F04C200EA921A /* DDXMLElement.m in Sources */,
+				0F632B101880DF4500CECF0B /* KXGroupsTableViewController.m in Sources */,
 				0F223B1E185F04C200EA921A /* NSXMLElement+XEP_0335.m in Sources */,
 				0F06BFF31831379700FDF785 /* KXHomeTableViewController.m in Sources */,
 				0F223B12185F04C200EA921A /* XMPPMessage+XEP_0184.m in Sources */,
@@ -1723,6 +1734,7 @@
 				0F223AE2185F04C200EA921A /* XMPPRoomHybridStorage.m in Sources */,
 				0F223AFE185F04C200EA921A /* XMPPMessage+XEP_0066.m in Sources */,
 				0F223AE1185F04C200EA921A /* XMPPRoomHybrid.xcdatamodeld in Sources */,
+				0F632B0D1880DF2100CECF0B /* KXGroupsTableViewCell.m in Sources */,
 				0F223B05185F04C200EA921A /* XMPPCapabilities.xcdatamodel in Sources */,
 				0F223AB7185F04C200EA921A /* XMPPAnonymousAuthentication.m in Sources */,
 				0FC756111855AF91008B081A /* KXTableViewController.m in Sources */,
@@ -1744,6 +1756,7 @@
 				0F223AC7185F04C200EA921A /* XMPPStream.m in Sources */,
 				0F223AC5185F04C200EA921A /* XMPPParser.m in Sources */,
 				0F223B21185F04C200EA921A /* RFImageToDataTransformer.m in Sources */,
+				0F632B131880E53E00CECF0B /* KXCoursesTableViewController.m in Sources */,
 				0F223AF5185F04C200EA921A /* XMPPvCardTempLabel.m in Sources */,
 				0F223ABF185F04C200EA921A /* NSXMLElement+XMPP.m in Sources */,
 				0F223B2A185F04C200EA921A /* DDTTYLogger.m in Sources */,
@@ -1758,7 +1771,6 @@
 				0F223AB8185F04C200EA921A /* XMPPDeprecatedDigestAuthentication.m in Sources */,
 				0F223AEE185F04C200EA921A /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				0F223AF6185F04C200EA921A /* XMPPvCardTempModule.m in Sources */,
-				0F761B09183CE8CE00651F7F /* KXMessage.m in Sources */,
 				0F223AE7185F04C200EA921A /* XMPPRoomOccupantMemoryStorageObject.m in Sources */,
 				0F223AFA185F04C200EA921A /* XMPPIQ+XEP_0060.m in Sources */,
 				0F523F881840702100F967BF /* KXVoiceHUD.m in Sources */,

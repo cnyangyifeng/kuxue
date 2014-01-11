@@ -644,6 +644,17 @@ enum XMPPRosterFlags
 	
 	XMPPLogTrace();
 	
+    // KuXue Customization
+    
+    [xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
+	
+	[self _setRequestedRoster:NO];
+	[self _setHasRoster:NO];
+	   
+	[earlyPresenceElements removeAllObjects];
+    
+    // End Customization
+    
 	if ([self autoFetchRoster])
 	{
 		[self fetchRoster];
@@ -823,12 +834,16 @@ enum XMPPRosterFlags
 	
 	XMPPLogTrace();
     
-	[xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
+    // KuXue Customization
+    
+	// [xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
 	
-	[self _setRequestedRoster:NO];
-	[self _setHasRoster:NO];
+	// [self _setRequestedRoster:NO];
+	// [self _setHasRoster:NO];
 	
-	[earlyPresenceElements removeAllObjects];
+	// [earlyPresenceElements removeAllObjects];
+    
+    // End Customization
 }
 
 #ifdef _XMPP_MUC_H
