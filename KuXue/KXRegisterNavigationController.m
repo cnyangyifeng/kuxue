@@ -1,18 +1,18 @@
 //
-//  KXMainTabBarController.m
+//  KXRegisterNavigationController.m
 //  KuXue
 //
 //  Created by Yang Yi Feng on 1/12/14.
 //  Copyright (c) 2014 kuxue.me. All rights reserved.
 //
 
-#import "KXMainTabBarController.h"
+#import "KXRegisterNavigationController.h"
 
-@interface KXMainTabBarController ()
+@interface KXRegisterNavigationController ()
 
 @end
 
-@implementation KXMainTabBarController
+@implementation KXRegisterNavigationController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

@@ -13,6 +13,7 @@
 #import "KXHomeDelegate.h"
 #import "KXLoginDelegate.h"
 #import "KXMeDelegate.h"
+#import "KXSMSVerificationDelegate.h"
 #import "KXUserProfileDelegate.h"
 #import "XMPPFramework.h"
 #import "constants.h"
@@ -67,6 +68,7 @@
 @property (weak, nonatomic) id loginDelegate;
 @property (weak, nonatomic) id meDelegate;
 @property (weak, nonatomic) id userProfileDelegate;
+@property (weak, nonatomic) id smsVerificationDelegate;
 
 @property (nonatomic) NSInteger badgeNumber;
 

@@ -43,11 +43,6 @@
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -60,7 +55,7 @@
     UIView *userIdTextFieldPadding = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, self.userIdTextField.frame.size.height)];
     self.userIdTextField.leftView = userIdTextFieldPadding;
     self.userIdTextField.leftViewMode = UITextFieldViewModeAlways;
-    self.userIdTextField.keyboardType = UIKeyboardTypeAlphabet;
+    self.userIdTextField.keyboardType = UIKeyboardTypeNumberPad;
 }
 
 - (void)initPasswordTextField
@@ -117,14 +112,15 @@
 
 - (IBAction)loginButtonTapped:(id)sender
 {
-    NSLog(@"Login button tapped.");
     [self dismissKeyboard];
     [self loginWithUserId:self.userIdTextField.text password:self.passwordTextField.text];
 }
 
 - (void)registerButtonTapped
 {
-    NSLog(@"Register button tapped.");
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    KXRegisterNavigationController *registerNavController = [storyboard instantiateViewControllerWithIdentifier:@"KXRegisterNavigationController"];
+    [self presentViewController:registerNavController animated:YES completion:nil];
 }
 
 #pragma mark - Login

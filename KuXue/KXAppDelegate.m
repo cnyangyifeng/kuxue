@@ -39,6 +39,7 @@
 @synthesize loginDelegate = _loginDelegate;
 @synthesize meDelegate = _meDelegate;
 @synthesize userProfileDelegate = _userProfileDelegate;
+@synthesize smsVerificationDelegate = _smsVerificationDelegate;
 
 @synthesize badgeNumber = _badgeNumber;
 
@@ -264,6 +265,7 @@
     [self goOnline];
     if (!self.autoConnect) {
         [self.loginDelegate didAuthenticate];
+        [self.smsVerificationDelegate didAuthenticate];
     }
 }
 
@@ -272,6 +274,7 @@
     NSLog(@"XMPP stream did not authenticate, user: %@.", [[xmppStream myJID] user]);
     if (!self.autoConnect) {
         [self.loginDelegate didNotAuthenticate];
+        [self.smsVerificationDelegate didNotAuthenticate];
     }
 }
 
