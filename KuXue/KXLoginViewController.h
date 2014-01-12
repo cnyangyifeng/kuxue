@@ -8,7 +8,6 @@
 
 #import <MBProgressHUD/MBProgressHUD.h>
 #import "KXLoginDelegate.h"
-#import "KXRegisterNavigationController.h"
 #import "KXViewController.h"
 
 #define REGISTER_BUTTON_HEIGHT 50.0f

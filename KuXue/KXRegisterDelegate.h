@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol KXLoginDelegate <NSObject>
+@protocol KXRegisterDelegate <NSObject>
 
 @required
 
-- (void)xmppStreamDidAuthenticate;
-- (void)didNotAuthenticate;
+- (void)xmppStreamDidConnect;
+- (void)xmppStreamDidDisconnect;
 
 @end

@@ -25,7 +25,9 @@
 @synthesize xmppCapabilities;
 @synthesize xmppCapabilitiesCoreDataStorage;
 
-@synthesize autoConnect;
+@synthesize loginEnabled = _loginEnabled;
+@synthesize registerEnabled = _registerEnabled;
+@synthesize homeEnabled = _homeEnabled;
 
 @synthesize firstRun = _firstRun;
 
@@ -38,8 +40,9 @@
 @synthesize homeDelegate = _homeDelegate;
 @synthesize loginDelegate = _loginDelegate;
 @synthesize meDelegate = _meDelegate;
-@synthesize userProfileDelegate = _userProfileDelegate;
+@synthesize registerDelegate = _registerDelegate;
 @synthesize smsVerificationDelegate = _smsVerificationDelegate;
+@synthesize userProfileDelegate = _userProfileDelegate;
 
 @synthesize badgeNumber = _badgeNumber;
 
@@ -55,14 +58,18 @@
     if (![defaults objectForKey:@"firstRun"]) {
         self.firstRun = TRUE;
         [defaults setObject:[NSDate date] forKey:@"firstRun"];
-        // TODO: Initializes application data.
+        // TODO: Initializes application data for the first run.
     } else {
         self.firstRun = FALSE;
     }
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [self setLoginEnabled:NO];
+    [self setRegisterEnabled:NO];
+    [self setHomeEnabled:YES];
+    
     [self setUpStream];
-    if (![self connect:YES]) {
+    if (![self connect]) {
         double delayInSeconds = 0.0f;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -71,7 +78,7 @@
     }
     
     /* Checks network reachablity. */
-    Reachability *reach = [Reachability reachabilityWithHostname:@"42.96.184.90"];
+    Reachability *reach = [Reachability reachabilityWithHostname:XMPP_HOST_NAME];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
     [reach startNotifier];
     
@@ -189,12 +196,10 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-#pragma mark - XMPP Connection/Disconnection
+#pragma mark - XMPP Public Methods
 
-- (BOOL)connect:(BOOL)automatic
+- (BOOL)connect
 {
-    autoConnect = automatic;
-    
     if ([[self xmppStream] isConnected]) {
         NSLog(@"XMPP server connected, connection kept alive.");
         return YES;
@@ -202,7 +207,7 @@
     
     NSString *myJid = [[NSUserDefaults standardUserDefaults] stringForKey:@"jid"];
     NSString *myPassword = [[NSUserDefaults standardUserDefaults] stringForKey:@"password"];
-    if (myJid == nil || myPassword == nil) {
+    if (myJid == nil || [myJid isEqualToString:@""] || myPassword == nil || [myPassword isEqualToString:@""]) {
         NSLog(@"XMPP server not connected, user not available.");
         return NO;
     }
@@ -227,6 +232,17 @@
     [xmppStream disconnect];
 }
 
+- (BOOL)registerWithElements:(NSArray *)elements
+{
+    NSError *error = nil;
+    if ([xmppStream registerWithElements:elements error:&error]) {
+        return NO;
+    }
+    
+    NSLog(@"New account registers.");
+    return YES;
+}
+
 #pragma mark - XMPPStreamDelegate
 
 - (void)xmppStream:(XMPPStream *)sender socketDidConnect:(GCDAsyncSocket *)socket
@@ -237,7 +253,12 @@
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
     NSLog(@"XMPP stream did connect.");
-    [self.homeDelegate didConnect];
+    if (self.homeEnabled) {
+        [self.homeDelegate xmppStreamDidConnect];
+    }
+    if (self.registerEnabled) {
+        [self.registerDelegate xmppStreamDidConnect];
+    }
     NSError *error = nil;
     if (![xmppStream authenticateWithPassword:password error:&error]) {
         NSLog(@"XMPP stream authenticate with password error.");
@@ -252,10 +273,15 @@
 - (void)xmppStreamDidDisconnect:(XMPPStream *)sender withError:(NSError *)error
 {
     NSLog(@"XMPP stream did disconnect.");
-    [self.homeDelegate didDisconnect];
-    NSString *myJid = [[NSUserDefaults standardUserDefaults] stringForKey:@"jid"];
-    if (myJid != nil) {
-        [self connect:YES];
+    if (self.homeEnabled) {
+        [self.homeDelegate xmppStreamDidDisconnect];
+        NSString *myJid = [[NSUserDefaults standardUserDefaults] stringForKey:@"jid"];
+        if (myJid != nil) {
+            [self connect];
+        }
+    }
+    if (self.registerEnabled) {
+        [self.registerDelegate xmppStreamDidDisconnect];
     }
 }
 
@@ -263,17 +289,21 @@
 {
     NSLog(@"XMPP stream did authenticate, user: %@.", [[xmppStream myJID] user]);
     [self goOnline];
-    if (!self.autoConnect) {
-        [self.loginDelegate didAuthenticate];
-        [self.smsVerificationDelegate didAuthenticate];
+    if (self.loginEnabled) {
+        [self.loginDelegate xmppStreamDidAuthenticate];
+    }
+    if (self.registerEnabled) {
+        [self.smsVerificationDelegate xmppStreamDidAuthenticate];
     }
 }
 
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(NSXMLElement *)error
 {
     NSLog(@"XMPP stream did not authenticate, user: %@.", [[xmppStream myJID] user]);
-    if (!self.autoConnect) {
+    if (self.loginEnabled) {
         [self.loginDelegate didNotAuthenticate];
+    }
+    if (self.registerEnabled) {
         [self.smsVerificationDelegate didNotAuthenticate];
     }
 }
@@ -281,8 +311,8 @@
 - (BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
 {
     if ([iq.type isEqualToString:@"result"]) {
-        NSXMLElement *element = (NSXMLElement *)[iq.children objectAtIndex:0];
-        NSLog(@"XMPP stream did receive IQ, type: %@, name: %@.", iq.type, element.name);
+        // NSXMLElement *element = (NSXMLElement *)[iq.children objectAtIndex:0];
+        NSLog(@"XMPP stream did receive IQ, type: %@.", iq.type);
     }
     return NO;
 }
@@ -294,16 +324,17 @@
         XMPPUserCoreDataStorageObject *userStorageObject = [xmppRosterCoreDataStorage userForJID:[message from] xmppStream:xmppStream managedObjectContext:[self managedRosterObjectContext]];
         NSString *body = [[message elementForName:@"body"] stringValue];
         NSString *from = [[userStorageObject jid] user];
+
+        if (self.homeEnabled) {
+            /* Reloads messages. */
+            [self.homeDelegate didReceiveMessage:message];
+            [self.chatDelegate didReceiveMessage:message];
+            userStorageObject.unreadMessages =
+                [NSNumber numberWithInt:[userStorageObject.unreadMessages intValue] + 1];
+        }
         
-        if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
-            [self.homeDelegate didReceiveMessage:message];
-            [self.chatDelegate didReceiveMessage:message];
-            userStorageObject.unreadMessages = [NSNumber numberWithInt:[userStorageObject.unreadMessages intValue] + 1];
-        } else {
-            [self.homeDelegate didReceiveMessage:message];
-            [self.chatDelegate didReceiveMessage:message];
-            userStorageObject.unreadMessages = [NSNumber numberWithInt:[userStorageObject.unreadMessages intValue] + 1];
-            NSLog(@"Presents a local notification.");
+        if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+            /* Presents a local notification. */
             self.badgeNumber++;
             UILocalNotification *localNotification = [[UILocalNotification alloc] init];
             localNotification.alertAction = @"View";
@@ -338,7 +369,26 @@
 - (void)xmppStream:(XMPPStream *)sender didSendMessage:(XMPPMessage *)message
 {
     NSLog(@"XMPP stream did send message: %@", message.body);
-    [[self chatDelegate] didSendMessage:message];
+    if (self.homeEnabled) {
+        [self.homeDelegate didSendMessage:message];
+        [self.chatDelegate didSendMessage:message];
+    }
+}
+
+- (void)xmppStreamDidRegister:(XMPPStream *)sender
+{
+    NSLog(@"XMPP stream did register.");
+    if (self.registerEnabled) {
+        [self.smsVerificationDelegate xmppStreamDidRegister];
+    }
+}
+
+- (void)xmppStream:(XMPPStream *)sender didNotRegister:(NSXMLElement *)error
+{
+    NSLog(@"XMPP stream did not register. %@", error.description);
+    if (self.registerEnabled) {
+        [self.smsVerificationDelegate didNotRegister];
+    }
 }
 
 #pragma mark - XMPPRosterDelegate
@@ -346,12 +396,17 @@
 - (void)xmppRosterDidEndPopulating:(XMPPRoster *)sender
 {
     NSLog(@"XMPP roster did end populating.");
-    [self.contactsDelegate xmppRosterDidEndPopulating];
+    if (self.homeEnabled) {
+        [self.contactsDelegate xmppRosterDidEndPopulating];
+    }
 }
 
 - (void)xmppRoster:(XMPPRoster *)sender didReceiveRosterItem:(NSXMLElement *)item
 {
     NSLog(@"XMPP roster did receive roster item.");
+    if (self.homeEnabled) {
+        [self.contactsDelegate didReceiveRosterItem];
+    }
 }
 
 #pragma mark - XMPPvCardTempModuleDelegate
@@ -481,7 +536,7 @@
     Reachability *reach = [note object];
     if ([reach isReachable]) {
         NSLog(@"Network reachable. Connects.");
-        [self connect:YES];
+        [self connect];
     } else {
         NSLog(@"Network not reachable. Disconnects.");
         [self disconnect];

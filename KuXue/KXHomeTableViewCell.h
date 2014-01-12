@@ -13,7 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *contactAvatarImageView;
 @property (weak, nonatomic) IBOutlet UILabel *contactNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageTimestampLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *messageTypeImageView;
 @property (weak, nonatomic) IBOutlet UILabel *messageBodyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *unreadLabel;
 

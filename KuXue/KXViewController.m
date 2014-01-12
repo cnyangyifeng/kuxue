@@ -27,6 +27,15 @@
     [super viewDidLoad];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[self appDelegate] setLoginEnabled:NO];
+    [[self appDelegate] setRegisterEnabled:NO];
+    [[self appDelegate] setHomeEnabled:YES];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

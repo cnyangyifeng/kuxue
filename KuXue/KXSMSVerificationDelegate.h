@@ -12,7 +12,9 @@
 
 @required
 
-- (void)didAuthenticate;
+- (void)xmppStreamDidRegister;
+- (void)didNotRegister;
+- (void)xmppStreamDidAuthenticate;
 - (void)didNotAuthenticate;
 
 @end

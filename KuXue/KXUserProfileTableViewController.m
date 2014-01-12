@@ -44,7 +44,7 @@
 
 - (void)didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
 {
-    NSLog(@"KXUserProfileDelegate callback: did receive vCard temp.");
+    NSLog(@"KXUserProfileDelegate callback: did receive vcard temp.");
 }
 
 #pragma mark - Private Methods

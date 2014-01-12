@@ -27,6 +27,15 @@
     [super viewDidLoad];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[self appDelegate] setLoginEnabled:NO];
+    [[self appDelegate] setRegisterEnabled:YES];
+    [[self appDelegate] setHomeEnabled:NO];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -34,9 +43,7 @@
 
 - (IBAction)startButtonTapped:(id)sender
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    KXMainTabBarController *mainTabBarController = [storyboard instantiateViewControllerWithIdentifier:@"KXMainTabBarController"];
-    [self presentViewController:mainTabBarController animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"modalMainFromRegisterOK" sender:nil];
 }
 
 @end

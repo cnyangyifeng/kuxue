@@ -13,6 +13,7 @@
 #import "KXHomeDelegate.h"
 #import "KXLoginDelegate.h"
 #import "KXMeDelegate.h"
+#import "KXRegisterDelegate.h"
 #import "KXSMSVerificationDelegate.h"
 #import "KXUserProfileDelegate.h"
 #import "XMPPFramework.h"
@@ -35,8 +36,6 @@
     XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesCoreDataStorage;
     
     NSString *password;
-    
-    BOOL autoConnect;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -54,7 +53,9 @@
 @property (strong, readonly, nonatomic) XMPPCapabilities *xmppCapabilities;
 @property (strong, readonly, nonatomic) XMPPCapabilitiesCoreDataStorage *xmppCapabilitiesCoreDataStorage;
 
-@property (nonatomic) BOOL autoConnect;
+@property (nonatomic) BOOL loginEnabled;
+@property (nonatomic) BOOL registerEnabled;
+@property (nonatomic) BOOL homeEnabled;
 
 @property (nonatomic) BOOL firstRun;
 
@@ -67,8 +68,9 @@
 @property (weak, nonatomic) id homeDelegate;
 @property (weak, nonatomic) id loginDelegate;
 @property (weak, nonatomic) id meDelegate;
-@property (weak, nonatomic) id userProfileDelegate;
+@property (weak, nonatomic) id registerDelegate;
 @property (weak, nonatomic) id smsVerificationDelegate;
+@property (weak, nonatomic) id userProfileDelegate;
 
 @property (nonatomic) NSInteger badgeNumber;
 
@@ -78,7 +80,8 @@
 - (NSManagedObjectContext *)managedMessageArchivingObjectContext;
 - (NSManagedObjectContext *)managedCapabilitiesObjectContext;
 
-- (BOOL)connect:(BOOL)automatic;
+- (BOOL)connect;
 - (void)disconnect;
+- (BOOL)registerWithElements:(NSArray *)elements;
 
 @end

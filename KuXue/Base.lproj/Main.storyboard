@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Main Tab Bar Controller-->
+        <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
             <objects>
-                <tabBarController storyboardIdentifier="KXMainTabBarController" id="8YX-ce-x5E" customClass="KXMainTabBarController" sceneMemberID="viewController">
+                <tabBarController id="8YX-ce-x5E" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="RMi-cc-bYa"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JQR-rB-NYL">
@@ -40,7 +40,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="gCj-ws-jzg">
-                                <rect key="frame" x="128" y="42" width="64" height="64"/>
+                                <rect key="frame" x="128" y="40" width="64" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile phone number" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="L9u-MI-jAc">
@@ -86,16 +86,17 @@
                         <outlet property="passwordTextField" destination="sMI-I6-raP" id="IEa-AQ-prW"/>
                         <outlet property="userIdTextField" destination="L9u-MI-jAc" id="S13-Gq-KEn"/>
                         <segue destination="8YX-ce-x5E" kind="modal" identifier="presentMainFromLogin" id="jJq-MO-bUx"/>
+                        <segue destination="tdt-Ic-OjR" kind="modal" identifier="modalRegisterFromLogin" id="QQ1-a7-MwL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HEr-PI-IHE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-84" y="2069"/>
+            <point key="canvasLocation" x="-84" y="2077"/>
         </scene>
-        <!--Register Navigation Controller-->
+        <!--Navigation Controller-->
         <scene sceneID="s9Q-7o-Qut">
             <objects>
-                <navigationController storyboardIdentifier="KXRegisterNavigationController" definesPresentationContext="YES" id="tdt-Ic-OjR" customClass="KXRegisterNavigationController" sceneMemberID="viewController">
+                <navigationController definesPresentationContext="YES" id="tdt-Ic-OjR" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Xg6-mZ-co7"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ewF-sK-6dt">
                         <autoresizingMask key="autoresizingMask"/>
@@ -106,9 +107,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AhB-7d-kl3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-454" y="2730"/>
+            <point key="canvasLocation" x="-772" y="2900"/>
         </scene>
-        <!--Register View Controller - Register KuXue-->
+        <!--Register View Controller - Register with KuXue-->
         <scene sceneID="RGZ-hY-qSs">
             <objects>
                 <viewController id="EdS-EM-fYf" customClass="KXRegisterViewController" sceneMemberID="viewController">
@@ -130,31 +131,36 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="uQ3-fy-Yth" kind="push" identifier="pushSMSVerificationFromRegister" id="7D7-QA-Def"/>
+                                    <action selector="nextButtonTapped:" destination="EdS-EM-fYf" eventType="touchUpInside" id="pJx-yl-w4I"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile phone number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mLI-qy-toB">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Mobile phone number" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mLI-qy-toB">
                                 <rect key="frame" x="30" y="100" width="260" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad" returnKeyType="next"/>
+                                <connections>
+                                    <action selector="textFieldDidEndOnExit:" destination="EdS-EM-fYf" eventType="editingDidEndOnExit" id="UE4-x2-6e7"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Register KuXue" id="ReR-EQ-NGI"/>
+                    <navigationItem key="navigationItem" title="Register with KuXue" id="ReR-EQ-NGI"/>
                     <connections>
                         <outlet property="nextButton" destination="vc6-Of-1td" id="EBi-mC-UbU"/>
                         <outlet property="userIdTextField" destination="mLI-qy-toB" id="Hgw-gG-S9z"/>
+                        <segue destination="uQ3-fy-Yth" kind="push" identifier="pushSMSVerificationFromRegister" id="r7n-5I-oTi"/>
+                        <segue destination="0r5-3N-DiJ" kind="modal" identifier="modalLoginFromRegister" id="ta0-xc-eJN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vj5-kY-Nu1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-84" y="2730"/>
+            <point key="canvasLocation" x="-297" y="2900"/>
         </scene>
-        <!--Verification View Controller - Register KuXue-->
+        <!--Verification View Controller - Register with KuXue-->
         <scene sceneID="Pii-Uo-eyi">
             <objects>
                 <viewController id="uQ3-fy-Yth" customClass="KXSMSVerificationViewController" sceneMemberID="viewController">
@@ -188,6 +194,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="verifyButtonTapped:" destination="uQ3-fy-Yth" eventType="touchUpInside" id="81g-Qw-ayg"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SMS Verification Code" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="NTI-mj-kH1">
                                 <rect key="frame" x="30" y="100" width="180" height="45"/>
@@ -203,19 +212,20 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Register KuXue" id="bY3-IF-cCh"/>
+                    <navigationItem key="navigationItem" title="Register with KuXue" id="bY3-IF-cCh"/>
                     <connections>
                         <outlet property="nextButton" destination="v4y-qL-HbT" id="o5J-tH-gf7"/>
                         <outlet property="verificationCodeTextField" destination="NTI-mj-kH1" id="uRK-2w-gWW"/>
                         <outlet property="verifyButton" destination="TSy-Vc-hki" id="zre-Wm-if6"/>
                         <segue destination="OC1-EB-ahA" kind="push" identifier="pushRegisterOKFromSMSVerification" id="YSc-5R-epo"/>
+                        <segue destination="0r5-3N-DiJ" kind="modal" identifier="modalLoginFromSMSVerification" id="2cs-7J-sFH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4L8-uc-7BN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="285" y="2730"/>
+            <point key="canvasLocation" x="178" y="2900"/>
         </scene>
-        <!--RegisterOK View Controller - Register KuXue-->
+        <!--RegisterOK View Controller - Register with KuXue-->
         <scene sceneID="oOC-kD-J6o">
             <objects>
                 <viewController id="OC1-EB-ahA" customClass="KXRegisterOKViewController" sceneMemberID="viewController">
@@ -251,14 +261,15 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Register KuXue" id="ySG-FR-Lxn"/>
+                    <navigationItem key="navigationItem" title="Register with KuXue" id="ySG-FR-Lxn"/>
                     <connections>
                         <outlet property="startButton" destination="Bp6-9d-jWc" id="ztp-QV-yWU"/>
+                        <segue destination="8YX-ce-x5E" kind="modal" identifier="modalMainFromRegisterOK" id="U08-Hm-XNY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jlB-bb-PgS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="653" y="2730"/>
+            <point key="canvasLocation" x="653" y="2900"/>
         </scene>
         <!--Contacts Table View Controller - Contacts-->
         <scene sceneID="HdF-Df-IOr">
@@ -845,59 +856,51 @@
         <scene sceneID="IJ1-To-CP8">
             <objects>
                 <tableViewController id="JSu-03-N6W" customClass="KXHomeTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="105" sectionHeaderHeight="20" sectionFooterHeight="20" id="P8E-oS-M15">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="75" sectionHeaderHeight="20" sectionFooterHeight="20" id="P8E-oS-M15">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="homeTableViewCell" id="WPR-mL-SYD" customClass="KXHomeTableViewCell">
-                                <rect key="frame" x="0.0" y="84" width="320" height="105"/>
+                                <rect key="frame" x="0.0" y="84" width="320" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WPR-mL-SYD" id="9xn-DQ-dbA">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="105"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gqA-PH-zfD">
-                                            <rect key="frame" x="10" y="10" width="30" height="30"/>
+                                            <rect key="frame" x="10" y="10" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Contact Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fyn-Be-MdE">
-                                            <rect key="frame" x="50" y="10" width="170" height="30"/>
+                                            <rect key="frame" x="70" y="10" width="150" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Message Body" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="230" translatesAutoresizingMaskIntoConstraints="NO" id="HQJ-Lo-1uc">
+                                            <rect key="frame" x="70" y="40" width="230" height="18"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Message Body" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="HQJ-Lo-1uc">
-                                            <rect key="frame" x="50" y="60" width="200" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mn7-1x-ljB">
-                                            <rect key="frame" x="230" y="10" width="70" height="30"/>
+                                            <rect key="frame" x="220" y="10" width="80" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Unread" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pan-c4-CyU">
-                                            <rect key="frame" x="260" y="60" width="40" height="30"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="99" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pan-c4-CyU">
+                                            <rect key="frame" x="51" y="5" width="16" height="16"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="9"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pqH-Tg-neF">
-                                            <rect key="frame" x="10" y="49" width="290" height="1"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                        </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="plv-yT-vge">
-                                            <rect key="frame" x="10" y="60" width="30" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
@@ -905,7 +908,6 @@
                                     <outlet property="contactNameLabel" destination="Fyn-Be-MdE" id="XIk-Mq-iNw"/>
                                     <outlet property="messageBodyLabel" destination="HQJ-Lo-1uc" id="Ney-Pc-pQ8"/>
                                     <outlet property="messageTimestampLabel" destination="mn7-1x-ljB" id="5LZ-Lb-xam"/>
-                                    <outlet property="messageTypeImageView" destination="plv-yT-vge" id="LiP-e8-MIT"/>
                                     <outlet property="unreadLabel" destination="Pan-c4-CyU" id="2yt-qE-CR3"/>
                                 </connections>
                             </tableViewCell>
@@ -1283,6 +1285,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Xqp-Y1-hAK"/>
+        <segue reference="2cs-7J-sFH"/>
+        <segue reference="jJq-MO-bUx"/>
     </inferredMetricsTieBreakers>
 </document>

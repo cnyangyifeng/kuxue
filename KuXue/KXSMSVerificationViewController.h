@@ -24,6 +24,7 @@
 
 @property (strong, nonatomic) NSString *userId;
 
+- (IBAction)verifyButtonTapped:(id)sender;
 - (IBAction)textFieldDidEndOnExit:(id)sender;
 - (IBAction)nextButtonTapped:(id)sender;
 

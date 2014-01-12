@@ -13,5 +13,6 @@
 @required
 
 - (void)xmppRosterDidEndPopulating;
+- (void)didReceiveRosterItem;
 
 @end

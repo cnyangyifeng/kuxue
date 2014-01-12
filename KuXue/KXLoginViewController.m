@@ -43,6 +43,15 @@
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[self appDelegate] setLoginEnabled:YES];
+    [[self appDelegate] setRegisterEnabled:NO];
+    [[self appDelegate] setHomeEnabled:NO];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -106,47 +115,48 @@
     } else {
         // else is passwordTextField.
         [sender resignFirstResponder];
-        [self loginWithUserId:self.userIdTextField.text password:self.passwordTextField.text];
+        [self connect];
     }
 }
 
 - (IBAction)loginButtonTapped:(id)sender
 {
     [self dismissKeyboard];
-    [self loginWithUserId:self.userIdTextField.text password:self.passwordTextField.text];
+    [self connect];
 }
 
 - (void)registerButtonTapped
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    KXRegisterNavigationController *registerNavController = [storyboard instantiateViewControllerWithIdentifier:@"KXRegisterNavigationController"];
-    [self presentViewController:registerNavController animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"modalRegisterFromLogin" sender:nil];
 }
 
-#pragma mark - Login
+#pragma mark - Connection
 
-- (void)loginWithUserId:(NSString *)userId password:(NSString *)password
+- (void)connect
 {
+    /* Disconnects */
+    [[self appDelegate] disconnect];
+    /* Connects */
     NSString *myJid = [self.userIdTextField.text stringByAppendingFormat:@"%@%@", @"@", XMPP_HOST_NAME];
     [[NSUserDefaults standardUserDefaults] setObject:myJid forKey:@"jid"];
     [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:@"password"];
-    [[self appDelegate] connect:NO];
+    [[self appDelegate] connect];
     [self showProgressHud];
     [self hideProgressHud:PROGRESS_TIME_IN_SECONDS];
 }
 
 #pragma mark - KXLoginDelegate
 
-- (void)didAuthenticate
+- (void)xmppStreamDidAuthenticate
 {
-    NSLog(@"KXLoginDelegate callback: User did authenticated.");
+    NSLog(@"KXLoginDelegate callback: xmpp stream did authenticate.");
     [self hideProgressHud:0.0f];
     [self performSegueWithIdentifier:@"presentMainFromLogin" sender:nil];
 }
 
 - (void)didNotAuthenticate
 {
-    NSLog(@"KXLoginDelegate callback: User did not authenticated.");
+    NSLog(@"KXLoginDelegate callback: did not authenticate.");
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"jid"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
     [[self appDelegate] disconnect];
@@ -169,8 +179,6 @@
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    hud.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
-    hud.color = [UIColor clearColor];
     self.progressHud = hud;
 }
 

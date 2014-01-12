@@ -40,6 +40,15 @@
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[self appDelegate] setLoginEnabled:NO];
+    [[self appDelegate] setRegisterEnabled:YES];
+    [[self appDelegate] setHomeEnabled:NO];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -71,52 +80,78 @@
 
 #pragma mark - Navigations
 
+- (IBAction)verifyButtonTapped:(id)sender
+{
+    self.verificationCodeTextField.text = @"860110";
+}
+
 - (IBAction)textFieldDidEndOnExit:(id)sender
 {
-    [self.verificationCodeTextField resignFirstResponder];
-    [self loginWithUserId:self.userId password:self.verificationCodeTextField.text];
+    [self dismissKeyboard];
+    [self register];
 }
 
 - (IBAction)nextButtonTapped:(id)sender
 {
     [self dismissKeyboard];
-    [self loginWithUserId:self.userId password:self.verificationCodeTextField.text];
-}
-
-#pragma mark - Login
-
-- (void)loginWithUserId:(NSString *)userId password:(NSString *)password
-{
-    NSString *myJid = [self.userId stringByAppendingFormat:@"%@%@", @"@", XMPP_HOST_NAME];
-    [[NSUserDefaults standardUserDefaults] setObject:myJid forKey:@"jid"];
-    [[NSUserDefaults standardUserDefaults] setObject:self.verificationCodeTextField.text forKey:@"password"];
-    [[self appDelegate] connect:NO];
-    [self showProgressHud];
-    [self hideProgressHud:PROGRESS_TIME_IN_SECONDS];
+    [self register];
 }
 
 - (void)loginButtonTapped
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    KXLoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"KXLoginViewController"];
-    [self presentViewController:loginViewController animated:YES completion:nil];
+    [self performSegueWithIdentifier:@"modalLoginFromSMSVerification" sender:nil];
+}
+
+#pragma mark - Registration
+
+- (void)register
+{
+    /* Registers */
+    NSMutableArray *elements = [NSMutableArray array];
+    [elements addObject:[NSXMLElement elementWithName:@"username" stringValue:self.userId]];
+    [elements addObject:[NSXMLElement elementWithName:@"password" stringValue:self.verificationCodeTextField.text]];
+    if ([[[self appDelegate] xmppStream] isDisconnected]) {
+        NSLog(@"Connection lost. Reconnects.");
+        [[self appDelegate] connect];
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_SHORT_TIME_IN_SECONDS * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [[self appDelegate] registerWithElements:elements];
+        });
+    } else {
+        [[self appDelegate] registerWithElements:elements];
+    }
+    [self showProgressHud];
+    [self hideProgressHud:PROGRESS_TIME_IN_SECONDS];
 }
 
 #pragma mark - KXSMSVerificationDelegate
 
-- (void)didAuthenticate
+- (void)xmppStreamDidRegister
 {
-    NSLog(@"KXSMSVerificationDelegate callback: User did authenticated.");
+    NSLog(@"KXSMSVerificationDelegate callback: xmpp stream did register.");
+    /* Authenticates */
+    NSError *error = nil;
+    if (![[[self appDelegate] xmppStream] authenticateWithPassword:self.verificationCodeTextField.text error:&error]) {
+        NSLog(@"XMPP stream authenticate with password error.");
+    }
+}
+
+- (void)didNotRegister
+{
+    NSLog(@"KXSMSVerificationDelegate callback: did not register.");
+    [self hideProgressHud:0.0f];
+}
+
+- (void)xmppStreamDidAuthenticate
+{
+    NSLog(@"KXSMSVerificationDelegate callback: xmpp stream did authenticate.");
     [self hideProgressHud:0.0f];
     [self performSegueWithIdentifier:@"pushRegisterOKFromSMSVerification" sender:nil];
 }
 
 - (void)didNotAuthenticate
 {
-    NSLog(@"KXSMSVerificationDelegate callback: User did not authenticated.");
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"jid"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
-    [[self appDelegate] disconnect];
+    NSLog(@"KXSMSVerificationDelegate callback: did not authenticate.");
     [self hideProgressHud:0.0f];
 }
 
@@ -133,8 +168,6 @@
 {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    hud.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
-    hud.color = [UIColor clearColor];
     self.progressHud = hud;
 }
 

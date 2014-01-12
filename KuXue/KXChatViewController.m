@@ -488,7 +488,7 @@
 
 - (void)didReceiveMessage:(XMPPMessage *)message
 {
-    NSLog(@"KXChatDelegate callback: New messsage received.");
+    NSLog(@"KXChatDelegate callback: did receive messsage.");
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_VERY_SHORT_TIME_IN_SECONDS * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self scrollTableView];
@@ -497,8 +497,7 @@
 
 - (void)didSendMessage:(XMPPMessage *)message
 {
-    NSLog(@"KXChatDelegate callback: New message sent.");
-    NSLog(@"KXChatDelegate callback: New messsage received.");
+    NSLog(@"KXChatDelegate callback: did send message.");
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_VERY_SHORT_TIME_IN_SECONDS * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self scrollTableView];

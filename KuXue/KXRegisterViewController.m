@@ -16,6 +16,8 @@
 
 @synthesize loginButton = _loginButton;
 
+@synthesize progressHud = _progressHud;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,10 +30,21 @@
 {
     [super viewDidLoad];
     
+    [[self appDelegate] setRegisterDelegate:self];
+    
     [self initUserIdTextField];
     [self initLoginButton];
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[self appDelegate] setLoginEnabled:NO];
+    [[self appDelegate] setRegisterEnabled:YES];
+    [[self appDelegate] setHomeEnabled:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,20 +78,61 @@
 
 #pragma mark - Navigations
 
+- (IBAction)textFieldDidEndOnExit:(id)sender
+{
+    [self dismissKeyboard];
+    [self connect];
+}
+
+- (IBAction)nextButtonTapped:(id)sender
+{
+    [self dismissKeyboard];
+    [self connect];
+}
+
+- (void)loginButtonTapped
+{
+    [self performSegueWithIdentifier:@"modalLoginFromRegister" sender:nil];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"pushSMSVerificationFromRegister"]) {
-        // TODO: Checks if jid exists.
         KXSMSVerificationViewController *smsVerificationController = segue.destinationViewController;
         smsVerificationController.userId = self.userIdTextField.text;
     }
 }
 
-- (void)loginButtonTapped
+#pragma mark - Connection
+
+- (void)connect
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    KXLoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"KXLoginViewController"];
-    [self presentViewController:loginViewController animated:YES completion:nil];
+    /* Disconnects */
+    [[self appDelegate] disconnect];
+    /* Connects */
+    NSString *myJid = [self.userIdTextField.text stringByAppendingFormat:@"%@%@", @"@", XMPP_HOST_NAME];
+    [[NSUserDefaults standardUserDefaults] setObject:myJid forKey:@"jid"];
+    [[NSUserDefaults standardUserDefaults] setObject:DEFAULT_PASSWORD forKey:@"password"];
+    [[self appDelegate] connect];
+    [self showProgressHud];
+    [self hideProgressHud:PROGRESS_TIME_IN_SECONDS];
+}
+
+#pragma mark - KXRegisterDelegate
+
+- (void)xmppStreamDidConnect
+{
+    NSLog(@"KXRegisterDelegate callback: xmpp stream did connect.");
+    [self hideProgressHud:0.0f];
+    [self performSegueWithIdentifier:@"pushSMSVerificationFromRegister" sender:nil];
+}
+
+- (void)xmppStreamDidDisconnect
+{
+    NSLog(@"KXRegisterDelegate callback: xmpp stream did disconnect.");
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"jid"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"password"];
+    [self hideProgressHud:0.0f];
 }
 
 #pragma mark - Private Methods
@@ -88,6 +142,21 @@
     if ([self.userIdTextField isFirstResponder]) {
         [self.userIdTextField resignFirstResponder];
     }
+}
+
+- (void)showProgressHud
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    self.progressHud = hud;
+}
+
+- (void)hideProgressHud:(double)delayInSeconds
+{
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.progressHud hide:YES];
+    });
 }
 
 @end

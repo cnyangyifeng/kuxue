@@ -13,8 +13,9 @@
 
 @required
 
-- (void)didConnect;
-- (void)didDisconnect;
+- (void)xmppStreamDidConnect;
+- (void)xmppStreamDidDisconnect;
 - (void)didReceiveMessage:(XMPPMessage *)message;
+- (void)didSendMessage:(XMPPMessage *)message;
 
 @end

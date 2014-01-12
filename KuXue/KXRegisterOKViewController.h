@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 kuxue.me. All rights reserved.
 //
 
-#import "KXMainTabBarController.h"
 #import "KXViewController.h"
 
 @interface KXRegisterOKViewController : KXViewController

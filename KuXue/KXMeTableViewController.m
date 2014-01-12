@@ -80,7 +80,7 @@
 
 - (void)didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp
 {
-    NSLog(@"KXMeDelegate callback: did receive vCard temp.");
+    NSLog(@"KXMeDelegate callback: did receive vcard temp.");
 }
 
 #pragma mark - Private Methods

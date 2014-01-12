@@ -8,6 +8,7 @@
 
 #define XMPP_HOST_NAME @"42.96.184.90"
 #define XMPP_HOST_PORT 5222
+#define DEFAULT_PASSWORD @"password"
 
 #define DEFAULT_FONT_SIZE 15.0f
 #define DEFAULT_AVATAR_NAME @"default.png"

@@ -40,6 +40,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+        
     [self loadConversationsFromCoreDataStorage];
     [self.tableView reloadData];
 }
@@ -81,10 +82,14 @@
     }
     cell.contactNameLabel.text = [[conversation bareJid] user];
     cell.messageTimestampLabel.text = [NSDateFormatter localizedStringFromDate:conversation.mostRecentMessageTimestamp dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle];
-    cell.messageTypeImageView.image = [UIImage imageNamed:@"MessageTypeVoice"];
     cell.messageBodyLabel.text = conversation.mostRecentMessageBody;
     cell.unreadLabel.text = [contact.unreadMessages stringValue];
-    
+    cell.unreadLabel.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Circle"]];
+    if (cell.unreadLabel.text == nil || [cell.unreadLabel.text isEqualToString:@""] || [cell.unreadLabel.text isEqualToString:@"0"]) {
+        cell.unreadLabel.hidden = YES;
+    } else {
+        cell.unreadLabel.hidden = NO;
+    }
     return cell;
 }
 
@@ -148,21 +153,31 @@
 
 #pragma mark - KXHomeDelegate
 
-- (void)didConnect
+- (void)xmppStreamDidConnect
 {
-    NSLog(@"KXHomeDelegate callback: User did connect.");
+    NSLog(@"KXHomeDelegate callback: xmpp stream did connect.");
     self.navigationItem.title = @"KuXue";
 }
 
-- (void)didDisconnect
+- (void)xmppStreamDidDisconnect
 {
-    NSLog(@"KXHomeDelegate callback: User did disconnect.");
+    NSLog(@"KXHomeDelegate callback: did disconnect.");
     self.navigationItem.title = @"Disconnected";
 }
 
 - (void)didReceiveMessage:(XMPPMessage *)message
 {
-    NSLog(@"KXHomeDelegate callback: New messsage received, home view updated.");
+    NSLog(@"KXHomeDelegate callback: did receive message.");
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_VERY_SHORT_TIME_IN_SECONDS * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self loadConversationsFromCoreDataStorage];
+        [self.tableView reloadData];
+    });
+}
+
+- (void)didSendMessage:(XMPPMessage *)message
+{
+    NSLog(@"KXHomeDelegate callback: did send message.");
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(PROGRESS_VERY_SHORT_TIME_IN_SECONDS * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self loadConversationsFromCoreDataStorage];

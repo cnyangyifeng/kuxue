@@ -168,7 +168,14 @@
 
 - (void)xmppRosterDidEndPopulating
 {
-    NSLog(@"KXContactsDelegate callback: Roster did end populating.");
+    NSLog(@"KXContactsDelegate callback: xmpp roster did end populating.");
+    [self loadContactsFromCoreDataStorage];
+    [self.tableView reloadData];
+}
+
+- (void)didReceiveRosterItem
+{
+    NSLog(@"KXContactsDelegate callback: did receive roster item.");
     [self loadContactsFromCoreDataStorage];
     [self.tableView reloadData];
 }

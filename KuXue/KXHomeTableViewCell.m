@@ -13,7 +13,6 @@
 @synthesize contactAvatarImageView = _contactAvatarImageView;
 @synthesize contactNameLabel = _contactNameLabel;
 @synthesize messageTimestampLabel = _messageTimestampLabel;
-@synthesize messageTypeImageView = _messageTypeImageView;
 @synthesize messageBodyLabel = _messageBodyLabel;
 @synthesize unreadLabel = _unreadLabel;
 
