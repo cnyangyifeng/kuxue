@@ -31,22 +31,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [[self appDelegate] setSmsVerificationDelegate:self];
-    
     [self initVerificationCodeTextField];
     [self initLoginButton];
-    
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [[self appDelegate] setLoginEnabled:NO];
     [[self appDelegate] setRegisterEnabled:YES];
     [[self appDelegate] setHomeEnabled:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.verificationCodeTextField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -61,7 +63,6 @@
     UIView *verificationCodeTextFieldPadding = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, self.verificationCodeTextField.frame.size.height)];
     self.verificationCodeTextField.leftView = verificationCodeTextFieldPadding;
     self.verificationCodeTextField.leftViewMode = UITextFieldViewModeAlways;
-    [self.verificationCodeTextField becomeFirstResponder];
 }
 
 - (void)initLoginButton
@@ -120,6 +121,13 @@
     } else {
         [[self appDelegate] registerWithElements:elements];
     }
+    /* Updates vCard */
+    NSXMLElement *vCardElement = [NSXMLElement elementWithName:@"vCard" xmlns:@"vcard-temp"];
+    NSXMLElement *nicknameElement = [NSXMLElement elementWithName:@"nickname" stringValue:self.userId];
+    [vCardElement addChild:nicknameElement];
+    XMPPvCardTemp *newvCardTemp = [XMPPvCardTemp vCardTempFromElement:vCardElement];
+    [[[self appDelegate] xmppvCardTempModule] updateMyvCardTemp:newvCardTemp];
+    /* Shows the progress hud */
     [self showProgressHud];
     [self hideProgressHud:PROGRESS_TIME_IN_SECONDS];
 }

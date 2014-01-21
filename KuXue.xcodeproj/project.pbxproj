@@ -153,6 +153,7 @@
 		0F69479E1881461C00675134 /* KXSMSVerificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F69479D1881461C00675134 /* KXSMSVerificationViewController.m */; };
 		0F6947A41882570D00675134 /* KXRegisterOKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6947A31882570D00675134 /* KXRegisterOKViewController.m */; };
 		0F761B04183C96C300651F7F /* KXChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F761B03183C96C300651F7F /* KXChatTableViewCell.m */; };
+		0FB805231884232D007EC0E1 /* KXNicknameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB805221884232D007EC0E1 /* KXNicknameViewController.m */; };
 		0FC6F0621838DF78009683D4 /* KXContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */; };
 		0FC6F0651838F6BE009683D4 /* KXContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0641838F6BE009683D4 /* KXContactTableViewController.m */; };
 		0FC6F07118392E58009683D4 /* KXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F07018392E58009683D4 /* KXChatViewController.m */; };
@@ -493,6 +494,8 @@
 		0F761B02183C96C300651F7F /* KXChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXChatTableViewCell.h; sourceTree = "<group>"; };
 		0F761B03183C96C300651F7F /* KXChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXChatTableViewCell.m; sourceTree = "<group>"; };
 		0F981660183DB35700EBD0B5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		0FB805211884232D007EC0E1 /* KXNicknameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXNicknameViewController.h; sourceTree = "<group>"; };
+		0FB805221884232D007EC0E1 /* KXNicknameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXNicknameViewController.m; sourceTree = "<group>"; };
 		0FC6F0601838DF78009683D4 /* KXContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXContactTableViewCell.h; sourceTree = "<group>"; };
 		0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactTableViewCell.m; sourceTree = "<group>"; };
 		0FC6F0631838F6BE009683D4 /* KXContactTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXContactTableViewController.h; sourceTree = "<group>"; };
@@ -530,6 +533,7 @@
 		0FE7CF9B1831169800CC502F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		0FE7CF9D183116FC00CC502F /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
 		0FE7D02E18312CE000CC502F /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		0FE8567F188D631D00C47F40 /* KXNicknameDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXNicknameDelegate.h; sourceTree = "<group>"; };
 		0FE87D711873D2D000F7C0E7 /* KXMeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMeDelegate.h; sourceTree = "<group>"; };
 		0FE87D721873D4A500F7C0E7 /* KXUserProfileDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXUserProfileDelegate.h; sourceTree = "<group>"; };
 		0FFE1074187559AF00B24D6D /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
@@ -1454,6 +1458,9 @@
 				0FFE10771875C2F500B24D6D /* KXMeTableViewCell.m */,
 				0FC756131856B409008B081A /* KXMeTableViewController.h */,
 				0FC756141856B409008B081A /* KXMeTableViewController.m */,
+				0FE8567F188D631D00C47F40 /* KXNicknameDelegate.h */,
+				0FB805211884232D007EC0E1 /* KXNicknameViewController.h */,
+				0FB805221884232D007EC0E1 /* KXNicknameViewController.m */,
 				0FE30F7E188293A8009EE505 /* KXRegisterDelegate.h */,
 				0F6947A21882570D00675134 /* KXRegisterOKViewController.h */,
 				0F6947A31882570D00675134 /* KXRegisterOKViewController.m */,
@@ -1662,6 +1669,7 @@
 				0F223B0B185F04C200EA921A /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				0F223ABE185F04C200EA921A /* NSNumber+XMPP.m in Sources */,
 				0FC6F07118392E58009683D4 /* KXChatViewController.m in Sources */,
+				0FB805231884232D007EC0E1 /* KXNicknameViewController.m in Sources */,
 				0F06BFFF1832278700FDF785 /* KXContactsTableViewCell.m in Sources */,
 				0F223ABA185F04C200EA921A /* XMPPDigestMD5Authentication.m in Sources */,
 				0F223ADC185F04C200EA921A /* XMPPPrivacy.m in Sources */,

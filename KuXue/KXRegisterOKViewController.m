@@ -30,7 +30,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [[self appDelegate] setLoginEnabled:NO];
     [[self appDelegate] setRegisterEnabled:YES];
     [[self appDelegate] setHomeEnabled:NO];

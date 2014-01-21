@@ -32,21 +32,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [[self appDelegate] setLoginDelegate:self];
-    
     [self initUserIdTextField];
     [self initPasswordTextField];
     [self initLoginButton];
     [self initRegisterButton];
-    
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
     [[self appDelegate] setLoginEnabled:YES];
     [[self appDelegate] setRegisterEnabled:NO];
     [[self appDelegate] setHomeEnabled:NO];
@@ -64,7 +60,6 @@
     UIView *userIdTextFieldPadding = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, self.userIdTextField.frame.size.height)];
     self.userIdTextField.leftView = userIdTextFieldPadding;
     self.userIdTextField.leftViewMode = UITextFieldViewModeAlways;
-    self.userIdTextField.keyboardType = UIKeyboardTypeNumberPad;
 }
 
 - (void)initPasswordTextField

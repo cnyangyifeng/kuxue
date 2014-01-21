@@ -30,7 +30,7 @@
         
         micImage = [UIImage imageNamed:@"VoiceHUD"];
         
-        // Fill empty sound meters.
+        // Fills the empty sound meters.
         for(int i = 0; i < SOUND_METER_COUNT; i++) {
             soundMeters[i] = 0;
         }

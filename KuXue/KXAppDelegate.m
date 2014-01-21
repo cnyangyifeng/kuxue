@@ -43,6 +43,7 @@
 @synthesize registerDelegate = _registerDelegate;
 @synthesize smsVerificationDelegate = _smsVerificationDelegate;
 @synthesize userProfileDelegate = _userProfileDelegate;
+@synthesize nicknameDelegate = _nicknameDelegate;
 
 @synthesize badgeNumber = _badgeNumber;
 
@@ -419,11 +420,17 @@
 - (void)xmppvCardTempModuleDidUpdateMyvCard:(XMPPvCardTempModule *)vCardTempModule
 {
     NSLog(@"XMPP vCard temp did update my vCard.");
+    if (self.homeEnabled) {
+        [self.nicknameDelegate xmppvCardTempModuleDidUpdateMyvCard:vCardTempModule];
+    }
 }
 
 - (void)xmppvCardTempModule:(XMPPvCardTempModule *)vCardTempModule failedToUpdateMyvCard:(NSXMLElement *)error
 {
-    NSLog(@"XMPP vCard temp failed to update my vCard.");
+    NSLog(@"XMPP vCard temp failed to update my vCard. %@", error);
+    if (self.homeEnabled) {
+        [self.nicknameDelegate failedToUpdateMyvCard:error];
+    }
 }
 
 #pragma mark - XMPPvCardAvatarDelegate

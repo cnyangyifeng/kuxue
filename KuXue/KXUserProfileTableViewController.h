@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 kuxue.me. All rights reserved.
 //
 
+#import "KXNicknameViewController.h"
 #import "KXTableViewController.h"
 #import "KXUserProfileDelegate.h"
 

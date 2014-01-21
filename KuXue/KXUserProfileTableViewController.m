@@ -40,6 +40,16 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - Navigations
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"pushNicknameFromUserProfile"]) {
+        KXNicknameViewController *nicknameController = segue.destinationViewController;
+        nicknameController.nickname = self.nicknameLabel.text;
+    }
+}
+
 #pragma mark - KXUserProfileDelegate
 
 - (void)didReceivevCardTemp:(XMPPvCardTemp *)vCardTemp

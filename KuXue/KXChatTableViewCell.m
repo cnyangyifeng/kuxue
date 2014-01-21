@@ -19,7 +19,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        
+
         UIImageView *avatarImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         UILabel *msgLabel = [[UILabel alloc] init];
@@ -34,7 +34,6 @@
         self.messageBackgroundImageView = bgImageView;
         self.messageContentLabel = msgLabel;
     }
-    
     return self;
 }
 

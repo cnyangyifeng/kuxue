@@ -16,6 +16,7 @@
 #import "KXRegisterDelegate.h"
 #import "KXSMSVerificationDelegate.h"
 #import "KXUserProfileDelegate.h"
+#import "KXNicknameDelegate.h"
 #import "XMPPFramework.h"
 #import "constants.h"
 
@@ -71,6 +72,7 @@
 @property (weak, nonatomic) id registerDelegate;
 @property (weak, nonatomic) id smsVerificationDelegate;
 @property (weak, nonatomic) id userProfileDelegate;
+@property (weak, nonatomic) id nicknameDelegate;
 
 @property (nonatomic) NSInteger badgeNumber;
 
