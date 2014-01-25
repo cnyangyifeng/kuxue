@@ -646,12 +646,12 @@ enum XMPPRosterFlags
 	
     // KuXue Customization
     
-    [xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
+    // [xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
 	
-	[self _setRequestedRoster:NO];
-	[self _setHasRoster:NO];
+	// [self _setRequestedRoster:NO];
+	// [self _setHasRoster:NO];
 	   
-	[earlyPresenceElements removeAllObjects];
+	// [earlyPresenceElements removeAllObjects];
     
     // End Customization
     
@@ -836,12 +836,12 @@ enum XMPPRosterFlags
     
     // KuXue Customization
     
-	// [xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
+    [xmppRosterStorage clearAllUsersAndResourcesForXMPPStream:xmppStream];
 	
-	// [self _setRequestedRoster:NO];
-	// [self _setHasRoster:NO];
+	[self _setRequestedRoster:NO];
+	[self _setHasRoster:NO];
 	
-	// [earlyPresenceElements removeAllObjects];
+	[earlyPresenceElements removeAllObjects];
     
     // End Customization
 }
