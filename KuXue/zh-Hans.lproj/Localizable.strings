@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  KuXue
+
+  Created by Yang Yi Feng on 1/29/14.
+  Copyright (c) 2014 kuxue.me. All rights reserved.
+*/
+
+"KuXue" = "酷学";
+"Disconnected" = "失去连接";
+"Pull to Refresh" = "下拉刷新";
+"Register" = "注册";
+"Sign in" = "登录";

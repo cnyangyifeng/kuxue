@@ -31,10 +31,17 @@ KuXue Modifications\
 
 \f2\fs22 \cf0 \CocoaLigature0 - (\cf2 NSString\cf0  *)getSortableName\
 \{\
-    \cf3 if\cf0  ([\cf3 self\cf0 .\cf2 displayName\cf0  \cf2 canBeConvertedToEncoding\cf0 :\cf2 NSASCIIStringEncoding\cf0 ]) \{\
-        \cf3 return\cf0  \cf3 self\cf0 .\cf2 displayName\cf0 ;\
+    \cf2 NSString\cf0  *sortableName;\
+    \cf3 if\cf0  (\cf3 self\cf0 .\cf2 nickname\cf0  == \cf3 nil\cf0  || [\cf3 self\cf0 .\cf2 nickname\cf0  \cf2 isEqualToString\cf0 :\cf4 @""\cf0 ]) \{\
+        sortableName = \cf3 self\cf0 .\cf2 displayName\cf0 ;\
     \} \cf3 else\cf0  \{\
-        \cf3 return\cf0  [\cf2 NSString\cf0  \cf2 stringWithFormat\cf0 :\cf4 @"%c"\cf0 , \cf2 pinyinFirstLetter\cf0 ([\cf3 self\cf0 .\cf2 displayName\cf0  \cf2 characterAtIndex\cf0 :0])];\
+        sortableName = \cf3 self\cf0 .\cf2 nickname\cf0 ;\
+    \}\
+    \
+    \cf3 if\cf0  ([sortableName \cf2 canBeConvertedToEncoding\cf0 :\cf2 NSASCIIStringEncoding\cf0 ]) \{\
+        \cf3 return\cf0  sortableName;\
+    \} \cf3 else\cf0  \{\
+        \cf3 return\cf0  [\cf2 NSString\cf0  \cf2 stringWithFormat\cf0 :\cf4 @"%c"\cf0 , \cf2 pinyinFirstLetter\cf0 ([sortableName \cf2 characterAtIndex\cf0 :0])];\
     \}\
 \}\
 \

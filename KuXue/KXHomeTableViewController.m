@@ -30,10 +30,11 @@
     [[self appDelegate] setHomeDelegate:self];
     /* Adds the pull-to-refresh capability. */
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh" attributes:dict];
+    // NSDictionary *dict = [NSDictionary dictionaryWithObject:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
+    // refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Pull to Refresh", nil) attributes:dict];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Pull to Refresh", nil)];
     [refreshControl addTarget:self action:@selector(refreshContacts) forControlEvents:UIControlEventValueChanged];
-    [refreshControl setTintColor:[UIColor whiteColor]];
+    // [refreshControl setTintColor:[UIColor whiteColor]];
     self.refreshControl = refreshControl;
 }
 
@@ -156,13 +157,13 @@
 - (void)xmppStreamDidConnect
 {
     NSLog(@"KXHomeDelegate callback: xmpp stream did connect.");
-    self.navigationItem.title = @"KuXue";
+    self.navigationItem.title = NSLocalizedString(@"KuXue", nil);
 }
 
 - (void)xmppStreamDidDisconnect
 {
     NSLog(@"KXHomeDelegate callback: did disconnect.");
-    self.navigationItem.title = @"Disconnected";
+    self.navigationItem.title = NSLocalizedString(@"Disconnected", nil);
 }
 
 - (void)didReceiveMessage:(XMPPMessage *)message

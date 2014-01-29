@@ -479,10 +479,17 @@
 
 - (NSString *)getSortableName
 {
-    if ([self.displayName canBeConvertedToEncoding:NSASCIIStringEncoding]) {
-        return self.displayName;
+    NSString *sortableName;
+    if (self.nickname == nil || [self.nickname isEqualToString:@""]) {
+        sortableName = self.displayName;
     } else {
-        return [NSString stringWithFormat:@"%c", pinyinFirstLetter([self.displayName characterAtIndex:0])];
+        sortableName = self.nickname;
+    }
+    
+    if ([sortableName canBeConvertedToEncoding:NSASCIIStringEncoding]) {
+        return sortableName;
+    } else {
+        return [NSString stringWithFormat:@"%c", pinyinFirstLetter([sortableName characterAtIndex:0])];
     }
 }
 

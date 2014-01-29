@@ -49,7 +49,6 @@
 {
     [super viewDidLoad];
     [[self appDelegate] setChatDelegate:self];
-    [self.view setBackgroundColor:[UIColor darkGrayColor]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
 }
@@ -90,7 +89,7 @@
 - (void)initMainView
 {
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - CHAT_TOOLBAR_HEIGHT)];
-    [tableView setBackgroundColor:[UIColor darkGrayColor]];
+    [tableView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [tableView setSeparatorInset:UIEdgeInsetsZero];
     [tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     tableView.dataSource = self;
@@ -99,6 +98,7 @@
     [tableView addGestureRecognizer:tapGestureRecognizer];
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, self.view.bounds.size.height - CHAT_TOOLBAR_HEIGHT, self.view.bounds.size.width, CHAT_TOOLBAR_HEIGHT)];
+    toolbar.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [leftButton setFrame:CGRectMake(0.0f, 0.0f, CHAT_BUTTON_WIDTH, CHAT_BUTTON_HEIGHT)];
@@ -333,29 +333,6 @@
 {
     XMPPMessageArchiving_Message_CoreDataObject *message = [_fetchedResultsController objectAtIndexPath:indexPath];
     
-    /* Sets the contact avatar. */
-    if (!message.isOutgoing) {
-        [cell.contactAvatarImageView setFrame:CGRectMake(0.0f, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
-        if (self.contact.photo != nil) {
-            cell.contactAvatarImageView.image = self.contact.photo;
-        } else {
-            NSData *photoData = [[[self appDelegate] xmppvCardAvatarModule] photoDataForJID:self.contact.jid];
-            if (photoData != nil) {
-                cell.contactAvatarImageView.image = [UIImage imageWithData:photoData];
-            } else {
-                cell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
-            }
-        }
-    } else {
-        [cell.contactAvatarImageView setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
-        XMPPvCardTemp *vCardTemp = [[[self appDelegate] xmppvCardTempModule] myvCardTemp];
-        if (vCardTemp.photo != nil) {
-            cell.contactAvatarImageView.image = [UIImage imageWithData:vCardTemp.photo];
-        } else {
-            cell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
-        }
-    }
-    
     /* Sets the message content. */
     cell.messageContentLabel.font = [UIFont systemFontOfSize:DEFAULT_FONT_SIZE];
     cell.messageContentLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -381,6 +358,29 @@
         bgImage = [[UIImage imageNamed:@"MessageOutgoing"] stretchableImageWithLeftCapWidth:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_WIDTH topCapHeight:MESSAGE_BACKGROUND_IMAGE_LEFT_CAP_HEIGHT];
         cell.messageBackgroundImageView.image = bgImage;
         [cell.messageBackgroundImageView setFrame:CGRectMake(cell.messageContentLabel.frame.origin.x - MESSAGE_PADDING, cell.messageContentLabel.frame.origin.y - MESSAGE_PADDING + MESSAGE_PADDING_TOP_SPACE, size.width + MESSAGE_PADDING_CALLOUT + MESSAGE_PADDING, cell.messageContentLabel.frame.size.height + MESSAGE_PADDING * 2)];
+    }
+    
+    /* Sets the contact avatar. */
+    if (!message.isOutgoing) {
+        [cell.contactAvatarImageView setFrame:CGRectMake(0.0f, cell.messageBackgroundImageView.frame.size.height - CONTACT_AVATAR_IMAGE_VIEW_HEIGHT - CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
+        if (self.contact.photo != nil) {
+            cell.contactAvatarImageView.image = self.contact.photo;
+        } else {
+            NSData *photoData = [[[self appDelegate] xmppvCardAvatarModule] photoDataForJID:self.contact.jid];
+            if (photoData != nil) {
+                cell.contactAvatarImageView.image = [UIImage imageWithData:photoData];
+            } else {
+                cell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
+            }
+        }
+    } else {
+        [cell.contactAvatarImageView setFrame:CGRectMake(cell.frame.size.width - CONTACT_AVATAR_IMAGE_VIEW_WIDTH, cell.messageBackgroundImageView.frame.size.height - CONTACT_AVATAR_IMAGE_VIEW_HEIGHT - CONTACT_AVATAR_PADDING_TOP_SPACE, CONTACT_AVATAR_IMAGE_VIEW_WIDTH, CONTACT_AVATAR_IMAGE_VIEW_HEIGHT)];
+        XMPPvCardTemp *vCardTemp = [[[self appDelegate] xmppvCardTempModule] myvCardTemp];
+        if (vCardTemp.photo != nil) {
+            cell.contactAvatarImageView.image = [UIImage imageWithData:vCardTemp.photo];
+        } else {
+            cell.contactAvatarImageView.image = [UIImage imageNamed:DEFAULT_AVATAR_NAME];
+        }
     }
 }
 

@@ -89,7 +89,7 @@
     UIButton *bottomButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [bottomButton setFrame:CGRectMake(0.0f, self.view.bounds.size.height - REGISTER_BUTTON_HEIGHT, self.view.bounds.size.width, REGISTER_BUTTON_HEIGHT)];
     [bottomButton setBackgroundColor:[UIColor whiteColor]];
-    [bottomButton setTitle:@"Register" forState:UIControlStateNormal];
+    [bottomButton setTitle:NSLocalizedString(@"Register", nil) forState:UIControlStateNormal];
     [bottomButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:DEFAULT_FONT_SIZE]];
     [bottomButton addTarget:self action:@selector(registerButtonTapped) forControlEvents:UIControlEventTouchUpInside];

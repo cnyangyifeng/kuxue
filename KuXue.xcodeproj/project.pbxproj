@@ -153,7 +153,7 @@
 		0F69479E1881461C00675134 /* KXSMSVerificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F69479D1881461C00675134 /* KXSMSVerificationViewController.m */; };
 		0F6947A41882570D00675134 /* KXRegisterOKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F6947A31882570D00675134 /* KXRegisterOKViewController.m */; };
 		0F761B04183C96C300651F7F /* KXChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F761B03183C96C300651F7F /* KXChatTableViewCell.m */; };
-		0FB805231884232D007EC0E1 /* KXNicknameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB805221884232D007EC0E1 /* KXNicknameViewController.m */; };
+		0FB805231884232D007EC0E1 /* KXNicknameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB805221884232D007EC0E1 /* KXNicknameTableViewController.m */; };
 		0FC6F0621838DF78009683D4 /* KXContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */; };
 		0FC6F0651838F6BE009683D4 /* KXContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F0641838F6BE009683D4 /* KXContactTableViewController.m */; };
 		0FC6F07118392E58009683D4 /* KXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC6F07018392E58009683D4 /* KXChatViewController.m */; };
@@ -161,6 +161,8 @@
 		0FC7560E18558FCD008B081A /* KXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC7560D18558FCD008B081A /* KXViewController.m */; };
 		0FC756111855AF91008B081A /* KXTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC756101855AF91008B081A /* KXTableViewController.m */; };
 		0FC756151856B409008B081A /* KXMeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC756141856B409008B081A /* KXMeTableViewController.m */; };
+		0FD5F40E1898824E003332D3 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FD5F4101898824E003332D3 /* Localizable.strings */; };
+		0FD5F41818991AA1003332D3 /* KXSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD5F41718991AA1003332D3 /* KXSettingsTableViewController.m */; };
 		0FE7CF601830B70600CC502F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF5F1830B70600CC502F /* Foundation.framework */; };
 		0FE7CF621830B70600CC502F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF611830B70600CC502F /* CoreGraphics.framework */; };
 		0FE7CF641830B70600CC502F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FE7CF631830B70600CC502F /* UIKit.framework */; };
@@ -181,6 +183,7 @@
 		0FFE10781875C2F500B24D6D /* KXMeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFE10771875C2F500B24D6D /* KXMeTableViewCell.m */; };
 		0FFE107A1876582D00B24D6D /* XMPPFramework_Notices.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 0FFE10791876582D00B24D6D /* XMPPFramework_Notices.rtf */; };
 		0FFE107C1876680200B24D6D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FFE107B1876680200B24D6D /* SystemConfiguration.framework */; };
+		0FFEB79D1896982200F0E269 /* KXDiscoverTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FFEB79C1896982200F0E269 /* KXDiscoverTableViewController.m */; };
 		9ED5EA570FE54895A1D5975B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A4B3FC2ECF9644C395A81B8D /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -494,8 +497,8 @@
 		0F761B02183C96C300651F7F /* KXChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXChatTableViewCell.h; sourceTree = "<group>"; };
 		0F761B03183C96C300651F7F /* KXChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXChatTableViewCell.m; sourceTree = "<group>"; };
 		0F981660183DB35700EBD0B5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		0FB805211884232D007EC0E1 /* KXNicknameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXNicknameViewController.h; sourceTree = "<group>"; };
-		0FB805221884232D007EC0E1 /* KXNicknameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXNicknameViewController.m; sourceTree = "<group>"; };
+		0FB805211884232D007EC0E1 /* KXNicknameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXNicknameTableViewController.h; sourceTree = "<group>"; };
+		0FB805221884232D007EC0E1 /* KXNicknameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXNicknameTableViewController.m; sourceTree = "<group>"; };
 		0FC6F0601838DF78009683D4 /* KXContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXContactTableViewCell.h; sourceTree = "<group>"; };
 		0FC6F0611838DF78009683D4 /* KXContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXContactTableViewCell.m; sourceTree = "<group>"; };
 		0FC6F0631838F6BE009683D4 /* KXContactTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXContactTableViewController.h; sourceTree = "<group>"; };
@@ -511,6 +514,12 @@
 		0FC756121855BE79008B081A /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		0FC756131856B409008B081A /* KXMeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXMeTableViewController.h; sourceTree = "<group>"; };
 		0FC756141856B409008B081A /* KXMeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMeTableViewController.m; sourceTree = "<group>"; };
+		0FD5F40A18987A44003332D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		0FD5F40B18987A44003332D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		0FD5F41218988255003332D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		0FD5F41318988272003332D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0FD5F41618991AA1003332D3 /* KXSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXSettingsTableViewController.h; sourceTree = "<group>"; };
+		0FD5F41718991AA1003332D3 /* KXSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXSettingsTableViewController.m; sourceTree = "<group>"; };
 		0FE30F7E188293A8009EE505 /* KXRegisterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXRegisterDelegate.h; sourceTree = "<group>"; };
 		0FE7CF5C1830B70600CC502F /* KuXue.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KuXue.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE7CF5F1830B70600CC502F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -541,6 +550,8 @@
 		0FFE10771875C2F500B24D6D /* KXMeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMeTableViewCell.m; sourceTree = "<group>"; };
 		0FFE10791876582D00B24D6D /* XMPPFramework_Notices.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = XMPPFramework_Notices.rtf; sourceTree = "<group>"; };
 		0FFE107B1876680200B24D6D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0FFEB79B1896982200F0E269 /* KXDiscoverTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXDiscoverTableViewController.h; sourceTree = "<group>"; };
+		0FFEB79C1896982200F0E269 /* KXDiscoverTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXDiscoverTableViewController.m; sourceTree = "<group>"; };
 		A4B3FC2ECF9644C395A81B8D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1441,6 +1452,8 @@
 				0F632B151880E8B500CECF0B /* KXCoursesTableViewCell.m */,
 				0F632B111880E53E00CECF0B /* KXCoursesTableViewController.h */,
 				0F632B121880E53E00CECF0B /* KXCoursesTableViewController.m */,
+				0FFEB79B1896982200F0E269 /* KXDiscoverTableViewController.h */,
+				0FFEB79C1896982200F0E269 /* KXDiscoverTableViewController.m */,
 				0F632B0B1880DF2100CECF0B /* KXGroupsTableViewCell.h */,
 				0F632B0C1880DF2100CECF0B /* KXGroupsTableViewCell.m */,
 				0F632B0E1880DF4500CECF0B /* KXGroupsTableViewController.h */,
@@ -1459,13 +1472,15 @@
 				0FC756131856B409008B081A /* KXMeTableViewController.h */,
 				0FC756141856B409008B081A /* KXMeTableViewController.m */,
 				0FE8567F188D631D00C47F40 /* KXNicknameDelegate.h */,
-				0FB805211884232D007EC0E1 /* KXNicknameViewController.h */,
-				0FB805221884232D007EC0E1 /* KXNicknameViewController.m */,
+				0FB805211884232D007EC0E1 /* KXNicknameTableViewController.h */,
+				0FB805221884232D007EC0E1 /* KXNicknameTableViewController.m */,
 				0FE30F7E188293A8009EE505 /* KXRegisterDelegate.h */,
 				0F6947A21882570D00675134 /* KXRegisterOKViewController.h */,
 				0F6947A31882570D00675134 /* KXRegisterOKViewController.m */,
 				0F694799188145FF00675134 /* KXRegisterViewController.h */,
 				0F69479A188145FF00675134 /* KXRegisterViewController.m */,
+				0FD5F41618991AA1003332D3 /* KXSettingsTableViewController.h */,
+				0FD5F41718991AA1003332D3 /* KXSettingsTableViewController.m */,
 				0F6947A81882617A00675134 /* KXSMSVerificationDelegate.h */,
 				0F69479C1881461C00675134 /* KXSMSVerificationViewController.h */,
 				0F69479D1881461C00675134 /* KXSMSVerificationViewController.m */,
@@ -1479,6 +1494,7 @@
 				0F523F861840702100F967BF /* KXVoiceHUD.h */,
 				0F523F871840702100F967BF /* KXVoiceHUD.m */,
 				0F523F891840717A00F967BF /* KXVoiceHUDDelegate.h */,
+				0FD5F4101898824E003332D3 /* Localizable.strings */,
 				0FE7CF711830B70600CC502F /* Main.storyboard */,
 				0FE7CF661830B70600CC502F /* Supporting Files */,
 			);
@@ -1586,6 +1602,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 0FE7CF531830B70600CC502F;
 			productRefGroup = 0FE7CF5D1830B70600CC502F /* Products */;
@@ -1608,6 +1625,7 @@
 				0F223B2D185F04C200EA921A /* README.txt in Resources */,
 				0FFE1075187559AF00B24D6D /* default.png in Resources */,
 				0FE7CF6A1830B70600CC502F /* InfoPlist.strings in Resources */,
+				0FD5F40E1898824E003332D3 /* Localizable.strings in Resources */,
 				0F223B391861EC6B00EA921A /* Images.xcassets in Resources */,
 				0F223B4818672D7300EA921A /* thumbnail-1.jpg in Resources */,
 				0FFE107A1876582D00B24D6D /* XMPPFramework_Notices.rtf in Resources */,
@@ -1669,11 +1687,12 @@
 				0F223B0B185F04C200EA921A /* XMPPMessageArchiving_Contact_CoreDataObject.m in Sources */,
 				0F223ABE185F04C200EA921A /* NSNumber+XMPP.m in Sources */,
 				0FC6F07118392E58009683D4 /* KXChatViewController.m in Sources */,
-				0FB805231884232D007EC0E1 /* KXNicknameViewController.m in Sources */,
+				0FB805231884232D007EC0E1 /* KXNicknameTableViewController.m in Sources */,
 				0F06BFFF1832278700FDF785 /* KXContactsTableViewCell.m in Sources */,
 				0F223ABA185F04C200EA921A /* XMPPDigestMD5Authentication.m in Sources */,
 				0F223ADC185F04C200EA921A /* XMPPPrivacy.m in Sources */,
 				0F223B01185F04C200EA921A /* XMPPMessage+XEP_0085.m in Sources */,
+				0FFEB79D1896982200F0E269 /* KXDiscoverTableViewController.m in Sources */,
 				0F223AC9185F04C200EA921A /* XMPPCoreDataStorage.m in Sources */,
 				0F223AE0185F04C200EA921A /* XMPPRoomOccupantCoreDataStorageObject.m in Sources */,
 				0F223B28185F04C200EA921A /* DDFileLogger.m in Sources */,
@@ -1769,6 +1788,7 @@
 				0FC756111855AF91008B081A /* KXTableViewController.m in Sources */,
 				0F223AF4185F04C200EA921A /* XMPPvCardTempEmail.m in Sources */,
 				0F223B27185F04C200EA921A /* DDASLLogger.m in Sources */,
+				0FD5F41818991AA1003332D3 /* KXSettingsTableViewController.m in Sources */,
 				0FC755C7184ED49E008B081A /* KXLoginViewController.m in Sources */,
 				0FC756151856B409008B081A /* KXMeTableViewController.m in Sources */,
 				0F223AD7185F04C200EA921A /* XMPPIQ+JabberRPC.m in Sources */,
@@ -1832,10 +1852,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		0FD5F4101898824E003332D3 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0FD5F41218988255003332D3 /* zh-Hans */,
+				0FD5F41318988272003332D3 /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		0FE7CF681830B70600CC502F /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0FE7CF691830B70600CC502F /* en */,
+				0FD5F40A18987A44003332D3 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1852,6 +1882,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0FE7CF8B1830B70700CC502F /* en */,
+				0FD5F40B18987A44003332D3 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

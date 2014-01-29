@@ -73,6 +73,9 @@
     } else if ([segue.identifier isEqualToString:@"pushUserProfileFromMe"]) {
         KXTableViewController *destinationViewController = segue.destinationViewController;
         destinationViewController.hidesBottomBarWhenPushed = YES;
+    } else if ([segue.identifier isEqualToString:@"pushSettingsFromMe"]) {
+        KXTableViewController *destinationViewController = segue.destinationViewController;
+        destinationViewController.hidesBottomBarWhenPushed = YES;
     }
 }
 

@@ -68,7 +68,7 @@
     UIButton *bottomButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [bottomButton setFrame:CGRectMake(0.0f, self.view.bounds.size.height - REGISTER_BUTTON_HEIGHT, self.view.bounds.size.width, LOGIN_BUTTON_HEIGHT)];
     [bottomButton setBackgroundColor:[UIColor whiteColor]];
-    [bottomButton setTitle:@"Sign in" forState:UIControlStateNormal];
+    [bottomButton setTitle:NSLocalizedString(@"Sign in", nil) forState:UIControlStateNormal];
     [bottomButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [bottomButton.titleLabel setFont:[UIFont systemFontOfSize:DEFAULT_FONT_SIZE]];
     [bottomButton addTarget:self action:@selector(loginButtonTapped) forControlEvents:UIControlEventTouchUpInside];
