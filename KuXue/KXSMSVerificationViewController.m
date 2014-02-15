@@ -33,6 +33,7 @@
     [super viewDidLoad];
     [[self appDelegate] setSmsVerificationDelegate:self];
     [self initVerificationCodeTextField];
+    [self initNextButton];
     [self initLoginButton];
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
 }
@@ -48,7 +49,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self.verificationCodeTextField becomeFirstResponder];
+    // [self.verificationCodeTextField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,6 +64,13 @@
     UIView *verificationCodeTextFieldPadding = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, self.verificationCodeTextField.frame.size.height)];
     self.verificationCodeTextField.leftView = verificationCodeTextFieldPadding;
     self.verificationCodeTextField.leftViewMode = UITextFieldViewModeAlways;
+    self.verificationCodeTextField.enabled = NO;
+}
+
+- (void)initNextButton
+{
+    [self.nextButton setBackgroundColor:[UIColor lightGrayColor]];
+    self.nextButton.enabled = NO;
 }
 
 - (void)initLoginButton
@@ -83,7 +91,10 @@
 
 - (IBAction)verifyButtonTapped:(id)sender
 {
-    self.verificationCodeTextField.text = @"860110";
+    self.verificationCodeTextField.text = [self randomCode];
+    self.nextButton.enabled = YES;
+    /* Sky blue color */
+    [self.nextButton setBackgroundColor:[UIColor colorWithRed:(102.0/255.0) green:(204.0/255.0) blue:(255.0/255.0) alpha:1.0]];
 }
 
 - (IBAction)textFieldDidEndOnExit:(id)sender
@@ -185,6 +196,18 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.progressHud hide:YES];
     });
+}
+
+- (NSString *)randomCode
+{
+    NSString *alphabet  = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789";
+    NSMutableString *s = [NSMutableString stringWithCapacity:20];
+    for (NSUInteger i = 0U; i < 10; i++) {
+        u_int32_t r = arc4random() % [alphabet length];
+        unichar c = [alphabet characterAtIndex:r];
+        [s appendFormat:@"%C", c];
+    }
+    return s;
 }
 
 @end

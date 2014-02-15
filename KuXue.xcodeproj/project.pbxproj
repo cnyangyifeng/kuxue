@@ -474,6 +474,7 @@
 		0F26E180185CCAA7001F4725 /* KXUserProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXUserProfileTableViewController.m; sourceTree = "<group>"; };
 		0F26E219185D4948001F4725 /* KXContactsDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXContactsDelegate.h; sourceTree = "<group>"; };
 		0F35AC1A184A4610003E7A6D /* KXHomeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KXHomeDelegate.h; sourceTree = "<group>"; };
+		0F44D33818A37EB60006C660 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
 		0F523F8218406CE900F967BF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0F523F8418406CF900F967BF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		0F523F861840702100F967BF /* KXVoiceHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KXVoiceHUD.h; path = ../../../Workspace/KuXue/KuXue/KXVoiceHUD.h; sourceTree = "<group>"; };
@@ -516,8 +517,8 @@
 		0FC756141856B409008B081A /* KXMeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXMeTableViewController.m; sourceTree = "<group>"; };
 		0FD5F40A18987A44003332D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		0FD5F40B18987A44003332D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
-		0FD5F41218988255003332D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		0FD5F41318988272003332D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0FD5F41218988255003332D3 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		0FD5F41318988272003332D3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0FD5F41618991AA1003332D3 /* KXSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXSettingsTableViewController.h; sourceTree = "<group>"; };
 		0FD5F41718991AA1003332D3 /* KXSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KXSettingsTableViewController.m; sourceTree = "<group>"; };
 		0FE30F7E188293A8009EE505 /* KXRegisterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KXRegisterDelegate.h; sourceTree = "<group>"; };
@@ -1874,6 +1875,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0FE7CF721830B70600CC502F /* Base */,
+				0F44D33818A37EB60006C660 /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

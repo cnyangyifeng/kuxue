@@ -42,13 +42,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self loadContactsFromCoreDataStorage];
-    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self loadContactsFromCoreDataStorage];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning

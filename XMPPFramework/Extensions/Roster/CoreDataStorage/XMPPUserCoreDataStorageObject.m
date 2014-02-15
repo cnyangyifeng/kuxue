@@ -480,11 +480,12 @@
 - (NSString *)getSortableName
 {
     NSString *sortableName;
-    if (self.nickname == nil || [self.nickname isEqualToString:@""]) {
-        sortableName = self.displayName;
-    } else {
-        sortableName = self.nickname;
-    }
+//    if (self.nickname == nil || [self.nickname isEqualToString:@""]) {
+//        sortableName = self.displayName;
+//    } else {
+//        sortableName = self.nickname;
+//    }
+    sortableName = self.displayName;
     
     if ([sortableName canBeConvertedToEncoding:NSASCIIStringEncoding]) {
         return sortableName;

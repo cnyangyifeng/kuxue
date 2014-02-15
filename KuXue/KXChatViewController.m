@@ -88,6 +88,8 @@
 
 - (void)initMainView
 {
+    [self.view setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - CHAT_TOOLBAR_HEIGHT)];
     [tableView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
     [tableView setSeparatorInset:UIEdgeInsetsZero];

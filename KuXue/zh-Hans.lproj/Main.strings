@@ -1,0 +1,225 @@
+
+/* Class = "IBUILabel"; text = "Scan"; ObjectID = "1Lk-NU-eWV"; */
+"1Lk-NU-eWV.text" = "Scan";
+
+/* Class = "IBUITabBarItem"; title = "Me"; ObjectID = "1Mw-Eu-Y8O"; */
+"1Mw-Eu-Y8O.title" = "Me";
+
+/* Class = "IBUILabel"; text = "Welcome to KuXue"; ObjectID = "3U8-Fl-3d2"; */
+"3U8-Fl-3d2.text" = "Welcome to KuXue";
+
+/* Class = "IBUILabel"; text = "Alert Sound"; ObjectID = "3Y1-RK-FF7"; */
+"3Y1-RK-FF7.text" = "Alert Sound";
+
+/* Class = "IBUILabel"; text = "QR Code"; ObjectID = "4xe-dA-IOE"; */
+"4xe-dA-IOE.text" = "QR Code";
+
+/* Class = "IBUILabel"; text = "Avatar"; ObjectID = "5Ab-R6-Fae"; */
+"5Ab-R6-Fae.text" = "Avatar";
+
+/* Class = "IBUIButton"; normalTitle = "Save"; ObjectID = "6a8-ej-ZD9"; */
+"6a8-ej-ZD9.normalTitle" = "Save";
+
+/* Class = "IBUILabel"; text = "Activity Nearby"; ObjectID = "6b9-Ca-3tz"; */
+"6b9-Ca-3tz.text" = "Activity Nearby";
+
+/* Class = "IBUILabel"; text = "No.6, HaidianZhong Street, Beijing, China 100080"; ObjectID = "6hB-OM-c1N"; */
+"6hB-OM-c1N.text" = "No.6, HaidianZhong Street, Beijing, China 100080";
+
+/* Class = "IBUILabel"; text = "Language"; ObjectID = "6u8-xs-CCJ"; */
+"6u8-xs-CCJ.text" = "Language";
+
+/* Class = "IBUILabel"; text = "Course Name"; ObjectID = "7in-tI-Hdk"; */
+"7in-tI-Hdk.text" = "Course Name";
+
+/* Class = "IBUILabel"; text = "User ID"; ObjectID = "Ah0-6f-3Le"; */
+"Ah0-6f-3Le.text" = "User ID";
+
+/* Class = "IBUIButton"; normalTitle = "Get Started"; ObjectID = "Bp6-9d-jWc"; */
+"Bp6-9d-jWc.normalTitle" = "Get Started";
+
+/* Class = "IBUINavigationItem"; title = "Nickname"; ObjectID = "CrD-ht-A4l"; */
+"CrD-ht-A4l.title" = "Nickname";
+
+/* Class = "IBUILabel"; text = "Nickname"; ObjectID = "DvP-aa-3Im"; */
+"DvP-aa-3Im.text" = "Nickname";
+
+/* Class = "IBUILabel"; text = "Web KuXue"; ObjectID = "FKi-qd-CXZ"; */
+"FKi-qd-CXZ.text" = "Web KuXue";
+
+/* Class = "IBUILabel"; text = "Contact Name"; ObjectID = "Fyn-Be-MdE"; */
+"Fyn-Be-MdE.text" = "Contact Name";
+
+/* Class = "IBUIButton"; normalTitle = "Sign in"; ObjectID = "Gbg-sI-Nvj"; */
+"Gbg-sI-Nvj.normalTitle" = "Sign in";
+
+/* Class = "IBUILabel"; text = "Message Body"; ObjectID = "HQJ-Lo-1uc"; */
+"HQJ-Lo-1uc.text" = "Message Body";
+
+/* Class = "IBUILabel"; text = "My Favorites"; ObjectID = "Hdc-8b-lHv"; */
+"Hdc-8b-lHv.text" = "My Favorites";
+
+/* Class = "IBUILabel"; text = "General"; ObjectID = "IRN-ob-qVJ"; */
+"IRN-ob-qVJ.text" = "General";
+
+/* Class = "IBUILabel"; text = "Contact Name"; ObjectID = "IgK-a0-RgM"; */
+"IgK-a0-RgM.text" = "Contact Name";
+
+/* Class = "IBUITextField"; placeholder = "Mobile Phone Number"; ObjectID = "L9u-MI-jAc"; */
+"L9u-MI-jAc.placeholder" = "Mobile Phone Number";
+
+/* Class = "IBUITextField"; placeholder = "Random Password"; ObjectID = "NTI-mj-kH1"; */
+"NTI-mj-kH1.placeholder" = "Random Password";
+
+/* Class = "IBUILabel"; text = "99"; ObjectID = "Pan-c4-CyU"; */
+"Pan-c4-CyU.text" = "99";
+
+/* Class = "IBUINavigationItem"; title = "My Courses"; ObjectID = "Phz-Ar-7Un"; */
+"Phz-Ar-7Un.title" = "My Courses";
+
+/* Class = "IBUILabel"; text = "Group Name"; ObjectID = "QYG-br-TO2"; */
+"QYG-br-TO2.text" = "Group Name";
+
+/* Class = "IBUILabel"; text = "Rate KuXue"; ObjectID = "Qxp-H3-Nsw"; */
+"Qxp-H3-Nsw.text" = "Rate KuXue";
+
+/* Class = "IBUINavigationItem"; title = "Register with KuXue"; ObjectID = "ReR-EQ-NGI"; */
+"ReR-EQ-NGI.title" = "Register with KuXue";
+
+/* Class = "IBUIButton"; normalTitle = "Generate"; ObjectID = "TSy-Vc-hki"; */
+"TSy-Vc-hki.normalTitle" = "Generate";
+
+/* Class = "IBUINavigationItem"; title = "Profile"; ObjectID = "UZz-JN-eiU"; */
+"UZz-JN-eiU.title" = "Profile";
+
+/* Class = "IBUINavigationItem"; title = "About Me"; ObjectID = "VWP-iz-mno"; */
+"VWP-iz-mno.title" = "About Me";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Summary"; ObjectID = "W93-al-aAU"; */
+"W93-al-aAU.headerTitle" = "Summary";
+
+/* Class = "IBUIButton"; normalTitle = "Chat"; ObjectID = "WlO-B7-JkM"; */
+"WlO-B7-JkM.normalTitle" = "Chat";
+
+/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "X4c-5H-Tub"; */
+"X4c-5H-Tub.title" = "Settings";
+
+/* Class = "IBUINavigationItem"; title = "Contacts"; ObjectID = "XDi-EX-EP8"; */
+"XDi-EX-EP8.title" = "Contacts";
+
+/* Class = "IBUITabBarItem"; title = "Discover"; ObjectID = "YSC-NB-yYm"; */
+"YSC-NB-yYm.title" = "Discover";
+
+/* Class = "IBUITabBarItem"; title = "Contacts"; ObjectID = "YiJ-SZ-3nF"; */
+"YiJ-SZ-3nF.title" = "Contacts";
+
+/* Class = "IBUILabel"; text = "About"; ObjectID = "ZI6-UN-3KB"; */
+"ZI6-UN-3KB.text" = "About";
+
+/* Class = "IBUILabel"; text = "About KuXue"; ObjectID = "Zqv-JW-Ywg"; */
+"Zqv-JW-Ywg.text" = "About KuXue";
+
+/* Class = "IBUILabel"; text = "27 Courses"; ObjectID = "Zr3-X9-0Ur"; */
+"Zr3-X9-0Ur.text" = "27 Courses";
+
+/* Class = "IBUINavigationItem"; title = "Register with KuXue"; ObjectID = "bY3-IF-cCh"; */
+"bY3-IF-cCh.title" = "Register with KuXue";
+
+/* Class = "IBUINavigationItem"; title = "My Groups"; ObjectID = "bhc-AD-jCd"; */
+"bhc-AD-jCd.title" = "My Groups";
+
+/* Class = "IBUILabel"; text = "Nickname"; ObjectID = "cuT-Dt-odU"; */
+"cuT-Dt-odU.text" = "Nickname";
+
+/* Class = "IBUINavigationItem"; title = "General"; ObjectID = "dDj-1O-7Nt"; */
+"dDj-1O-7Nt.title" = "General";
+
+/* Class = "IBUILabel"; text = "3 Groups"; ObjectID = "gVb-xV-iHf"; */
+"gVb-xV-iHf.text" = "3 Groups";
+
+/* Class = "IBUILabel"; text = "Nickname"; ObjectID = "gw1-qM-w5A"; */
+"gw1-qM-w5A.text" = "Nickname";
+
+/* Class = "IBUILabel"; text = "Settings"; ObjectID = "hXZ-nW-4LA"; */
+"hXZ-nW-4LA.text" = "Settings";
+
+/* Class = "IBUITabBarItem"; title = "Home"; ObjectID = "hYC-Ti-RTH"; */
+"hYC-Ti-RTH.title" = "Home";
+
+/* Class = "IBUINavigationItem"; title = "Discover"; ObjectID = "i58-I6-tw5"; */
+"i58-I6-tw5.title" = "Discover";
+
+/* Class = "IBUILabel"; text = "If I could go back and redo my twenties, there would be one thing I'd do more of: just try hacking things together."; ObjectID = "iC6-cM-CDO"; */
+"iC6-cM-CDO.text" = "If I could go back and redo my twenties, there would be one thing I'd do more of: just try hacking things together.";
+
+/* Class = "IBUINavigationItem"; title = "Notifications"; ObjectID = "iFQ-ar-18Z"; */
+"iFQ-ar-18Z.title" = "Notifications";
+
+/* Class = "IBUILabel"; text = "Vibrate"; ObjectID = "ioh-9m-KIm"; */
+"ioh-9m-KIm.text" = "Vibrate";
+
+/* Class = "IBUITextField"; placeholder = "Mobile Phone Number"; ObjectID = "mLI-qy-toB"; */
+"mLI-qy-toB.placeholder" = "Mobile Phone Number";
+
+/* Class = "IBUILabel"; text = "Time"; ObjectID = "mn7-1x-ljB"; */
+"mn7-1x-ljB.text" = "Time";
+
+/* Class = "IBUILabel"; text = "Notifications"; ObjectID = "n20-1Z-GlV"; */
+"n20-1Z-GlV.text" = "Notifications";
+
+/* Class = "IBUILabel"; text = "User ID"; ObjectID = "o0t-Kf-qpJ"; */
+"o0t-Kf-qpJ.text" = "User ID";
+
+/* Class = "IBUILabel"; text = "Terms of Service"; ObjectID = "o2v-aB-5qC"; */
+"o2v-aB-5qC.text" = "Terms of Service";
+
+/* Class = "IBUILabel"; text = "Nickname"; ObjectID = "o3w-VG-FRn"; */
+"o3w-VG-FRn.text" = "Nickname";
+
+/* Class = "IBUINavigationItem"; title = "About"; ObjectID = "oux-Bj-C8N"; */
+"oux-Bj-C8N.title" = "About";
+
+/* Class = "IBUIButton"; normalTitle = "Sign out"; ObjectID = "qQS-Po-hS4"; */
+"qQS-Po-hS4.normalTitle" = "Sign out";
+
+/* Class = "IBUINavigationItem"; title = "My Activity"; ObjectID = "qau-AN-ylx"; */
+"qau-AN-ylx.title" = "My Activity";
+
+/* Class = "IBUITextField"; placeholder = "Password"; ObjectID = "sMI-I6-raP"; */
+"sMI-I6-raP.placeholder" = "Password";
+
+/* Class = "IBUILabel"; text = "Knowledge Library"; ObjectID = "sjy-RC-bik"; */
+"sjy-RC-bik.text" = "Knowledge Library";
+
+/* Class = "IBUILabel"; text = "Activity Name"; ObjectID = "tMs-jQ-Qyi"; */
+"tMs-jQ-Qyi.text" = "Activity Name";
+
+/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "v4y-qL-HbT"; */
+"v4y-qL-HbT.normalTitle" = "Next";
+
+/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "vc6-Of-1td"; */
+"vc6-Of-1td.normalTitle" = "Next";
+
+/* Class = "IBUILabel"; text = "Contact Name"; ObjectID = "vuq-Q6-ohN"; */
+"vuq-Q6-ohN.text" = "Contact Name";
+
+/* Class = "IBUITextField"; placeholder = "Your new nickname"; ObjectID = "wTL-q8-FP0"; */
+"wTL-q8-FP0.placeholder" = "Your new nickname";
+
+/* Class = "IBUILabel"; text = "Drift Bottle"; ObjectID = "xbw-bb-EFG"; */
+"xbw-bb-EFG.text" = "Drift Bottle";
+
+/* Class = "IBUINavigationItem"; title = "KuXue"; ObjectID = "y0T-GB-Aeb"; */
+"y0T-GB-Aeb.title" = "KuXue";
+
+/* Class = "IBUINavigationItem"; title = "Register with KuXue"; ObjectID = "ySG-FR-Lxn"; */
+"ySG-FR-Lxn.title" = "Register with KuXue";
+
+/* Class = "IBUINavigationItem"; title = "Contact"; ObjectID = "zaq-4U-rqy"; */
+"zaq-4U-rqy.title" = "Contact";
+
+/* Class = "IBUILabel"; text = "Recent Activity"; ObjectID = "zcd-Dd-UP0"; */
+"zcd-Dd-UP0.text" = "Recent Activity";
+
+/* Class = "IBUINavigationItem"; title = "Me"; ObjectID = "zhU-eG-Vd1"; */
+"zhU-eG-Vd1.title" = "Me";
